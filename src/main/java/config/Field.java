@@ -1,14 +1,14 @@
 package config;
 
-public class Field {
+public class Field<Opt> {
     private int id;
     private String name;
     private String type;
-    private Options options;
+    private Opt options;
 
     public Field(){}
 
-    public Field(int id, String name, String type, Options options){
+    public Field(int id, String name, String type, Opt options){
         this.id = id;
         this.name = name;
         this.type = type;
@@ -27,7 +27,7 @@ public class Field {
         return this.type;
     }
 
-    public void setOptions(Options options) {
+    public void setOptions(Opt options) {
         this.options = options;
     }
 }
