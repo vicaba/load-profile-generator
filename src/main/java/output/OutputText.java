@@ -1,14 +1,15 @@
 package output;
 
-import config.ConfigGenerator;
-import config.Field;
-import config.OptionsString;
+import config.*;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Random;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class OutputText {
     private ConfigGenerator genC;
@@ -16,6 +17,7 @@ public class OutputText {
     private static final String FILE_OUTPUT = "output/data";
     private static final String FILE_FORMAT = ".out";
     private static final String DATE_PATTERN = "yyyyMMdd_HHmmss";
+    private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm";
 
     public OutputText(ConfigGenerator genC, Random randomSeed) {
         this.genC = genC;
@@ -37,12 +39,12 @@ public class OutputText {
             writeDataToOutput(iTotalData, writer);
 
             writer.close();
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
     }
 
-    private void writeDataToOutput(int iTotalData, BufferedWriter writer) throws IOException {
+    private void writeDataToOutput(int iTotalData, BufferedWriter writer) throws IOException, ParseException {
         ArrayList<Field> fields = genC.getFields();
         for (int i = 0; i < iTotalData; i++) {
             for (Field field: fields) {
@@ -52,7 +54,15 @@ public class OutputText {
                     OptionsString optString = (OptionsString) field.getOptions();
                     writeRandomString(writer, optString);
 
+                } else if (field.getOptions().getClass() == OptionsNumber.class) {
+                    OptionsNumber optNumber = (OptionsNumber) field.getOptions();
+                    writeRandomNumber(writer, optNumber);
+                } else if (field.getOptions().getClass() == OptionsDate.class) {
+                    OptionsDate optDate = (OptionsDate) field.getOptions();
+                    writeNextDate(writer, optDate, i);
                 }
+
+                writer.write(" ");
             }
             writer.write("\n");
         }
@@ -62,6 +72,25 @@ public class OutputText {
         writer.write(optionsString.getAcceptedString(
                 randomSeed.nextInt(optionsString.getSizeAccepted())
         ));
+    }
+
+    //TODO Compatibility with decimals
+    //TODO Consider removing exclusive and inclusive fields and just make it inclusive min and exclusive max
+    private void writeRandomNumber(BufferedWriter writer, OptionsNumber optionsNumber) throws IOException {
+        int iRange = randomSeed.nextInt(optionsNumber.getTotalRanges());
+        int iMin = optionsNumber.getRangeMin(iRange);
+        writer.write(Integer.toString(
+                randomSeed.nextInt(optionsNumber.getRangeMax(iRange) + 1 - iMin) + iMin)
+        );
+    }
+
+    private void writeNextDate(BufferedWriter writer, OptionsDate optionsDate, int iCycle) throws ParseException, IOException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+
+        LocalDateTime formatDateTime = LocalDateTime.parse(optionsDate.getStartingDate(), formatter)
+                .plusSeconds(optionsDate.getTimeIncrement()*iCycle);
+
+        writer.write(formatDateTime.format(formatter));
     }
 
 }
