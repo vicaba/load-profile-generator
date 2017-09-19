@@ -17,9 +17,11 @@ public class Config {
                     new FileReader(JSON_PATH));
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(Field.class, new FieldDeserializer());
-            ConfigGenerator genC = gsonBuilder.create().fromJson(br, ConfigGenerator.class);
+            ConfigGenerator genC = gsonBuilder.create()
+                    .fromJson(br, ConfigGenerator.class);
 
             System.out.println(gsonBuilder.create().toJson(genC));
+
             return genC;
 
         } catch (FileNotFoundException e) {

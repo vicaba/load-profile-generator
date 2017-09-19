@@ -27,6 +27,10 @@ public class Field<Opt> {
         return this.fieldInfo.getType();
     }
 
+    public Opt getOptions() {
+        return this.options;
+    }
+
     public void setOptions(Opt options) {
         this.options = options;
     }

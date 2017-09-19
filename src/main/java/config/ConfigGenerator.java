@@ -22,4 +22,8 @@ public class ConfigGenerator {
     public Field getField(int field) {
         return fields.get(field);
     }
+
+    public ArrayList<Field> getFields() {
+        return this.fields;
+    }
 }
