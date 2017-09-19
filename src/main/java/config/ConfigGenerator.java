@@ -7,7 +7,9 @@ public class ConfigGenerator {
     private int skipLine;
     private ArrayList<Field> fields;
 
-    public ConfigGenerator() {}
+    public ConfigGenerator() {
+        fields = new ArrayList<>();
+    }
 
     public int getLength() {
         return this.length;

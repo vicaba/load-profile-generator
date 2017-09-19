@@ -5,10 +5,12 @@ import com.google.gson.*;
 import java.lang.reflect.Type;
 
 public class FieldDeserializer implements JsonDeserializer<Field> {
-    private final static String ID_FIELD = "id";
+    /*private final static String ID_FIELD = "id";
     private final static String NAME_FIELD = "name";
     private final static String TYPE_FIELD = "type";
+    */
     private final static String OPTIONS_FIELD = "options";
+    private final static String INFO_FIELD = "info";
 
     //----- FOR ANY NEW OPTION TYPE, ADD ITS NAME HERE ----
     private final static String STRING_TYPE = "string";
@@ -28,13 +30,16 @@ public class FieldDeserializer implements JsonDeserializer<Field> {
 
     private Field getDeserializeField(JsonObject jo) {
         //---- Configure this part to adapt to your own field, if necessary ----
-        int iID = jo.get(ID_FIELD).getAsInt();              //Field ID
+        /*int iID = jo.get(ID_FIELD).getAsInt();              //Field ID
         String sName = jo.get(NAME_FIELD).getAsString();    //Field Name
         String sType = jo.get(TYPE_FIELD).getAsString();    //Field Type
-        Options options = getOptionsFromJSON(jo, sType);    //Field Options
+        */
+        FieldInfo fieldInfo = new Gson().fromJson(
+                jo.get(INFO_FIELD).getAsJsonObject(),FieldInfo.class);
+        Options options = getOptionsFromJSON(jo, fieldInfo.getType());    //Field Options
 
         //---- Don't forget to modify the constructor ----
-        return new Field(iID, sName, sType, options);
+        return new Field<>(fieldInfo, options);
     }
 
     private Options getOptionsFromJSON(JsonObject jo, String sType) {

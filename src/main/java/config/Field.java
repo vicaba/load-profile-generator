@@ -4,27 +4,27 @@ public class Field<Opt> {
     private int id;
     private String name;
     private String type;
+    private FieldInfo fieldInfo;
     private Opt options;
 
     public Field(){}
 
-    public Field(int id, String name, String type, Opt options){
-        this.id = id;
+    public Field(FieldInfo fieldInfo, Opt options){
+        /*this.id = id;
         this.name = name;
-        this.type = type;
+        this.type = type;*/
+        this.fieldInfo = fieldInfo;
         this.options = options;
     }
 
-    public int getId() {
-        return this.id;
-    }
+    public int getId() { return this.fieldInfo.getId(); }
 
     public String getName() {
-        return this.name;
+        return this.fieldInfo.getName();
     }
 
     public String getType() {
-        return this.type;
+        return this.fieldInfo.getType();
     }
 
     public void setOptions(Opt options) {
