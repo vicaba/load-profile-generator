@@ -29,16 +29,10 @@ public class FieldDeserializer implements JsonDeserializer<Field> {
     }
 
     private Field getDeserializeField(JsonObject jo) {
-        //---- Configure this part to adapt to your own field, if necessary ----
-        /*int iID = jo.get(ID_FIELD).getAsInt();              //Field ID
-        String sName = jo.get(NAME_FIELD).getAsString();    //Field Name
-        String sType = jo.get(TYPE_FIELD).getAsString();    //Field Type
-        */
         FieldInfo fieldInfo = new Gson().fromJson(
                 jo.get(INFO_FIELD).getAsJsonObject(),FieldInfo.class);
-        Options options = getOptionsFromJSON(jo, fieldInfo.getType());    //Field Options
+        Options options = getOptionsFromJSON(jo, fieldInfo.getType());
 
-        //---- Don't forget to modify the constructor ----
         return new Field<>(fieldInfo, options);
     }
 

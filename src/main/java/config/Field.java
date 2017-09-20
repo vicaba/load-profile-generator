@@ -1,18 +1,10 @@
 package config;
 
 public class Field<Opt> {
-    private int id;
-    private String name;
-    private String type;
     private FieldInfo fieldInfo;
     private Opt options;
 
-    public Field(){}
-
-    public Field(FieldInfo fieldInfo, Opt options){
-        /*this.id = id;
-        this.name = name;
-        this.type = type;*/
+    Field(FieldInfo fieldInfo, Opt options){
         this.fieldInfo = fieldInfo;
         this.options = options;
     }
@@ -31,7 +23,4 @@ public class Field<Opt> {
         return this.options;
     }
 
-    public void setOptions(Opt options) {
-        this.options = options;
-    }
 }
