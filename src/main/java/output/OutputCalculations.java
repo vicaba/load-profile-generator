@@ -7,6 +7,7 @@ import java.util.Random;
 /**
  * Class where all the calculations are made. Can work with integers, decimals or dates.
  * @author Albert Trias Torroglosa
+ * @since 21/09/2017
  * @version 1.0
  */
 public class OutputCalculations {
@@ -28,7 +29,7 @@ public class OutputCalculations {
      * @param method Random method to be used.
      * @return int with a value between the range given.
      */
-    public int calculateRangeInteger(int min, int max, char method) {
+    int calculateRangeInteger(int min, int max, char method) {
         switch(method) {
             case EQUIV:
                 return equalChanceInteger(min, max);
@@ -59,7 +60,7 @@ public class OutputCalculations {
      * @param dateFormat String with the format that the starting date and the resulting date follow.
      * @return String with the calculated date.
      */
-    public String calculateNextDate(String startingDate, int timeIncrement, int cycle, String dateFormat) {
+    String calculateNextDate(String startingDate, int timeIncrement, int cycle, String dateFormat) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
         LocalDateTime formatDateTime = LocalDateTime.parse(startingDate, formatter)
                 .plusSeconds(timeIncrement*cycle);
