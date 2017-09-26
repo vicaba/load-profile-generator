@@ -1,7 +1,6 @@
 package output;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
@@ -47,5 +46,6 @@ public class OutputConfig {
     public String getType() {
         return this.type;
     }
+
 
 }

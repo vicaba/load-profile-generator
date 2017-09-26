@@ -1,6 +1,7 @@
 package infrastructure.serialization;
 
-import output.OutputType;
+
+import infrastructure.serialization.json.OutputType;
 
 /**
  *

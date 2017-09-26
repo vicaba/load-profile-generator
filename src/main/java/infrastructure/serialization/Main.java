@@ -1,7 +1,6 @@
 package infrastructure.serialization;
 
 import infrastructure.serialization.json.OutputNumberJsonSerializer;
-import output.OutputTypeNumber;
 
 public class Main {
   public static void main(String[] args) {
