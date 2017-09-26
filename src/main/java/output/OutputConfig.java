@@ -1,6 +1,8 @@
 package output;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -11,29 +13,27 @@ public class OutputConfig {
     private String method;
     private String type;
 
+    private final static String AMOUNT_FIELD = "amount";
+    private final static String METHOD_FIELD = "method";
+    private final static String TYPE_FIELD = "type";
+    private final static String FILE_VALUE = "file";
     private static final String JSON_PATH = "resources/output.json";
 
-    public boolean configureFromJson() {
+    public OutputConfig() {
         try {
             BufferedReader br = new BufferedReader(
                     new FileReader(JSON_PATH));
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            OutputConfig outputConfig = gsonBuilder.create()
-                    .fromJson(br, OutputConfig.class);
+            JsonObject jsonObject = new Gson().fromJson(br,JsonObject.class);
 
-            this.amount = outputConfig.getAmount();
-            this.method = outputConfig.getMethod();
-            this.type = outputConfig.getType();
-
-            //TODO Remove testing print
-            System.out.println(gsonBuilder.create().toJson(outputConfig));
-
-            return true;
+            this.amount = jsonObject.get(AMOUNT_FIELD).getAsInt();
+            this.method = jsonObject.get(METHOD_FIELD).getAsString();
+            if (this.method.equals(FILE_VALUE)) {
+                this.type = jsonObject.get(TYPE_FIELD).getAsString();
+            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return false;
     }
 
     public int getAmount() {
@@ -47,4 +47,5 @@ public class OutputConfig {
     public String getType() {
         return this.type;
     }
+
 }
