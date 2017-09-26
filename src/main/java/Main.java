@@ -1,9 +1,6 @@
 import config.Config;
 import config.ConfigGenerator;
-import output.FileOutput;
-import output.JsonFileOutput;
-import output.Output;
-import output.OutputCalculations;
+import output.*;
 
 import java.util.Random;
 
@@ -13,10 +10,13 @@ public class Main {
         Config config = new Config();
         ConfigGenerator configGen;
         if ((configGen = config.configureFromJSON()) != null) {
-            //TODO Read a config file that decides the type of output, if file or stream, and if json or others, plus the amount of data
-            OutputCalculations outputCalculations = new OutputCalculations();
-            JsonFileOutput jsonFileOutput = new JsonFileOutput();
-            jsonFileOutput.writeToFile(jsonFileOutput.prepareData(configGen,20,outputCalculations));
+            OutputConfig outputConfig = new OutputConfig();
+            if (outputConfig.configureFromJson()) {
+                OutputCalculations outputCalculations = new OutputCalculations();
+                JsonFileOutput jsonFileOutput = new JsonFileOutput();
+                //TODO To change so it passes OutputConfig
+                jsonFileOutput.writeToFile(jsonFileOutput.prepareData(configGen, outputConfig.getAmount(), outputCalculations));
+            }
 
         }
         System.out.println("------------Bye World!----------");
