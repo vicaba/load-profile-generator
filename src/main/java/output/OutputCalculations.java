@@ -10,6 +10,7 @@ import java.util.Random;
  * @since 21/09/2017
  * @version 1.0
  */
+//TODO Create different classes according to the method used for probability.
 public class OutputCalculations {
     private final static char EQUIV = 'E'; //Random method will give the same probability to all numbers.
 
@@ -29,7 +30,7 @@ public class OutputCalculations {
      * @param method Random method to be used.
      * @return int with a value between the range given.
      */
-    int calculateRangeInteger(int min, int max, char method) {
+    public int calculateRangeInteger(int min, int max, char method) {
         switch(method) {
             case EQUIV:
                 return equalChanceInteger(min, max);
@@ -60,7 +61,7 @@ public class OutputCalculations {
      * @param dateFormat String with the format that the starting date and the resulting date follow.
      * @return String with the calculated date.
      */
-    String calculateNextDate(String startingDate, int timeIncrement, int cycle, String dateFormat) {
+    public String calculateNextDate(String startingDate, int timeIncrement, int cycle, String dateFormat) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
         LocalDateTime formatDateTime = LocalDateTime.parse(startingDate, formatter)
                 .plusSeconds(timeIncrement*cycle);

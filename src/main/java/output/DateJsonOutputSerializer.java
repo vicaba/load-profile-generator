@@ -12,7 +12,7 @@ public class DateJsonOutputSerializer implements JsonOutputSerializer<OptionsDat
     private static final String VALUE_FIELD = "value";
     private static final String TYPE_VALUE = "date";
 
-    DateJsonOutputSerializer(OutputCalculations calculations, int cycle) {
+    public DateJsonOutputSerializer(OutputCalculations calculations, int cycle) {
         this.calculations = calculations;
         this.cycle = cycle;
     }

@@ -4,7 +4,7 @@ public class Field<Opt> {
     private FieldInfo fieldInfo;
     private Opt options;
 
-    Field(FieldInfo fieldInfo, Opt options){
+    public Field(FieldInfo fieldInfo, Opt options){
         this.fieldInfo = fieldInfo;
         this.options = options;
     }

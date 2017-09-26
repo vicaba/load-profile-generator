@@ -36,6 +36,7 @@ public class FieldDeserializer implements JsonDeserializer<Field> {
         return new Field<>(fieldInfo, options);
     }
 
+    //TODO Need to ask if this is fine or not according to the SOLID principle, O.
     private Options getOptionsFromJSON(JsonObject jo, String sType) {
         switch (sType) {
             case STRING_TYPE:

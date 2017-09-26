@@ -6,7 +6,6 @@ import com.google.gson.JsonArray;
 import config.*;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -17,6 +16,8 @@ public class JsonFileOutput implements FileOutput<JsonArray> {
     private static final String DATE_PATTERN = "yyyyMMdd_HHmmss";
     private static final String FILE_OUTPUT = "output/data";
     private static final String FILE_FORMAT = ".json";
+
+    //TODO writeToFile and prepareData do not respect the SOLID principle, S. Must be put in separate classes
 
     @Override
     public void writeToFile(JsonArray dataSet) {
@@ -48,8 +49,9 @@ public class JsonFileOutput implements FileOutput<JsonArray> {
             for (Field field: fields) {
                 System.out.println(field.getId()+"-"+field.getName()+"-"+field.getType()+"-"+field.getOptions());
 
+                //TODO Does not respect the SOLID principle, O. Don't know how to solve this yet.
                 if (field.getOptions().getClass() == OptionsString.class) {
-                    //TODO If added in the future, there will be a switch to decide the method used. This will most likely be inside a config file.
+
                     StringJsonOutputSerializer sJOS = new StringJsonOutputSerializer(outputCalculations);
                     OptionsString optionsString = (OptionsString) field.getOptions();
                     data.add(sJOS.write(optionsString));
