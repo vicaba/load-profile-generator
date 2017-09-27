@@ -1,5 +1,7 @@
 package config;
 
+import domain.field.Field;
+
 import java.util.ArrayList;
 
 public class ConfigGenerator {

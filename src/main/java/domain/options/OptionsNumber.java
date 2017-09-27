@@ -1,16 +1,16 @@
-package config;
+package domain.options;
 
 import java.util.ArrayList;
 
 public class OptionsNumber extends Options {
     private String type;
-    private ArrayList<Range> ranges;
+    private ArrayList<NumberRange> ranges;
 
     public OptionsNumber() {
         this.ranges = new ArrayList<>();
     }
 
-    public ArrayList<Range> getRanges() {
+    public ArrayList<NumberRange> getRanges() {
         return this.ranges;
     }
 

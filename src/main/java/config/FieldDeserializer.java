@@ -1,6 +1,12 @@
 package config;
 
 import com.google.gson.*;
+import domain.field.Field;
+import domain.field.FieldInfo;
+import domain.options.Options;
+import domain.options.OptionsDate;
+import domain.options.OptionsNumber;
+import domain.options.OptionsString;
 
 import java.lang.reflect.Type;
 

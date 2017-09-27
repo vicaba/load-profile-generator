@@ -1,4 +1,4 @@
-package config;
+package domain.field;
 
 public class Field<Opt> {
     private FieldInfo fieldInfo;

@@ -1,6 +1,7 @@
 package config;
 
 import com.google.gson.GsonBuilder;
+import domain.field.Field;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

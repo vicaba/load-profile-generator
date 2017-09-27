@@ -1,4 +1,4 @@
-package config;
+package domain.field;
 
 public class FieldInfo {
     private int id;

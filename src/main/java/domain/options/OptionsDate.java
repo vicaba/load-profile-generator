@@ -1,4 +1,4 @@
-package config;
+package domain.options;
 
 public class OptionsDate extends Options {
     private String startingDate;

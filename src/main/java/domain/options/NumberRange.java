@@ -1,6 +1,6 @@
-package config;
+package domain.options;
 
-public class Range {
+public class NumberRange {
     private float min;
     private int max;
 

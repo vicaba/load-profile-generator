@@ -1,22 +1,23 @@
 package domain.calculations;
 
-import config.Range;
+import domain.options.NumberRange;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class NumberEqualCalculations implements EqualCalculations<Float> {
-    private ArrayList<Range> ranges;
+    private ArrayList<NumberRange> numberRanges;
 
-    public NumberEqualCalculations(ArrayList<Range> ranges) {
-        this.ranges = ranges;
+    public NumberEqualCalculations(ArrayList<NumberRange> numberRanges) {
+        this.numberRanges = numberRanges;
     }
 
     @Override
     public Float calculate() {
-        Range range = ranges.get(ThreadLocalRandom.current().nextInt(0, ranges.size()));
+        NumberRange numberRange =
+                this.numberRanges.get(ThreadLocalRandom.current().nextInt(0, this.numberRanges.size()));
 
-        float fMin = range.getMin();
-        return ThreadLocalRandom.current().nextFloat() * (range.getMax() - fMin) + fMin;
+        float fMin = numberRange.getMin();
+        return ThreadLocalRandom.current().nextFloat() * (numberRange.getMax() - fMin) + fMin;
     }
 }
