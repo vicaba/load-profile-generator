@@ -3,36 +3,18 @@ package config;
 import java.util.ArrayList;
 
 public class OptionsNumber extends Options {
-    private class Range {
-        private int min;
-        private boolean exclusiveMin;
-        private int max;
-        private boolean exclusiveMax;
-
-        int getMin() {
-            return this.min;
-        }
-
-        int getMax() {
-            return this.max;
-        }
-    }
+    private String type;
     private ArrayList<Range> ranges;
 
     public OptionsNumber() {
-        ranges = new ArrayList<>();
+        this.ranges = new ArrayList<>();
     }
 
-    public int getTotalRanges() {
-        return ranges.size();
+    public ArrayList<Range> getRanges() {
+        return this.ranges;
     }
 
-    public int getRangeMin(int iRange) {
-        return this.ranges.get(iRange).getMin();
+    public String getType() {
+        return this.type;
     }
-
-    public int getRangeMax(int iRange) {
-        return this.ranges.get(iRange).getMax();
-    }
-
 }

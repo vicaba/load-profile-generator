@@ -18,6 +18,10 @@ public class OptionsString extends Options {
         return this.ignoreCaps;
     }
 
+    public ArrayList<String> getAcceptedStrings() {
+        return this.acceptedStrings;
+    }
+
     public String getAcceptedString(int iWhich) {
         return this.acceptedStrings.get(iWhich);
     }

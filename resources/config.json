@@ -20,6 +20,7 @@
         "type": "number"
       },
       "options": {
+        "type": "decimal",
         "ranges": [
           {
             "min": 4,
