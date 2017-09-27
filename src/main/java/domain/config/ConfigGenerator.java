@@ -1,13 +1,13 @@
-package config;
+package domain.config;
 
-import domain.field.Field;
+import domain.field.InputField;
 
 import java.util.ArrayList;
 
 public class ConfigGenerator {
     private int length;
     private int skipLine;
-    private ArrayList<Field> fields;
+    private ArrayList<InputField> fields;
 
     public ConfigGenerator() {
         fields = new ArrayList<>();
@@ -21,11 +21,11 @@ public class ConfigGenerator {
         return this.skipLine;
     }
 
-    public Field getField(int field) {
+    public InputField getField(int field) {
         return fields.get(field);
     }
 
-    public ArrayList<Field> getFields() {
+    public ArrayList<InputField> getFields() {
         return this.fields;
     }
 }

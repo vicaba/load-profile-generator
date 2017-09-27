@@ -1,11 +1,12 @@
 package domain.field;
 
-public class FieldInfo {
+public class InputFieldInfo {
     private int id;
     private String name;
     private String type;
 
-    public FieldInfo() {}
+    public InputFieldInfo() {
+    }
 
     public int getId() {
         return this.id;
