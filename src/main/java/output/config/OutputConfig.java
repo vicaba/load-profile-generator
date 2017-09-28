@@ -6,21 +6,18 @@ import domain.output.OutputField;
 import java.io.BufferedReader;
 
 public class OutputConfig {
-    //TODO Consider obtaining path of the config file through the main arguments.
-    private static final String JSON_PATH = "resources/output.json";
+  private OutputField outputField;
 
-    private OutputField outputField;
+  public OutputConfig(String jsonPath) {
+    BufferedReaderTreatment bufferedReaderTreatment = new BufferedReaderTreatment(jsonPath);
+    BufferedReader br = bufferedReaderTreatment.getReader();
 
-    public OutputConfig() {
-        BufferedReaderTreatment bufferedReaderTreatment = new BufferedReaderTreatment(JSON_PATH);
-        BufferedReader br = bufferedReaderTreatment.getReader();
+    this.outputField = new Gson().fromJson(br, OutputField.class);
 
-        this.outputField = new Gson().fromJson(br, OutputField.class);
+    bufferedReaderTreatment.closeReader();
+  }
 
-        bufferedReaderTreatment.closeReader();
-    }
-
-    public OutputField getOutputField() {
-        return this.outputField;
-    }
+  public OutputField getOutputField() {
+    return this.outputField;
+  }
 }

@@ -14,33 +14,39 @@ public class Main {
 
   public static void main(String[] args) {
     System.out.println("------------Hello World!----------");
-    InputConfig inputConfig = new InputConfig();
-    ConfigGenerator configGen;
-    if ((configGen = inputConfig.getConfigGenerator()) != null) {
+    if (args.length != 2) {
+      System.out.println(
+          "Hi there, don't forget that you need to add the paths first"
+              + "towards your input file and second to your output file, in this order.");
+    } else {
+      InputConfig inputConfig = new InputConfig(args[0]);
+      ConfigGenerator configGen;
+      if ((configGen = inputConfig.getConfigGenerator()) != null) {
 
-      OutputField outputField = new OutputConfig().getOutputField();
-      switch (outputField.getMethod()) {
-        case FILE_METHOD:
-          switch (outputField.getType()) {
-            case JSON_TYPE:
-              JsonDataPreparation jsonDataPreparation =
-                  new JsonDataPreparation(configGen, outputField.getAmount());
-              JsonArray jsonArray = new JsonArray();
-              for (int i = 0; i < outputField.getAmount(); i++) {
-                jsonArray.add(jsonDataPreparation.prepareData());
-              }
-              new JsonFileOutput().writeToFile(jsonArray);
-              break;
-            default:
-              break;
-          }
+        OutputField outputField = new OutputConfig(args[1]).getOutputField();
+        switch (outputField.getMethod()) {
+          case FILE_METHOD:
+            switch (outputField.getType()) {
+              case JSON_TYPE:
+                JsonDataPreparation jsonDataPreparation =
+                    new JsonDataPreparation(configGen, outputField.getAmount());
+                JsonArray jsonArray = new JsonArray();
+                for (int i = 0; i < outputField.getAmount(); i++) {
+                  jsonArray.add(jsonDataPreparation.prepareData());
+                }
+                new JsonFileOutput().writeToFile(jsonArray);
+                break;
+              default:
+                break;
+            }
 
-          break;
-        case STREAM_METHOD:
-          new StreamExample().example();
-          break;
-        default:
-          break;
+            break;
+          case STREAM_METHOD:
+            new StreamExample().example();
+            break;
+          default:
+            break;
+        }
       }
     }
     System.out.println("------------Bye World!----------");
