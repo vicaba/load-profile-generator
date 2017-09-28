@@ -2,6 +2,7 @@ package domain.calculations;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Class responsible of giving a valid date field depending on the input configurations that are
@@ -19,8 +20,8 @@ public class DateEqualCalculations implements EqualCalculations<String> {
   private String startingDate;
   /** How much time in seconds there is between created dates */
   private int timeIncrement;
-  /** The current cycle. Used to choose the next X date after the starting date */
-  private int cycle;
+  /** The total amount of dates we will have. */
+  private int maxDates;
 
   private DateTimeFormatter dateTimeFormatter;
 
@@ -31,27 +32,29 @@ public class DateEqualCalculations implements EqualCalculations<String> {
    *     generated.
    * @param timeIncrement Integer with the amount of time that will pass every time a new date is
    *     generated.
-   * @param cycle Integer with the current data cycle we are in at the moment.
+   * @param maxDates Integer that indicates how many max dates we will have have, minimum 1. Dates
+   *     above startingDate + maxDates*timeIncrement will never be generated.
    */
-  public DateEqualCalculations(String startingDate, int timeIncrement, int cycle) {
+  public DateEqualCalculations(String startingDate, int timeIncrement, int maxDates) {
     this.dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
     this.startingDate = startingDate;
     this.timeIncrement = timeIncrement;
-    this.cycle = cycle;
+    this.maxDates = maxDates;
   }
 
   /**
    * Function responsible of giving a valid date according to the configuration passed in the
    * constructor. The next date will be based according to the formula startingDate +
-   * timeIncrement*cycle.
+   * timeIncrement*random(1,maxDates+1).
    *
-   * @return A valid date according to the formula mentioned above.
+   * @return A random date that follows the formula mentioned above.
    */
   @Override
   public String calculate() {
     LocalDateTime localDateTime =
         LocalDateTime.parse(this.startingDate, this.dateTimeFormatter)
-            .plusSeconds(this.timeIncrement * this.cycle);
+            .plusSeconds(
+                this.timeIncrement * ThreadLocalRandom.current().nextInt(1, this.maxDates + 1));
 
     return localDateTime.format(dateTimeFormatter);
   }
