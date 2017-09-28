@@ -8,6 +8,7 @@ import output.field.FieldDeserializer;
 import java.io.BufferedReader;
 
 public class InputConfig {
+    //TODO Consider obtaining path of the config file through the main arguments.
     private static final String JSON_PATH = "resources/config.json";
 
     private ConfigGenerator configGenerator;

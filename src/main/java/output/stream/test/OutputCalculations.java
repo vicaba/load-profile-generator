@@ -1,4 +1,4 @@
-package domain.calculations;
+package output.stream.test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

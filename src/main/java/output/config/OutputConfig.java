@@ -6,6 +6,7 @@ import domain.output.OutputField;
 import java.io.BufferedReader;
 
 public class OutputConfig {
+    //TODO Consider obtaining path of the config file through the main arguments.
     private static final String JSON_PATH = "resources/output.json";
 
     private OutputField outputField;
