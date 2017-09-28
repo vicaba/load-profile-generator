@@ -1,3 +1,4 @@
+import com.google.gson.JsonArray;
 import domain.config.ConfigGenerator;
 import domain.output.OutputField;
 import output.config.InputConfig;
@@ -24,8 +25,11 @@ public class Main {
             case JSON_TYPE:
               JsonDataPreparation jsonDataPreparation =
                   new JsonDataPreparation(configGen, outputField.getAmount());
-
-              new JsonFileOutput().writeToFile(jsonDataPreparation.prepareData());
+              JsonArray jsonArray = new JsonArray();
+              for (int i = 0; i < outputField.getAmount(); i++) {
+                jsonArray.add(jsonDataPreparation.prepareData());
+              }
+              new JsonFileOutput().writeToFile(jsonArray);
               break;
             default:
               break;
