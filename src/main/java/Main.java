@@ -42,7 +42,9 @@ public class Main {
 
             break;
           case STREAM_METHOD:
-            new StreamExample().example();
+            // new StreamExample().example1();
+            // new StreamExample().example2();
+            new StreamExample().example3();
             break;
           default:
             break;
