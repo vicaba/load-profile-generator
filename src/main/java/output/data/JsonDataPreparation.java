@@ -19,7 +19,7 @@ public class JsonDataPreparation {
   private ConfigGenerator configGenerator;
   // private int totalData;
 
-  public JsonDataPreparation(ConfigGenerator configGenerator, int totalData) {
+  public JsonDataPreparation(ConfigGenerator configGenerator) {
 
     this.configGenerator = configGenerator;
     // this.totalData = totalData;
@@ -36,6 +36,7 @@ public class JsonDataPreparation {
     data = new JsonArray();
     for (InputField inputField : inputFields) {
 
+      /*
       System.out.println(
           inputField.getId()
               + "-"
@@ -44,6 +45,7 @@ public class JsonDataPreparation {
               + inputField.getType()
               + "-"
               + inputField.getOptions().toString());
+      */
 
       if (inputField.getOptions().getClass() == OptionsString.class) {
 

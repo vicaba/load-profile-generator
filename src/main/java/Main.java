@@ -29,7 +29,7 @@ public class Main {
             switch (outputField.getType()) {
               case JSON_TYPE:
                 JsonDataPreparation jsonDataPreparation =
-                    new JsonDataPreparation(configGen, outputField.getAmount());
+                    new JsonDataPreparation(configGen);
                 JsonArray jsonArray = new JsonArray();
                 for (int i = 0; i < outputField.getAmount(); i++) {
                   jsonArray.add(jsonDataPreparation.prepareData());
@@ -44,7 +44,8 @@ public class Main {
           case STREAM_METHOD:
             // new StreamExample().example1();
             // new StreamExample().example2();
-            new StreamExample().example3();
+            //new StreamExample().example3();
+            new StreamExample().example6(configGen);
             break;
           default:
             break;
