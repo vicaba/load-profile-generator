@@ -8,7 +8,6 @@
         "type": "string"
       },
       "options": {
-        "ignoreCaps": false,
         "acceptedStrings": ["GG","GL","GM"]
       }
     },
@@ -23,15 +22,11 @@
         "ranges": [
           {
             "min": 4,
-            "exclusiveMin": true,
-            "max": 100,
-            "exclusiveMax": false
+            "max": 100
           },
           {
             "min": -50,
-            "exclusiveMin": false,
-            "max": -1,
-            "exclusiveMax": false
+            "max": -1
           }
         ]
       }

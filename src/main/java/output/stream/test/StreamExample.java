@@ -22,6 +22,7 @@ import scala.concurrent.duration.Duration;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Scanner;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.TimeUnit;
 
@@ -155,10 +156,12 @@ public class StreamExample {
 
     Gson gson = new Gson();
     CompletionStage<Done> resultFuture = source
-            .via(new MapJson<>(gson::toJson))
+            .via(new MapStreamData<>(gson::toJson))
             .runWith(Sink.foreach(System.out::println), materializer);
 
-
+    Scanner scanner = new Scanner(System.in);
+    while (scanner.nextLine() == null);
+    system.terminate();
   }
 
   // TODO Siguiente lectura para la proxima vez, General Concepts.
