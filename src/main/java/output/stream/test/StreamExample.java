@@ -4,12 +4,9 @@ import akka.Done;
 import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
-import akka.stream.ActorMaterializer;
-import akka.stream.IOResult;
-import akka.stream.Materializer;
-import akka.stream.ThrottleMode;
-import akka.stream.javadsl.*;
-import akka.util.ByteString;
+import akka.stream.*;
+import akka.stream.javadsl.Sink;
+import akka.stream.javadsl.Source;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -22,12 +19,9 @@ import output.data.JsonDataPreparation;
 import output.stream.test.Greeter.Greet;
 import output.stream.test.Greeter.WhoToGreet;
 import scala.concurrent.duration.Duration;
-import sun.security.krb5.Config;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.TimeUnit;
 
@@ -103,37 +97,37 @@ public class StreamExample {
   }
 
   public void example4() {
-    //Especifica la fuente de datos, el primer parámetro indica el tipo de datos que sacará la fuente.
-    final Source<Integer, NotUsed> source = Source.range(0,100);
-    //Necesario ya que necesitamos uno al menos para el Materializer, y es necesario un ActorSystem para tener alguno.
+    // Especifica la fuente de datos, el primer parámetro indica el tipo de datos que sacará la
+    // fuente.
+    final Source<Integer, NotUsed> source = Source.range(0, 100);
+    // Necesario ya que necesitamos uno al menos para el Materializer, y es necesario un ActorSystem
+    // para tener alguno.
     final ActorSystem system = ActorSystem.create("QuickStart");
-    //Especifica una factoría de streams. Es necesario para hacer stream entre Actors.
+    // Especifica una factoría de streams. Es necesario para hacer stream entre Actors.
     final Materializer materializer = ActorMaterializer.create(system);
 
-    //runForEach hace que la fuente pase al Materializer y que comience a sacar datos,
-    //aparte de sacar la info por consola.
-    final CompletionStage<Done> done =
-            source.runForeach(System.out::println, materializer);
+    // runForEach hace que la fuente pase al Materializer y que comience a sacar datos,
+    // aparte de sacar la info por consola.
+    final CompletionStage<Done> done = source.runForeach(System.out::println, materializer);
 
-    //Si recibimos por done que el estado del stream ha pasado a que se ha finalizado, esta línea para el ActorSystem.
+    // Si recibimos por done que el estado del stream ha pasado a que se ha finalizado, esta línea
+    // para el ActorSystem.
     done.thenRun(system::terminate);
   }
 
   public void example5() {
-    final Source<Integer, NotUsed> source = Source.range(1,100);
+    final Source<Integer, NotUsed> source = Source.range(1, 100);
     final ActorSystem system = ActorSystem.create("QuickStart2");
     final Materializer materializer = ActorMaterializer.create(system);
 
     final Source<BigInteger, NotUsed> factorials =
-            source
-              .scan(BigInteger.ONE, (acc,next) -> acc.multiply(BigInteger.valueOf(next)));
-
+        source.scan(BigInteger.ONE, (acc, next) -> acc.multiply(BigInteger.valueOf(next)));
 
     final CompletionStage<Done> result =
-            factorials
-                    .zipWith(Source.range(0, 99), (num, idx) -> String.format("%d! = %s", idx, num))
-                    .throttle(1, Duration.create(1, TimeUnit.SECONDS), 1, ThrottleMode.shaping())
-                    .runForeach(System.out::println, materializer);
+        factorials
+            .zipWith(Source.range(0, 99), (num, idx) -> String.format("%d! = %s", idx, num))
+            .throttle(1, Duration.create(1, TimeUnit.SECONDS), 1, ThrottleMode.shaping())
+            .runForeach(System.out::println, materializer);
     /*
     final CompletionStage<IOResult> result =
             factorials
@@ -154,29 +148,43 @@ public class StreamExample {
     JsonDataPreparation jsonDataPreparation = new JsonDataPreparation(configGenerator);
     final ActorSystem system = ActorSystem.create("QuickStart");
     final Materializer materializer = ActorMaterializer.create(system);
-    final Source<String, NotUsed> source =
-            Source
-                    .repeat("not-used")
-                    .map(a -> jsonDataPreparation.prepareData())
-                    .map(a -> new Gson().toJson(a));
+    final Source<JsonElement, NotUsed> source =
+        Source.repeat("not-used")
+            .map(a -> jsonDataPreparation.prepareData());
 
-    source.runWith(Sink.foreach(System.out::println), materializer);
+
+    Gson gson = new Gson();
+    CompletionStage<Done> resultFuture = source
+            .via(new MapJson<>(gson::toJson))
+            .runWith(Sink.foreach(System.out::println), materializer);
+
+
   }
 
-  //TODO Siguiente lectura para la proxima vez, General Concepts.
+  // TODO Siguiente lectura para la proxima vez, General Concepts.
 
-  //Objetivos principales:
-  //1. Cada vez que se ha de enviar un nuevo dato por el Stream, tendremos que generarlo de nuevo para la aleatoriedad
-  //   de datos. La funcion importate aqui es prepareData(), ya que esta es la que genera el nuevo dato. Mirar como
-  //   poner esta funcion para que cada vez que se quiera enviar un nuevo dato esta se llama reusando el mismo source.
-  //2. El dato que se enviara debe ser un tipo especifico, como por ejemplo String o BigInteger.
-  //   String puede ser la mejor opcion para esto al trabajar con json y xml, pero vale la pena mirar
-  //   de que otras formas puedo pasar el valor para que no dependa solo de un tipo especifico como JsonArray.
-  //3. Mirar si es necesario hacer algun ajuste de la velocidad en que se ha de enviar datos (en caso de que haya
-  //   algun estandar), o si no es necesario controlarlo, aunque akka internamente ya pueda controlar el flujo
+  // Objetivos principales:
+  // 1. Cada vez que se ha de enviar un nuevo dato por el Stream, tendremos que generarlo de nuevo
+  // para la aleatoriedad
+  //   de datos. La funcion importate aqui es prepareData(), ya que esta es la que genera el nuevo
+  // dato. Mirar como
+  //   poner esta funcion para que cada vez que se quiera enviar un nuevo dato esta se llama
+  // reusando el mismo source.
+  // 2. El dato que se enviara debe ser un tipo especifico, como por ejemplo String o BigInteger.
+  //   String puede ser la mejor opcion para esto al trabajar con json y xml, pero vale la pena
+  // mirar
+  //   de que otras formas puedo pasar el valor para que no dependa solo de un tipo especifico como
+  // JsonArray.
+  // 3. Mirar si es necesario hacer algun ajuste de la velocidad en que se ha de enviar datos (en
+  // caso de que haya
+  //   algun estandar), o si no es necesario controlarlo, aunque akka internamente ya pueda
+  // controlar el flujo
   //   para evitar OutOfMemoryException.
-  //4. Como se ha de crear varias columnas para cada dato (depediendo del input.json), mirar para akka como hacer
-  //   que la generacion de cada columna se haga en paralelo, para no generar una columna despues de otra y asi
-  //   que tarde menos a la hora de generar un dato. Tambien mirar si vale la pena hacer esto o no segun la solucion
+  // 4. Como se ha de crear varias columnas para cada dato (depediendo del input.json), mirar para
+  // akka como hacer
+  //   que la generacion de cada columna se haga en paralelo, para no generar una columna despues de
+  // otra y asi
+  //   que tarde menos a la hora de generar un dato. Tambien mirar si vale la pena hacer esto o no
+  // segun la solucion
   //   encontrada.
 }
