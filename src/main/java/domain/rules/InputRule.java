@@ -1,12 +1,12 @@
-package domain.field;
+package domain.rules;
 
 public class InputRule {
   private String id;
   private String condition;
   private int comparator;
-  private ConditionResult result;
+  private ConditionModifier result;
 
-  public InputRule(String id, String condition, int comparator, ConditionResult result) {
+  public InputRule(String id, String condition, int comparator, ConditionModifier result) {
     this.id = id;
     this.condition = condition;
     this.comparator = comparator;
@@ -25,7 +25,7 @@ public class InputRule {
     return this.comparator;
   }
 
-  public ConditionResult getResult() {
+  public ConditionModifier getResult() {
     return this.result;
   }
 }

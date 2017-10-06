@@ -1,11 +1,11 @@
-package domain.field;
+package domain.rules;
 
-public class ConditionResult {
+public class ConditionModifier {
   private String id;
   private String operation;
   private int value;
 
-  public ConditionResult(String id, String operation, int value) {
+  public ConditionModifier(String id, String operation, int value) {
     this.id = id;
     this.operation = operation;
     this.value = value;
