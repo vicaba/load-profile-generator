@@ -1,6 +1,5 @@
 package output.data;
 
-import com.google.gson.JsonArray;
 import domain.calculations.DateEqualCalculations;
 import domain.calculations.NumberEqualCalculations;
 import domain.calculations.StringEqualCalculations;
@@ -9,33 +8,26 @@ import domain.field.InputField;
 import domain.options.OptionsDate;
 import domain.options.OptionsNumber;
 import domain.options.OptionsString;
+import domain.output.Output;
 
 import java.util.ArrayList;
 
-public class JsonDataPreparation {
+public class DataPreparation {
   private static final String INTEGER_TYPE = "integer";
   private static final String DECIMAL_TYPE = "decimal";
 
   private ConfigGenerator configGenerator;
   // private int totalData;
 
-  public JsonDataPreparation(ConfigGenerator configGenerator) {
-
+  public DataPreparation(ConfigGenerator configGenerator) {
     this.configGenerator = configGenerator;
-    // this.totalData = totalData;
   }
 
-  public JsonArray prepareData() {
-
+  public ArrayList<Output> prepareData() {
     ArrayList<InputField> inputFields = this.configGenerator.getFields();
-    // JsonArray dataSet = new JsonArray();
-    JsonArray data;
+    ArrayList<Output> data = new ArrayList<>();
 
-    // for (int i = 0; i < this.totalData; i++) {
-
-    data = new JsonArray();
     for (InputField inputField : inputFields) {
-
       /*
       System.out.println(
           inputField.getId()
@@ -46,14 +38,13 @@ public class JsonDataPreparation {
               + "-"
               + inputField.getOptions().toString());
       */
-
       if (inputField.getOptions().getClass() == OptionsString.class) {
 
         OptionsString optionsString = (OptionsString) inputField.getOptions();
         StringEqualCalculations stringEqualCalculations =
             new StringEqualCalculations(optionsString.getAcceptedStrings());
-
-        data.add(new StringJsonOutputSerializer().write(stringEqualCalculations.calculate()));
+        Output<String> output = new Output<>("string", stringEqualCalculations.calculate());
+        data.add(output);
 
       } else if (inputField.getOptions().getClass() == OptionsNumber.class) {
 
@@ -61,19 +52,19 @@ public class JsonDataPreparation {
         NumberEqualCalculations numberEqualCalculations =
             new NumberEqualCalculations(optionsNumber.getRanges());
 
-        String output = "ERROR";
         switch (optionsNumber.getType()) {
           case INTEGER_TYPE:
             int iResult = numberEqualCalculations.calculate().intValue();
-            output = Integer.toString(iResult);
+            Output<Integer> outputInt = new Output<>("number", iResult);
+            data.add(outputInt);
             break;
 
           case DECIMAL_TYPE:
-            output = numberEqualCalculations.calculate().toString();
+            float fResult = numberEqualCalculations.calculate();
+            Output<Float> outputFloat = new Output<>("number", fResult);
+            data.add(outputFloat);
             break;
         }
-
-        data.add(new NumberJsonOutputSerializer().write(output));
 
       } else if (inputField.getOptions().getClass() == OptionsDate.class) {
 
@@ -84,12 +75,10 @@ public class JsonDataPreparation {
                 optionsDate.getTimeIncrement(),
                 optionsDate.getMaxDates());
 
-        data.add(new DateJsonOutputSerializer().write(dateEqualCalculations.calculate()));
+        Output<String> output = new Output<>("date", dateEqualCalculations.calculate());
+        data.add(output);
       }
     }
-
-    // dataSet.add(data);
-    // }
 
     return data;
   }

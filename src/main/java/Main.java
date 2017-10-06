@@ -1,11 +1,11 @@
-import com.google.gson.JsonArray;
 import domain.config.ConfigGenerator;
 import domain.output.OutputField;
 import output.config.InputConfig;
 import output.config.OutputConfig;
-import output.data.JsonDataPreparation;
-import output.file.JsonFileOutput;
+import output.data.DataPreparation;
 import output.stream.test.StreamExample;
+
+import java.util.ArrayList;
 
 public class Main {
   private static final String FILE_METHOD = "file";
@@ -21,19 +21,24 @@ public class Main {
     } else {
       InputConfig inputConfig = new InputConfig(args[0]);
       ConfigGenerator configGen;
-      if ((configGen = inputConfig.getConfigGenerator()) != null) {
 
+      if ((configGen = inputConfig.getConfigGenerator()) != null) {
         OutputField outputField = new OutputConfig(args[1]).getOutputField();
+        DataPreparation dataPreparation = new DataPreparation(configGen);
+        ArrayList<ArrayList> outputs = new ArrayList<>();
+
+        for (int i = 0; i < outputField.getAmount(); i++) {
+          outputs.add(dataPreparation.prepareData());
+        }
+        //TODO Apply Rules Here
+        //TODO RulesApplication(configGen.getRules());
+        //TODO applyRules(outputs);
+
         switch (outputField.getMethod()) {
           case FILE_METHOD:
             switch (outputField.getType()) {
               case JSON_TYPE:
-                JsonDataPreparation jsonDataPreparation = new JsonDataPreparation(configGen);
-                JsonArray jsonArray = new JsonArray();
-                for (int i = 0; i < outputField.getAmount(); i++) {
-                  jsonArray.add(jsonDataPreparation.prepareData());
-                }
-                new JsonFileOutput().writeToFile(jsonArray);
+                // new JsonFileOutput().writeToFile(jsonArray);
                 break;
               default:
                 break;

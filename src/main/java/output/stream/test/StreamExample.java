@@ -14,7 +14,7 @@ import com.google.gson.JsonElement;
 import domain.config.ConfigGenerator;
 import domain.field.InputField;
 import output.config.InputConfig;
-import output.data.JsonDataPreparation;
+import output.data.DataPreparation;
 import output.stream.test.Greeter.Greet;
 import output.stream.test.Greeter.WhoToGreet;
 import scala.concurrent.duration.Duration;
@@ -38,12 +38,14 @@ public class StreamExample {
 
     if ((configGen = inputConfig.getConfigGenerator()) != null) {
 
+      /*
       InputField inputField = configGen.getField(0);
-      JsonDataPreparation jsonDataPreparation = new JsonDataPreparation(configGen);
-      Source<JsonArray, NotUsed> source3 = Source.single(jsonDataPreparation.prepareData());
+      DataPreparation dataPreparation = new DataPreparation(configGen);
+      Source<JsonArray, NotUsed> source3 = Source.single(dataPreparation.prepareData());
       final CompletionStage<Done> done2 =
           source3.runForeach(i -> System.out.println(gson.toJson(i)), materializer);
       done2.thenRun(system::terminate);
+      */
 
       /*
       Source<JsonObject, NotUsed> source2 =
@@ -144,12 +146,13 @@ public class StreamExample {
   }
 
   public void example6(ConfigGenerator configGenerator) {
-    JsonDataPreparation jsonDataPreparation = new JsonDataPreparation(configGenerator);
+    /*
+    DataPreparation dataPreparation = new DataPreparation(configGenerator);
     final ActorSystem system = ActorSystem.create("QuickStart");
     final Materializer materializer = ActorMaterializer.create(system);
     final Source<JsonElement, NotUsed> source =
-        Source.repeat("not-used")
-            .map(a -> jsonDataPreparation.prepareData());
+        Source.repeat("not-used");
+            .map(a -> dataPreparation.prepareData());
 
 
     Gson gson = new Gson();
@@ -160,6 +163,7 @@ public class StreamExample {
     Scanner scanner = new Scanner(System.in);
     while (scanner.nextLine() == null);
     system.terminate();
+    */
   }
 
   // TODO Siguiente lectura para la proxima vez, General Concepts.
