@@ -1,13 +1,13 @@
 package domain.field;
 
 public class InputFieldInfo {
-  private int id;
+  private String id;
   private String name;
   private String type;
 
   public InputFieldInfo() {}
 
-  public int getId() {
+  public String getId() {
     return this.id;
   }
 

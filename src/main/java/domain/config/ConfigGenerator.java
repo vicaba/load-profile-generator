@@ -1,6 +1,7 @@
 package domain.config;
 
 import domain.field.InputField;
+import domain.field.InputRule;
 
 import java.util.ArrayList;
 
@@ -14,12 +15,13 @@ import java.util.ArrayList;
 public class ConfigGenerator {
   /** ArrayList with the list of fields obtained from the config file. */
   private ArrayList<InputField> fields;
-  /** The amount of fields inside the list of fields */
-  private int length;
+  /** ArrayList with the list of rules obtained from the config file. */
+  private ArrayList<InputRule> rules;
 
   /** Constructor. */
   public ConfigGenerator() {
-    fields = new ArrayList<>();
+    this.fields = new ArrayList<>();
+    this.rules = new ArrayList<>();
   }
 
   /**
@@ -32,21 +34,31 @@ public class ConfigGenerator {
   }
 
   /**
-   * Getter for the length value.
+   * Getter for the list of results value.
    *
-   * @return Integer with the length of the list of fields.
+   * @return ArrayList with the list of results.
    */
-  public int getLength() {
-    return this.length;
+  public ArrayList<InputRule> getRules() {
+    return this.rules;
   }
 
   /**
-   * Getter of one specific field inside the list of fieds.
+   * Getter of one specific field inside the list of fields.
    *
-   * @param field Integer that indicates which field we get, goes from 0 to length.
+   * @param field Integer that indicates which field we get, goes from 0 to length of fields.
    * @return Field that was chosen with the field parameter.
    */
   public InputField getField(int field) {
-    return fields.get(field);
+    return this.fields.get(field);
+  }
+
+  /**
+   * Getter of one specific field inside the list of rules.
+   *
+   * @param rule Integer that indicates which field we get, goes from 0 to length of rules.
+   * @return Field that was chosen with the rule parameter.
+   */
+  public InputRule getRule(int rule) {
+    return this.rules.get(rule);
   }
 }

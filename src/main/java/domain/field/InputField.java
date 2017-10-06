@@ -9,7 +9,7 @@ public class InputField<Opt> {
     this.options = options;
   }
 
-  public int getId() {
+  public String getId() {
     return this.fields.getId();
   }
 
