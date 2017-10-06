@@ -13,7 +13,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import domain.config.ConfigGenerator;
 import domain.field.InputField;
-import output.StringJsonSerializer;
 import output.config.InputConfig;
 import output.data.JsonDataPreparation;
 import output.stream.test.Greeter.Greet;
@@ -33,7 +32,6 @@ public class StreamExample {
     final ActorSystem system = ActorSystem.create("QuickStart");
     final Materializer materializer = ActorMaterializer.create(system);
     OutputCalculations outputCalculations = new OutputCalculations();
-    StringJsonSerializer stringJsonSerializer = new StringJsonSerializer();
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     InputConfig inputConfig = new InputConfig("resources/input.json");
     ConfigGenerator configGen;
