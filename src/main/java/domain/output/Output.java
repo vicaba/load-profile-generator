@@ -1,6 +1,6 @@
 package domain.output;
 
-public class Output<T> {
+public class Output<T extends Comparable<T>> {
   private String id;
   private String type;
   private T value;
@@ -15,7 +15,11 @@ public class Output<T> {
     return this.id;
   }
 
-  public T getValue() {
+    public String getType() {
+        return this.type;
+    }
+
+    public T getValue() {
     return this.value;
   }
 }

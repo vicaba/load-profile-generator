@@ -1,8 +1,10 @@
 import domain.config.ConfigGenerator;
+import domain.output.Output;
 import domain.output.OutputField;
 import output.config.InputConfig;
 import output.config.OutputConfig;
 import output.data.DataPreparation;
+import output.rule.RulesApplication;
 import output.stream.test.StreamExample;
 
 import java.util.ArrayList;
@@ -25,14 +27,14 @@ public class Main {
       if ((configGen = inputConfig.getConfigGenerator()) != null) {
         OutputField outputField = new OutputConfig(args[1]).getOutputField();
         DataPreparation dataPreparation = new DataPreparation(configGen);
-        ArrayList<ArrayList> outputs = new ArrayList<>();
+        ArrayList<ArrayList<Output>> outputs = new ArrayList<>();
+        RulesApplication rulesApplication = new RulesApplication(configGen.getRules());
 
         for (int i = 0; i < outputField.getAmount(); i++) {
-          outputs.add(dataPreparation.prepareData());
+          ArrayList<Output> auxOutput = dataPreparation.prepareData();
+          rulesApplication.applyRules(auxOutput);
+          outputs.add(auxOutput);
         }
-        //TODO Apply Rules Here
-        //TODO RulesApplication(configGen.getRules());
-        //TODO applyRules(outputs);
 
         switch (outputField.getMethod()) {
           case FILE_METHOD:

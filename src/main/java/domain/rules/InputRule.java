@@ -1,12 +1,12 @@
 package domain.rules;
 
-public class InputRule {
+public class InputRule<T extends Comparable<T>> {
   private String id;
   private String condition;
-  private int comparator;
+  private T comparator;
   private ConditionModifier result;
 
-  public InputRule(String id, String condition, int comparator, ConditionModifier result) {
+  public InputRule(String id, String condition, T comparator, ConditionModifier result) {
     this.id = id;
     this.condition = condition;
     this.comparator = comparator;
@@ -21,7 +21,7 @@ public class InputRule {
     return this.condition;
   }
 
-  public int getComparator() {
+  public T getComparator() {
     return this.comparator;
   }
 
