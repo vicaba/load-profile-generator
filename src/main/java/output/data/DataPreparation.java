@@ -43,7 +43,7 @@ public class DataPreparation {
         OptionsString optionsString = (OptionsString) inputField.getOptions();
         StringEqualCalculations stringEqualCalculations =
             new StringEqualCalculations(optionsString.getAcceptedStrings());
-        Output<String> output = new Output<>("string", stringEqualCalculations.calculate());
+        Output<String> output = new Output<>(inputField.getId(),"string", stringEqualCalculations.calculate());
         data.add(output);
 
       } else if (inputField.getOptions().getClass() == OptionsNumber.class) {
@@ -55,13 +55,13 @@ public class DataPreparation {
         switch (optionsNumber.getType()) {
           case INTEGER_TYPE:
             int iResult = numberEqualCalculations.calculate().intValue();
-            Output<Integer> outputInt = new Output<>("number", iResult);
+            Output<Integer> outputInt = new Output<>(inputField.getId(),"number", iResult);
             data.add(outputInt);
             break;
 
           case DECIMAL_TYPE:
             float fResult = numberEqualCalculations.calculate();
-            Output<Float> outputFloat = new Output<>("number", fResult);
+            Output<Float> outputFloat = new Output<>(inputField.getId(),"number", fResult);
             data.add(outputFloat);
             break;
         }
@@ -75,7 +75,7 @@ public class DataPreparation {
                 optionsDate.getTimeIncrement(),
                 optionsDate.getMaxDates());
 
-        Output<String> output = new Output<>("date", dateEqualCalculations.calculate());
+        Output<String> output = new Output<>(inputField.getId(),"date", dateEqualCalculations.calculate());
         data.add(output);
       }
     }
