@@ -1,6 +1,6 @@
 package domain.output;
 
-public class Output<T extends Comparable<T>> {
+public class Output<T> {
   private String id;
   private String type;
   private T value;

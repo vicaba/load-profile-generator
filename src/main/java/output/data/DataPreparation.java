@@ -10,6 +10,8 @@ import domain.options.OptionsNumber;
 import domain.options.OptionsString;
 import domain.output.Output;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class DataPreparation {
@@ -23,7 +25,7 @@ public class DataPreparation {
     this.configGenerator = configGenerator;
   }
 
-  public ArrayList<Output> prepareData() {
+  public ArrayList<Output> prepareData(int cycle) {
     ArrayList<InputField> inputFields = this.configGenerator.getFields();
     ArrayList<Output> data = new ArrayList<>();
 
@@ -43,7 +45,8 @@ public class DataPreparation {
         OptionsString optionsString = (OptionsString) inputField.getOptions();
         StringEqualCalculations stringEqualCalculations =
             new StringEqualCalculations(optionsString.getAcceptedStrings());
-        Output<String> output = new Output<>(inputField.getId(),"string", stringEqualCalculations.calculate());
+        Output<String> output =
+            new Output<>(inputField.getId(), "string", stringEqualCalculations.calculate());
         data.add(output);
 
       } else if (inputField.getOptions().getClass() == OptionsNumber.class) {
@@ -55,13 +58,13 @@ public class DataPreparation {
         switch (optionsNumber.getType()) {
           case INTEGER_TYPE:
             int iResult = numberEqualCalculations.calculate().intValue();
-            Output<Integer> outputInt = new Output<>(inputField.getId(),"number", iResult);
+            Output<Integer> outputInt = new Output<>(inputField.getId(), "integer", iResult);
             data.add(outputInt);
             break;
 
           case DECIMAL_TYPE:
             float fResult = numberEqualCalculations.calculate();
-            Output<Float> outputFloat = new Output<>(inputField.getId(),"number", fResult);
+            Output<Float> outputFloat = new Output<>(inputField.getId(), "decimal", fResult);
             data.add(outputFloat);
             break;
         }
@@ -73,11 +76,15 @@ public class DataPreparation {
             new DateEqualCalculations(
                 optionsDate.getStartingDate(),
                 optionsDate.getTimeIncrement(),
-                optionsDate.getMaxDates());
+                cycle);
+        LocalDateTime localDateTime =
+            LocalDateTime.parse(
+                dateEqualCalculations.calculate(), DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
 
-        Output<String> output = new Output<>(inputField.getId(),"date", dateEqualCalculations.calculate());
+        Output<LocalDateTime> output = new Output<>(inputField.getId(), "date", localDateTime);
         data.add(output);
       }
+      cycle++;
     }
 
     return data;

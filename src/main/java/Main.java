@@ -31,7 +31,7 @@ public class Main {
         RulesApplication rulesApplication = new RulesApplication(configGen.getRules());
 
         for (int i = 0; i < outputField.getAmount(); i++) {
-          ArrayList<Output> auxOutput = dataPreparation.prepareData();
+          ArrayList<Output> auxOutput = dataPreparation.prepareData(i);
           rulesApplication.applyRules(auxOutput);
           outputs.add(auxOutput);
         }

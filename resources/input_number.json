@@ -1,19 +1,8 @@
 {
-  "length": 3,
   "fields": [
     {
       "info": {
         "id": "0001",
-        "name": "Name",
-        "type": "string"
-      },
-      "options": {
-        "acceptedStrings": ["GG","GL","GM"]
-      }
-    },
-    {
-      "info": {
-        "id": "0002",
         "name": "Temperature",
         "type": "number"
       },
@@ -33,13 +22,30 @@
     },
     {
       "info": {
-        "id": "0003",
-        "name": "Date",
-        "type": "date"
+        "id": "0002",
+        "name": "Temperature",
+        "type": "number"
       },
       "options": {
-        "startingDate": "18-09-2017 08:00",
-        "timeIncrement": 3600
+        "type": "integer",
+        "ranges": [
+          {
+            "min": 4,
+            "max": 5
+          }
+        ]
+      }
+    }
+  ],
+  "rules": [
+    {
+      "id": "0001",
+      "condition": "isLess",
+      "comparator": 100,
+      "result": {
+        "id": "0002",
+        "operation": "sum",
+        "value": 5
       }
     }
   ]

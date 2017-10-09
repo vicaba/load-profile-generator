@@ -1,6 +1,6 @@
 package output.rule;
 
-public class RulesCondition<T extends Comparable<T>>{
+public class RulesCondition<T extends Comparable<T>> {
   private T leftCondition;
   private String condition;
   private T rightCondition;
@@ -15,10 +15,10 @@ public class RulesCondition<T extends Comparable<T>>{
     switch (this.condition) {
       case "isLess":
         return this.leftCondition.compareTo(this.rightCondition) < 0;
+      case "isEqual":
+        return this.leftCondition.compareTo(this.rightCondition) == 0;
       default:
         return false;
     }
   }
-
-
 }

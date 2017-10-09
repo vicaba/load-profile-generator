@@ -1,6 +1,6 @@
 package domain.rules;
 
-public class InputRule<T extends Comparable<T>> {
+public class InputRule<T> {
   private String id;
   private String condition;
   private T comparator;

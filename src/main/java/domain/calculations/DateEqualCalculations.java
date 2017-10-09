@@ -21,7 +21,7 @@ public class DateEqualCalculations implements EqualCalculations<String> {
   /** How much time in seconds there is between created dates */
   private int timeIncrement;
   /** The total amount of dates we will have. */
-  private int maxDates;
+  private int cycle;
 
   private DateTimeFormatter dateTimeFormatter;
 
@@ -32,14 +32,13 @@ public class DateEqualCalculations implements EqualCalculations<String> {
    *     generated.
    * @param timeIncrement Integer with the amount of time that will pass every time a new date is
    *     generated.
-   * @param maxDates Integer that indicates how many max dates we will have have, minimum 1. Dates
-   *     above startingDate + maxDates*timeIncrement will never be generated.
+   * @param cycle Current date cycle.
    */
-  public DateEqualCalculations(String startingDate, int timeIncrement, int maxDates) {
+  public DateEqualCalculations(String startingDate, int timeIncrement, int cycle) {
     this.dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
     this.startingDate = startingDate;
     this.timeIncrement = timeIncrement;
-    this.maxDates = maxDates;
+    this.cycle = cycle;
   }
 
   /**
@@ -54,7 +53,7 @@ public class DateEqualCalculations implements EqualCalculations<String> {
     LocalDateTime localDateTime =
         LocalDateTime.parse(this.startingDate, this.dateTimeFormatter)
             .plusSeconds(
-                this.timeIncrement * ThreadLocalRandom.current().nextInt(1, this.maxDates + 1));
+                this.timeIncrement * this.cycle);
 
     return localDateTime.format(dateTimeFormatter);
   }
