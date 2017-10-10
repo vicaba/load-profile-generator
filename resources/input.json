@@ -7,7 +7,7 @@
         "type": "number"
       },
       "options": {
-        "type": "decimal",
+        "type": "integer",
         "ranges": [
           {
             "min": 4,
@@ -27,7 +27,7 @@
         "type": "number"
       },
       "options": {
-        "type": "decimal",
+        "type": "integer",
         "ranges": [
           {
             "min": 50,
@@ -40,11 +40,11 @@
   "rules": [
     {
       "id": "0001",
-      "condition": "isGreater",
-      "comparator": 50,
+      "condition": "isLess",
+      "comparator": 30,
       "result": {
         "id": "0002",
-        "operation": "sum",
+        "operation": "+",
         "value": 5
       }
     }

@@ -15,11 +15,15 @@ public class Output<T> {
     return this.id;
   }
 
-    public String getType() {
-        return this.type;
-    }
+  public String getType() {
+    return this.type;
+  }
 
-    public T getValue() {
+  public T getValue() {
     return this.value;
+  }
+
+  public void setValue(T value) {
+    this.value = value;
   }
 }

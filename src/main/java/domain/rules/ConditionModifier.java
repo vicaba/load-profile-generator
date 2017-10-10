@@ -1,25 +1,25 @@
 package domain.rules;
 
-public class ConditionModifier {
+public class ConditionModifier<T> {
   private String id;
   private String operation;
-  private int value;
+  private T value;
 
-  public ConditionModifier(String id, String operation, int value) {
+  public ConditionModifier(String id, String operation, T value) {
     this.id = id;
     this.operation = operation;
     this.value = value;
   }
 
   public String getId() {
-    return id;
+    return this.id;
   }
 
   public String getOperation() {
-    return operation;
+    return this.operation;
   }
 
-  public int getValue() {
-    return value;
+  public T getValue() {
+    return this.value;
   }
 }
