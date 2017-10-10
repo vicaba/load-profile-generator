@@ -85,11 +85,8 @@ public class DataPreparation {
                 optionsDate.getStartingDate(),
                 optionsDate.getTimeIncrement(),
                 cycle);
-        LocalDateTime localDateTime =
-            LocalDateTime.parse(
-                dateEqualCalculations.calculate(), DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
 
-        Output<LocalDateTime> output = new Output<>(inputField.getId(), "date", localDateTime);
+        Output<LocalDateTime> output = new Output<>(inputField.getId(), "date", dateEqualCalculations.calculate());
         data.add(output);
       }
       cycle++;
