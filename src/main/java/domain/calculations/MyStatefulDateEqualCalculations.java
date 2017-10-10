@@ -30,7 +30,6 @@ public class MyStatefulDateEqualCalculations implements EqualCalculations<LocalD
    * @param timeIncrement Integer with the amount of time that will pass every time a new date is
    *     generated.
    */
-  // TODO: Change currentDate type frpm String to a Date specific type. Remove maxDates.
   public MyStatefulDateEqualCalculations(LocalDateTime startingDate, int timeIncrement) {
     this.currentDate = startingDate;
     this.timeIncrement = timeIncrement;

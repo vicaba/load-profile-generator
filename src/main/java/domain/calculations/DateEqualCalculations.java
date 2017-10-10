@@ -12,7 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Albert Trias
  * @since 28/09/2017
  */
-public class DateEqualCalculations implements EqualCalculations<String> {
+public class DateEqualCalculations implements EqualCalculations<LocalDateTime> {
   /** Defines the format in which the date will appear in the output data. */
   private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm";
 
@@ -49,12 +49,13 @@ public class DateEqualCalculations implements EqualCalculations<String> {
    * @return A random date that follows the formula mentioned above.
    */
   @Override
-  public String calculate() {
+  public LocalDateTime calculate() {
     LocalDateTime localDateTime =
         LocalDateTime.parse(this.startingDate, this.dateTimeFormatter)
             .plusSeconds(
                 this.timeIncrement * this.cycle);
 
-    return localDateTime.format(dateTimeFormatter);
+    return localDateTime;
+    //return localDateTime.format(dateTimeFormatter);
   }
 }
