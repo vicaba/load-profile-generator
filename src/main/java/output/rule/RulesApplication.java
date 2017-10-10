@@ -3,6 +3,7 @@ package output.rule;
 import domain.output.Output;
 import domain.rules.InputRule;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -21,46 +22,16 @@ public class RulesApplication {
         if (rule.getId().equals(output.getId())) {
           boolean resultsChecked = false;
           if (output.getValue() instanceof Integer) {
-            Integer leftCondition = (Integer) output.getValue();
-            Double rightCondition = (Double) rule.getComparator();
-
-            RulesCondition<Integer> rulesCondition =
-                new RulesCondition<>(leftCondition, rule.getCondition(), rightCondition.intValue());
-            resultsChecked = rulesCondition.checkResults();
-
+            resultsChecked = (new ApplyRuleInteger()).getCondition((Output<Integer>) output, (InputRule<Double>) rule).checkResults();
           } else if (output.getValue() instanceof Float) {
-            Float leftCondition = (Float) output.getValue();
-            Double rightCondition = (Double) rule.getComparator();
-
-            RulesCondition<Float> rulesCondition =
-                new RulesCondition<>(
-                    leftCondition, rule.getCondition(), rightCondition.floatValue());
-            resultsChecked = rulesCondition.checkResults();
-
+            resultsChecked = (new ApplyRuleFloat()).getCondition((Output<Float>) output, (InputRule<Double>) rule).checkResults();
           } else if (output.getValue() instanceof String) {
-            String leftCondition = (String) output.getValue();
-            String rightCondition = (String) rule.getComparator();
-
-            RulesCondition<String> rulesCondition =
-                new RulesCondition<>(leftCondition, rule.getCondition(), rightCondition);
-            resultsChecked = rulesCondition.checkResults();
-
+            resultsChecked = (new ApplyRuleString()).getCondition((Output<String>) output, (InputRule<String>) rule).checkResults();
           } else if (output.getValue() instanceof LocalDateTime) {
-              Long leftCondition = ((LocalDateTime) output.getValue())
-                      .atZone(ZoneId.systemDefault())
-                      .toInstant()
-                      .toEpochMilli();
-              Long rightCondition =
-                      LocalDateTime
-                              .parse((String)rule.getComparator(), DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))
-                              .atZone(ZoneId.systemDefault())
-                              .toInstant()
-                              .toEpochMilli();
+              InputRule<LocalDateTime> _inputRule = ((InputRule<String>) rule).map((dateAsString) -> LocalDateTime
+                .parse(dateAsString, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
 
-              RulesCondition<Long> rulesCondition =
-                      new RulesCondition<>(leftCondition, rule.getCondition(), rightCondition);
-              resultsChecked = rulesCondition.checkResults();
-
+            resultsChecked = (new ApplyRuleLocalDateTime()).getCondition((Output<LocalDateTime>) output, _inputRule).checkResults();
           }
           if (resultsChecked) {
             System.out.println(
