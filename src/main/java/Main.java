@@ -4,7 +4,7 @@ import domain.output.OutputField;
 import output.config.InputConfig;
 import output.config.OutputConfig;
 import output.data.DataPreparation;
-import output.rule.RulesApplication;
+import output.rule.RulesCheck;
 import output.stream.test.StreamExample;
 
 import java.util.ArrayList;
@@ -28,11 +28,11 @@ public class Main {
         OutputField outputField = new OutputConfig(args[1]).getOutputField();
         DataPreparation dataPreparation = new DataPreparation(configGen);
         ArrayList<ArrayList<Output>> outputs = new ArrayList<>();
-        RulesApplication rulesApplication = new RulesApplication(configGen.getRules());
+        RulesCheck rulesCheck = new RulesCheck(configGen.getRules());
 
         for (int i = 0; i < outputField.getAmount(); i++) {
           ArrayList<Output> auxOutput = dataPreparation.prepareData(i);
-          rulesApplication.applyRules(auxOutput);
+          rulesCheck.applyRules(auxOutput);
           outputs.add(auxOutput);
         }
 

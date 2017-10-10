@@ -89,7 +89,7 @@ public class DataPreparation {
         Output<LocalDateTime> output = new Output<>(inputField.getId(), "date", dateEqualCalculations.calculate());
         data.add(output);
       }
-      cycle++;
+
     }
 
     return data;

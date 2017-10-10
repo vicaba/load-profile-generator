@@ -1,6 +1,6 @@
-package output.rule;
+package output.rule.create;
 
-public class ApplyRuleFloat extends ApplyRuleT<Float, Double> {
+public class CreateRuleFloat extends CreateRuleT<Float, Double> {
 
   @Override
   protected Float rightConditionValue(Double rightCondition) {

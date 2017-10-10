@@ -1,6 +1,6 @@
-package output.rule;
+package output.rule.create;
 
-public class ApplyRuleString extends ApplyRuleT<String, String> {
+public class CreateRuleString extends CreateRuleT<String, String> {
 
   @Override
   protected String rightConditionValue(String rightCondition) {

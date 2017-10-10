@@ -2,85 +2,67 @@ package output.rule;
 
 import domain.output.Output;
 import domain.rules.ConditionModifier;
-import domain.rules.InputRule;
+import output.rule.operation.RulesOperationDate;
+import output.rule.operation.RulesOperationFloat;
+import output.rule.operation.RulesOperationInteger;
+import output.rule.operation.RulesOperationString;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class RulesApplication {
-  private ArrayList<InputRule> rules;
+  private ConditionModifier conditionModifier;
+  private String idRule;
 
-  public RulesApplication(ArrayList<InputRule> rules) {
-    this.rules = rules;
+  public RulesApplication(String idRule, ConditionModifier conditionModifier) {
+    this.idRule = idRule;
+    this.conditionModifier = conditionModifier;
   }
 
   public void applyRules(ArrayList<Output> outputs) {
-    for (InputRule rule : this.rules) {
+    for (int i = 0; i < outputs.size(); i++) {
+      if (idRule.equals(outputs.get(i).getId())) {
+        System.out.println(
+            "Changes will be made to output with value " + outputs.get(i).getValue());
 
-      for (Output output : outputs) {
+        if (outputs.get(i).getValue() instanceof Integer) {
+          RulesOperationInteger rulesOperation =
+              new RulesOperationInteger(
+                  conditionModifier.getOperation(), (Double) conditionModifier.getValue());
 
-        if (rule.getId().equals(output.getId())) {
-          boolean resultsChecked = false;
+          rulesOperation.applyChanges((Output<Integer>) outputs.get(i));
 
-          if (output.getValue() instanceof Integer) {
-            resultsChecked =
-                (new ApplyRuleInteger()).getCondition((Output<Integer>) output, (InputRule<Double>) rule).checkResults();
+        } else if (outputs.get(i).getValue() instanceof String) {
+          RulesOperationString rulesOperation =
+              new RulesOperationString(
+                  conditionModifier.getOperation(), (String) conditionModifier.getValue());
 
-          } else if (output.getValue() instanceof Float) {
-            resultsChecked =
-                (new ApplyRuleFloat())
-                    .getCondition((Output<Float>) output, (InputRule<Double>) rule)
-                    .checkResults();
+          rulesOperation.applyChanges((Output<String>) outputs.get(i));
 
-          } else if (output.getValue() instanceof String) {
-            resultsChecked =
-                (new ApplyRuleString())
-                    .getCondition((Output<String>) output, (InputRule<String>) rule)
-                    .checkResults();
+        } else if (outputs.get(i).getValue() instanceof LocalDateTime) {
+          RulesOperationDate rulesOperation =
+              new RulesOperationDate(
+                  conditionModifier.getOperation(), (Double) conditionModifier.getValue());
 
-          } else if (output.getValue() instanceof LocalDateTime) {
-            InputRule<LocalDateTime> _inputRule =
-                ((InputRule<String>) rule)
-                    .map(
-                        (dateAsString) ->
-                            LocalDateTime.parse(
-                                dateAsString, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+          rulesOperation.applyChanges((Output<LocalDateTime>) outputs.get(i));
 
-            resultsChecked =
-                (new ApplyRuleLocalDateTime())
-                    .getCondition((Output<LocalDateTime>) output, _inputRule)
-                    .checkResults();
-          }
+        } else if (outputs.get(i).getValue() instanceof Float) {
+          RulesOperationFloat rulesOperation =
+              new RulesOperationFloat(
+                  conditionModifier.getOperation(), (Double) conditionModifier.getValue());
 
-          if (resultsChecked) {
-            ConditionModifier<Double> conditionModifier = (ConditionModifier<Double>) rule.getResult();
+          rulesOperation.applyChanges((Output<Float>) outputs.get(i));
 
-            for (int i = 0; i < outputs.size(); i++) {
-              if (rule.getId().equals(outputs.get(i).getId())) {
-                System.out.println("Changes will be made to output with value " + outputs.get(i).getValue());
-                RulesOperationInteger rulesOperation =
-                        new RulesOperationInteger(
-                                conditionModifier.getOperation(), conditionModifier.getValue());
-                rulesOperation.applyChanges((Output<Integer>) outputs.get(i));
-                System.out.println(
-                        "Found id with value " + outputs.get(i).getValue() + ". Changing value. ");
-                break;
-              }
-            }
-
-          } else {
-            System.out.println(
-                "Didn't find a number in "
-                    + output.getValue()
-                    + ". Apply rule "
-                    + rule.getComparator());
-          }
         }
+        /*
+        RulesOperationInteger rulesOperation =
+                new RulesOperationInteger(
+                        conditionModifier.getOperation(), conditionModifier.getValue());
+        rulesOperation.applyChanges((Output<Integer>) outputs.get(i));
+        */
+        System.out.println(
+            "Found id with value " + outputs.get(i).getValue() + ". Changing value. ");
       }
-    }
-    for (Output output : outputs) {
-      System.out.println("Output value is " + output.getValue());
     }
   }
 }

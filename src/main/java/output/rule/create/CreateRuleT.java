@@ -1,9 +1,10 @@
-package output.rule;
+package output.rule.create;
 
 import domain.output.Output;
 import domain.rules.InputRule;
+import output.rule.RulesCondition;
 
-abstract class ApplyRuleT<LeftTermT extends Comparable<? super LeftTermT>, RightTermT> {
+abstract class CreateRuleT<LeftTermT extends Comparable<? super LeftTermT>, RightTermT> {
 
   public RulesCondition<LeftTermT> getCondition(
       Output<LeftTermT> output, InputRule<RightTermT> inputRule) {

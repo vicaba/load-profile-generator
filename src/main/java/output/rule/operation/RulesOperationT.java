@@ -1,4 +1,4 @@
-package output.rule;
+package output.rule.operation;
 
 import domain.output.Output;
 

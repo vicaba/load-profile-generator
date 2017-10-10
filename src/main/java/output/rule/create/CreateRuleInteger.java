@@ -1,6 +1,6 @@
-package output.rule;
+package output.rule.create;
 
-public class ApplyRuleInteger extends ApplyRuleT<Integer, Double> {
+public class CreateRuleInteger extends CreateRuleT<Integer, Double> {
 
   @Override
   protected Integer rightConditionValue(Double rightCondition) {

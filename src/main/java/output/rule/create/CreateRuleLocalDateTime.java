@@ -1,8 +1,8 @@
-package output.rule;
+package output.rule.create;
 
 import java.time.LocalDateTime;
 
-public class ApplyRuleLocalDateTime extends ApplyRuleT<LocalDateTime, LocalDateTime> {
+public class CreateRuleLocalDateTime extends CreateRuleT<LocalDateTime, LocalDateTime> {
 
   @Override
   protected LocalDateTime rightConditionValue(LocalDateTime rightCondition) {

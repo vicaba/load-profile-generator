@@ -1,18 +1,19 @@
-package output.rule;
+package output.rule.operation;
 
 import domain.output.Output;
 
-public class RulesOperationInteger implements RulesOperationT<Integer> {
+public class RulesOperationFloat implements RulesOperationT<Float> {
   private String operation;
-  private Integer value;
+  private Float value;
 
-  public RulesOperationInteger(String operation, Double value) {
+  public RulesOperationFloat(String operation, Double value) {
     this.operation = operation;
-    this.value = value.intValue();
+    this.value = value.floatValue();
   }
 
   @Override
-  public void applyChanges(Output<Integer> output) {
+  @SuppressWarnings("Duplicates")
+  public void applyChanges(Output<Float> output) {
     switch (operation) {
       case "+":
         output.setValue(output.getValue() + this.value);
