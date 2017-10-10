@@ -1,6 +1,6 @@
 package output.rule;
 
-public class RulesCondition<T extends Comparable<T>> {
+public class RulesCondition<T extends Comparable<? super T>> {
   private T leftCondition;
   private String condition;
   private T rightCondition;

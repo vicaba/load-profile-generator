@@ -1,6 +1,11 @@
 package domain.rules;
 
-public class InputRule<T> {
+
+import functional.Functor;
+
+import java.util.function.Function;
+
+public class InputRule<T> implements Functor<T, InputRule<?>> {
   private String id;
   private String condition;
   private T comparator;
@@ -27,5 +32,10 @@ public class InputRule<T> {
 
   public ConditionModifier getResult() {
     return this.result;
+  }
+
+  @Override
+  public <R> InputRule<R> map(Function<T, R> f) {
+    return new InputRule<>(id, condition, f.apply(comparator), result);
   }
 }
