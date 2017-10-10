@@ -39,6 +39,7 @@ public class NumberEqualCalculations implements EqualCalculations<Float> {
   @Override
   public Float calculate() {
     // First we obtain the random range from the list of ranges
+    //System.out.println("Number of ranges is " + this.numberRanges.size());
     NumberRange numberRange =
         this.numberRanges.get(ThreadLocalRandom.current().nextInt(0, this.numberRanges.size()));
 

@@ -5,6 +5,7 @@ import domain.calculations.NumberEqualCalculations;
 import domain.calculations.StringEqualCalculations;
 import domain.config.ConfigGenerator;
 import domain.field.InputField;
+import domain.options.NumberRange;
 import domain.options.OptionsDate;
 import domain.options.OptionsNumber;
 import domain.options.OptionsString;
@@ -54,6 +55,13 @@ public class DataPreparation {
         OptionsNumber optionsNumber = (OptionsNumber) inputField.getOptions();
         NumberEqualCalculations numberEqualCalculations =
             new NumberEqualCalculations(optionsNumber.getRanges());
+
+        /*
+        for (NumberRange range : optionsNumber.getRanges()) {
+
+          System.out.println(range.getMin() + " - " + range.getMax());
+        }
+        */
 
         switch (optionsNumber.getType()) {
           case INTEGER_TYPE:

@@ -17,6 +17,14 @@ public class RulesCondition<T extends Comparable<? super T>> {
         return this.leftCondition.compareTo(this.rightCondition) < 0;
       case "isEqual":
         return this.leftCondition.compareTo(this.rightCondition) == 0;
+      case "isGreater":
+        return this.leftCondition.compareTo(this.rightCondition) > 0;
+      case "isLessEqual":
+        return this.leftCondition.compareTo(this.rightCondition) <= 0;
+      case "isGreaterEqual":
+        return this.leftCondition.compareTo(this.rightCondition) >= 0;
+      case "isNotEqual":
+        return this.leftCondition.compareTo(this.rightCondition) != 0;
       default:
         return false;
     }

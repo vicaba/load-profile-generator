@@ -1,6 +1,5 @@
 package domain.rules;
 
-
 import functional.Functor;
 
 import java.util.function.Function;
