@@ -59,12 +59,7 @@ public class RulesCheck {
           if (resultsChecked) {
             RulesApplication rulesApplication = new RulesApplication(rule.getId(),rule.getResult());
             rulesApplication.applyRules(outputs);
-          } else {
-            System.out.println(
-                "Didn't find a number in "
-                    + output.getValue()
-                    + ". Apply rule "
-                    + rule.getComparator());
+
           }
         }
       }

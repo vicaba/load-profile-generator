@@ -40,7 +40,7 @@
   "rules": [
     {
       "id": "0001",
-      "condition": "isLess",
+      "condition": "isLessThan",
       "comparator": 100,
       "result": {
         "id": "0002",

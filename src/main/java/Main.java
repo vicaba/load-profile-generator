@@ -6,6 +6,7 @@ import output.config.OutputConfig;
 import output.data.DataPreparation;
 import output.rule.RulesCheck;
 import output.stream.test.StreamExample;
+import output.template.CreateTemplate;
 
 import java.util.ArrayList;
 
@@ -23,6 +24,9 @@ public class Main {
     } else {
       InputConfig inputConfig = new InputConfig(args[0]);
       ConfigGenerator configGen;
+
+      CreateTemplate createTemplate = new CreateTemplate();
+      createTemplate.createObjectTemplate();
 
       if ((configGen = inputConfig.getConfigGenerator()) != null) {
         OutputField outputField = new OutputConfig(args[1]).getOutputField();

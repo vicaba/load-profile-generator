@@ -12,6 +12,8 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream-testkit" % "2.5.4" % Test
 )
 
+libraryDependencies += "org.freemarker" % "freemarker" % "2.3.26-incubating"
+
 
 
 

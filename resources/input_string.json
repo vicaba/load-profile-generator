@@ -24,7 +24,7 @@
   "rules": [
     {
       "id": "0002",
-      "condition": "isEqual",
+      "condition": "isEqualThan",
       "comparator": "MM",
       "result": {
         "id": "0002",
