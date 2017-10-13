@@ -1,40 +1,20 @@
 package output.template;
 
+import domain.output.Output;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CreateTemplate {
-  public class Product {
-    private String url;
-    private String name;
-
-    Product() {}
-
-    public String getUrl() {
-      return this.url;
-    }
-
-    public String getname() {
-      return this.name;
-    }
-
-    public void setUrl(String url) {
-      this.url = url;
-    }
-
-    public void setName(String name) {
-      this.name = name;
-    }
-  }
 
   private Configuration cfg;
 
@@ -50,20 +30,24 @@ public class CreateTemplate {
     }
   }
 
-  public void createObjectTemplate() {
+  public void createObjectTemplate(ArrayList<ArrayList<Output>> outputs) {
     try {
       Map<String, Object> root = new HashMap<>();
-      root.put("user", "Big Joe");
+      root.put("headers", outputs.get(0));
 
-      Product latestProduct = new Product();
-      latestProduct.setUrl("templates/test.html");
-      latestProduct.setName("HELLO");
-      root.put("latestProduct", latestProduct);
+      root.put("outputs", outputs);
 
-      Template template = cfg.getTemplate("test.ftlh");
+      Template template = cfg.getTemplate("template_html.ftlh");
 
-      Writer out = new OutputStreamWriter(System.out);
+      // For output in console, use this one. Testing only.
+      // Writer out = new OutputStreamWriter(System.out);
+
+      // For output in file, use this one.
+      Writer out = new FileWriter(new File("output/data.html"));
+
       template.process(root, out);
+      out.flush();
+      out.close();
     } catch (IOException | TemplateException e) {
       e.printStackTrace();
     }

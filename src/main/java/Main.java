@@ -25,9 +25,6 @@ public class Main {
       InputConfig inputConfig = new InputConfig(args[0]);
       ConfigGenerator configGen;
 
-      CreateTemplate createTemplate = new CreateTemplate();
-      createTemplate.createObjectTemplate();
-
       if ((configGen = inputConfig.getConfigGenerator()) != null) {
         OutputField outputField = new OutputConfig(args[1]).getOutputField();
         DataPreparation dataPreparation = new DataPreparation(configGen);
@@ -39,6 +36,9 @@ public class Main {
           rulesCheck.applyRules(auxOutput);
           outputs.add(auxOutput);
         }
+
+        CreateTemplate createTemplate = new CreateTemplate();
+        createTemplate.createObjectTemplate(outputs);
 
         switch (outputField.getMethod()) {
           case FILE_METHOD:
