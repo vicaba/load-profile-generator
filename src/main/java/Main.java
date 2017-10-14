@@ -1,12 +1,12 @@
-import domain.config.ConfigGenerator;
-import domain.output.Output;
-import domain.output.OutputField;
-import output.config.InputConfig;
-import output.config.OutputConfig;
-import output.data.DataPreparation;
-import output.rule.RulesCheck;
-import output.stream.test.StreamExample;
-import output.template.CreateTemplate;
+import domain.in.config.ConfigHolder;
+import domain.out.field.Output;
+import domain.out.field.OutputField;
+import infrastructure.in.config.json.deserializer.InputConfigReader;
+import infrastructure.out.config.serialization.json.deserializer.OutputConfigReader;
+import infrastructure.DataPreparation;
+import domain.transform.rule.RulesCheck;
+import example.stream.test.StreamExample;
+import example.template.CreateTemplate;
 
 import java.util.ArrayList;
 
@@ -22,11 +22,11 @@ public class Main {
           "Hi there, don't forget that you need to add the paths first"
               + "towards your input file and second to your output file, in this order.");
     } else {
-      InputConfig inputConfig = new InputConfig(args[0]);
-      ConfigGenerator configGen;
+      InputConfigReader inputConfig = new InputConfigReader(args[0]);
+      ConfigHolder configGen;
 
       if ((configGen = inputConfig.getConfigGenerator()) != null) {
-        OutputField outputField = new OutputConfig(args[1]).getOutputField();
+        OutputField outputField = new OutputConfigReader(args[1]).getOutputField();
         DataPreparation dataPreparation = new DataPreparation(configGen);
         ArrayList<ArrayList<Output>> outputs = new ArrayList<>();
         RulesCheck rulesCheck = new RulesCheck(configGen.getRules());
