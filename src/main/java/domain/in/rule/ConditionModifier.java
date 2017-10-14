@@ -1,4 +1,4 @@
-package domain.in.rules;
+package domain.in.rule;
 
 public class ConditionModifier<T> {
 

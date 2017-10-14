@@ -1,7 +1,7 @@
 package domain.transform.rule;
 
 import domain.out.field.Output;
-import domain.in.rules.ConditionModifier;
+import domain.in.rule.ConditionModifier;
 import domain.transform.rule.operation.RulesOperationDate;
 import domain.transform.rule.operation.RulesOperationFloat;
 import domain.transform.rule.operation.RulesOperationInteger;

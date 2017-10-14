@@ -1,4 +1,4 @@
-package domain.in.rules;
+package domain.in.rule;
 
 import util.functional.Functor;
 
@@ -34,8 +34,10 @@ public class InputRule<T> implements Functor<T, InputRule<?>> {
     return this.result;
   }
 
+  /*
   @Override
   public <R> InputRule<R> map(Function<T, R> f) {
     return new InputRule<>(id, condition, f.apply(comparator), result);
   }
+  */
 }

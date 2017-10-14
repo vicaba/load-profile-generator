@@ -1,7 +1,7 @@
 package domain.in.config;
 
 import domain.in.field.InputField;
-import domain.in.rules.InputRule;
+import domain.in.rule.InputRule;
 
 import java.util.ArrayList;
 

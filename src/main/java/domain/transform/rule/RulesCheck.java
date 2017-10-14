@@ -1,7 +1,7 @@
 package domain.transform.rule;
 
 import domain.out.field.Output;
-import domain.in.rules.InputRule;
+import domain.in.rule.InputRule;
 import domain.transform.rule.create.CreateRuleFloat;
 import domain.transform.rule.create.CreateRuleInteger;
 import domain.transform.rule.create.CreateRuleLocalDateTime;

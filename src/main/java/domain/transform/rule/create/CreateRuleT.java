@@ -1,7 +1,7 @@
 package domain.transform.rule.create;
 
 import domain.out.field.Output;
-import domain.in.rules.InputRule;
+import domain.in.rule.InputRule;
 import domain.transform.rule.RulesCondition;
 
 abstract class CreateRuleT<LeftTermT extends Comparable<? super LeftTermT>, RightTermT> {
