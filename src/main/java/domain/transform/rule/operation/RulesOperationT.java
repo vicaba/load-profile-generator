@@ -1,8 +1,8 @@
 package domain.transform.rule.operation;
 
-import domain.out.field.Output;
+import domain.value.Value;
 
 public interface RulesOperationT<T> {
 
-    void applyChanges(Output<T> output);
+    void applyChanges(Value<T> output);
 }

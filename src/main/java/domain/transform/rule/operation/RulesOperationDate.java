@@ -1,6 +1,6 @@
 package domain.transform.rule.operation;
 
-import domain.out.field.Output;
+import domain.value.Value;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +14,7 @@ public class RulesOperationDate implements RulesOperationT<LocalDateTime> {
   }
 
   @Override
-  public void applyChanges(Output<LocalDateTime> output) {
+  public void applyChanges(Value<LocalDateTime> output) {
     switch (operation) {
       case "+":
         output.setValue(output.getValue().plusSeconds(this.value));

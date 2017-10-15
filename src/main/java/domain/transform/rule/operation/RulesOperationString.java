@@ -1,6 +1,6 @@
 package domain.transform.rule.operation;
 
-import domain.out.field.Output;
+import domain.value.Value;
 
 public class RulesOperationString implements RulesOperationT<String> {
   private String operation;
@@ -12,7 +12,7 @@ public class RulesOperationString implements RulesOperationT<String> {
   }
 
   @Override
-  public void applyChanges(Output<String> output) {
+  public void applyChanges(Value<String> output) {
     switch (this.operation) {
       case "+S":
         output.setValue(output.getValue() + this.value);

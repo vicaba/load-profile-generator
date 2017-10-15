@@ -1,6 +1,6 @@
 package domain.transform.rule.operation;
 
-import domain.out.field.Output;
+import domain.value.Value;
 
 public class RulesOperationFloat implements RulesOperationT<Float> {
   private String operation;
@@ -13,7 +13,7 @@ public class RulesOperationFloat implements RulesOperationT<Float> {
 
   @Override
   @SuppressWarnings("Duplicates")
-  public void applyChanges(Output<Float> output) {
+  public void applyChanges(Value<Float> output) {
     switch (operation) {
       case "+":
         output.setValue(output.getValue() + this.value);

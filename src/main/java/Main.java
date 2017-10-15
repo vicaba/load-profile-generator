@@ -1,5 +1,5 @@
 import domain.in.config.ConfigHolder;
-import domain.out.field.Output;
+import domain.value.Value;
 import domain.out.field.OutputField;
 import infrastructure.in.config.json.deserializer.InputConfigReader;
 import infrastructure.out.config.serialization.json.deserializer.OutputConfigReader;
@@ -28,11 +28,11 @@ public class Main {
       if ((configGen = inputConfig.getConfigGenerator()) != null) {
         OutputField outputField = new OutputConfigReader(args[1]).getOutputField();
         DataPreparation dataPreparation = new DataPreparation(configGen);
-        ArrayList<ArrayList<Output>> outputs = new ArrayList<>();
+        ArrayList<ArrayList<Value>> outputs = new ArrayList<>();
         RulesCheck rulesCheck = new RulesCheck(configGen.getRules());
 
         for (int i = 0; i < outputField.getAmount(); i++) {
-          ArrayList<Output> auxOutput = dataPreparation.prepareData(i);
+          ArrayList<Value> auxOutput = dataPreparation.prepareData(i);
           rulesCheck.applyRules(auxOutput);
           outputs.add(auxOutput);
         }

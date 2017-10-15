@@ -1,6 +1,6 @@
 package domain.transform.rule;
 
-import domain.out.field.Output;
+import domain.value.Value;
 import domain.in.rule.InputRule;
 import domain.transform.rule.create.CreateRuleFloat;
 import domain.transform.rule.create.CreateRuleInteger;
@@ -18,28 +18,28 @@ public class RulesCheck {
     this.rules = rules;
   }
 
-  public void applyRules(ArrayList<Output> outputs) {
+  public void applyRules(ArrayList<Value> outputs) {
     for (InputRule rule : this.rules) {
 
-      for (Output output : outputs) {
+      for (Value output : outputs) {
 
         if (rule.getId().equals(output.getId())) {
           boolean resultsChecked = false;
 
           if (output.getValue() instanceof Integer) {
             resultsChecked =
-                (new CreateRuleInteger()).getCondition((Output<Integer>) output, (InputRule<Double>) rule).checkResults();
+                (new CreateRuleInteger()).getCondition((Value<Integer>) output, (InputRule<Double>) rule).checkResults();
 
           } else if (output.getValue() instanceof Float) {
             resultsChecked =
                 (new CreateRuleFloat())
-                    .getCondition((Output<Float>) output, (InputRule<Double>) rule)
+                    .getCondition((Value<Float>) output, (InputRule<Double>) rule)
                     .checkResults();
 
           } else if (output.getValue() instanceof String) {
             resultsChecked =
                 (new CreateRuleString())
-                    .getCondition((Output<String>) output, (InputRule<String>) rule)
+                    .getCondition((Value<String>) output, (InputRule<String>) rule)
                     .checkResults();
 
           } else if (output.getValue() instanceof LocalDateTime) {
@@ -52,7 +52,7 @@ public class RulesCheck {
 
             resultsChecked =
                 (new CreateRuleLocalDateTime())
-                    .getCondition((Output<LocalDateTime>) output, _inputRule)
+                    .getCondition((Value<LocalDateTime>) output, _inputRule)
                     .checkResults();
           }
 
@@ -64,8 +64,8 @@ public class RulesCheck {
         }
       }
     }
-    for (Output output : outputs) {
-      System.out.println("Output value is " + output.getValue());
+    for (Value output : outputs) {
+      System.out.println("Value value is " + output.getValue());
     }
   }
 }

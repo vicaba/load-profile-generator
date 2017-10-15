@@ -8,7 +8,7 @@ import domain.in.field.InputField;
 import domain.in.field.options.OptionsDate;
 import domain.in.field.options.OptionsNumber;
 import domain.in.field.options.OptionsString;
-import domain.out.field.Output;
+import domain.value.Value;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,9 +25,9 @@ public class DataPreparation {
     this.configGenerator = configGenerator;
   }
 
-  public ArrayList<Output> prepareData(int cycle) {
+  public ArrayList<Value> prepareData(int cycle) {
     ArrayList<InputField> inputFields = this.configGenerator.getFields();
-    ArrayList<Output> data = new ArrayList<>();
+    ArrayList<Value> data = new ArrayList<>();
 
     for (InputField inputField : inputFields) {
       /*
@@ -45,8 +45,8 @@ public class DataPreparation {
         OptionsString optionsString = (OptionsString) inputField.getOptions();
         StringEqualCalculations stringEqualCalculations =
             new StringEqualCalculations(optionsString.getAcceptedStrings());
-        Output<String> output =
-            new Output<>(inputField.getId(), "string", stringEqualCalculations.calculate());
+        Value<String> output =
+            new Value<>(inputField.getId(), "string", stringEqualCalculations.calculate());
         data.add(output);
 
       } else if (inputField.getOptions().getClass() == OptionsNumber.class) {
@@ -65,13 +65,13 @@ public class DataPreparation {
         switch (optionsNumber.getType()) {
           case INTEGER_TYPE:
             int iResult = numberEqualCalculations.calculate().intValue();
-            Output<Integer> outputInt = new Output<>(inputField.getId(), "integer", iResult);
+            Value<Integer> outputInt = new Value<>(inputField.getId(), "integer", iResult);
             data.add(outputInt);
             break;
 
           case DECIMAL_TYPE:
             float fResult = numberEqualCalculations.calculate();
-            Output<Float> outputFloat = new Output<>(inputField.getId(), "decimal", fResult);
+            Value<Float> outputFloat = new Value<>(inputField.getId(), "decimal", fResult);
             data.add(outputFloat);
             break;
         }
@@ -85,7 +85,7 @@ public class DataPreparation {
                 optionsDate.getTimeIncrement(),
                 cycle);
 
-        Output<LocalDateTime> output = new Output<>(inputField.getId(), "date", dateEqualCalculations.calculate());
+        Value<LocalDateTime> output = new Value<>(inputField.getId(), "date", dateEqualCalculations.calculate());
         data.add(output);
       }
 

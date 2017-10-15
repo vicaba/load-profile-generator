@@ -1,6 +1,6 @@
 package example.template;
 
-import domain.out.field.Output;
+import domain.value.Value;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -30,7 +30,7 @@ public class CreateTemplate {
     }
   }
 
-  public void createObjectTemplate(ArrayList<ArrayList<Output>> outputs) {
+  public void createObjectTemplate(ArrayList<ArrayList<Value>> outputs) {
     try {
       Map<String, Object> root = new HashMap<>();
       root.put("headers", outputs.get(0));

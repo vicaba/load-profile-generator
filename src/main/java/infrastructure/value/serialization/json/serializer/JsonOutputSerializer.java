@@ -1,4 +1,4 @@
-package infrastructure.out.field.serialization.json.serializer;
+package infrastructure.value.serialization.json.serializer;
 
 import com.google.gson.JsonObject;
 
