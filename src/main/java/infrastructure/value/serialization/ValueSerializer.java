@@ -1,6 +1,6 @@
 package infrastructure.value.serialization;
 
-public interface ValueSerializer<T extends String, R> {
+public interface ValueSerializer<T, R> {
 
-  R write(T output);
+  R write(T value);
 }

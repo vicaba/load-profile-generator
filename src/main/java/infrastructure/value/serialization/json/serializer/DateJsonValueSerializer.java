@@ -1,19 +1,20 @@
 package infrastructure.value.serialization.json.serializer;
 
 import com.google.gson.JsonObject;
+import domain.value.Value;
 
-public class DateJsonValueSerializer implements JsonValueSerializer<String> {
-  private static final String TYPE_FIELD = "type";
-  private static final String VALUE_FIELD = "value";
-  private static final String TYPE_VALUE = "date";
+import java.time.LocalDateTime;
+
+public class DateJsonValueSerializer extends JsonValueSerializer<Value<LocalDateTime>> {
 
   @Override
-  public JsonObject write(String output) {
-
-    JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty(TYPE_FIELD, TYPE_VALUE);
-    jsonObject.addProperty(VALUE_FIELD, output);
-
-    return jsonObject;
+  protected String typeValue() {
+    return "date";
   }
+
+  @Override
+  protected String valueToStringTransformer(Value<LocalDateTime> value) {
+    return value.getValue().toString();
+  }
+
 }

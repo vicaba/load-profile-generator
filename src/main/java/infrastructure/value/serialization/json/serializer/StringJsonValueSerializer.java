@@ -1,17 +1,17 @@
 package infrastructure.value.serialization.json.serializer;
 
 import com.google.gson.JsonObject;
+import domain.value.Value;
 
-public class StringJsonValueSerializer implements JsonValueSerializer<String> {
-  private static final String TYPE_FIELD = "type";
-  private static final String VALUE_FIELD = "value";
-  private static final String TYPE_VALUE = "string";
+public class StringJsonValueSerializer extends JsonValueSerializer<Value<String>> {
 
   @Override
-  public JsonObject write(String output) {
-    JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty(TYPE_FIELD, TYPE_VALUE);
-    jsonObject.addProperty(VALUE_FIELD, output);
-    return jsonObject;
+  protected String typeValue() {
+    return "string";
+  }
+
+  @Override
+  protected String valueToStringTransformer(Value<String> value) {
+    return value.getValue();
   }
 }
