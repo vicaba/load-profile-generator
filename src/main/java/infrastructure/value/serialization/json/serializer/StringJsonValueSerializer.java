@@ -2,18 +2,16 @@ package infrastructure.value.serialization.json.serializer;
 
 import com.google.gson.JsonObject;
 
-public class DateJsonOutputSerializer implements JsonOutputSerializer<String> {
+public class StringJsonValueSerializer implements JsonValueSerializer<String> {
   private static final String TYPE_FIELD = "type";
   private static final String VALUE_FIELD = "value";
-  private static final String TYPE_VALUE = "date";
+  private static final String TYPE_VALUE = "string";
 
   @Override
   public JsonObject write(String output) {
-
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty(TYPE_FIELD, TYPE_VALUE);
     jsonObject.addProperty(VALUE_FIELD, output);
-
     return jsonObject;
   }
 }

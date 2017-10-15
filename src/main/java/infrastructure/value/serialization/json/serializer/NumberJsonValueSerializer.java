@@ -2,7 +2,7 @@ package infrastructure.value.serialization.json.serializer;
 
 import com.google.gson.JsonObject;
 
-public class NumberJsonOutputSerializer implements JsonOutputSerializer<String> {
+public class NumberJsonValueSerializer implements JsonValueSerializer<String> {
   private static final String TYPE_FIELD = "type";
   private static final String VALUE_FIELD = "value";
   private static final String TYPE_VALUE = "number";
