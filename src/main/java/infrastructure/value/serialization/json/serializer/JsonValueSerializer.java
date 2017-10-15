@@ -21,5 +21,4 @@ public abstract class JsonValueSerializer<T> implements ValueSerializer<T, JsonO
   protected abstract String typeValue();
 
   protected abstract String valueToStringTransformer(T value);
-
 }

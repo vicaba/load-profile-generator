@@ -5,7 +5,6 @@ import domain.value.Value;
 
 public class NumberJsonValueSerializer extends JsonValueSerializer<Value<Number>> {
 
-
   @Override
   protected String typeValue() {
     return "number";

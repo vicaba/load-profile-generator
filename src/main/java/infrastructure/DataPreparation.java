@@ -81,14 +81,12 @@ public class DataPreparation {
         OptionsDate optionsDate = (OptionsDate) inputField.getOptions();
         DateEqualCalculations dateEqualCalculations =
             new DateEqualCalculations(
-                optionsDate.getStartingDate(),
-                optionsDate.getTimeIncrement(),
-                cycle);
+                optionsDate.getStartingDate(), optionsDate.getTimeIncrement(), cycle);
 
-        Value<LocalDateTime> output = new Value<>(inputField.getId(), "date", dateEqualCalculations.calculate());
+        Value<LocalDateTime> output =
+            new Value<>(inputField.getId(), "date", dateEqualCalculations.calculate());
         data.add(output);
       }
-
     }
 
     return data;

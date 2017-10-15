@@ -16,5 +16,4 @@ public class DateJsonValueSerializer extends JsonValueSerializer<Value<LocalDate
   protected String valueToStringTransformer(Value<LocalDateTime> value) {
     return value.getValue().toString();
   }
-
 }
