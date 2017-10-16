@@ -21,7 +21,7 @@ public class RulesOperationString implements RulesOperationT<String> {
         output.setValue(this.value + output.getValue());
         break;
       case "=":
-        output.setValue(output.getValue());
+        output.setValue(this.value);
         break;
       default:
         break;

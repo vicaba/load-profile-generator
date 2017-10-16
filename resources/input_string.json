@@ -28,8 +28,8 @@
       "comparator": "MM",
       "result": {
         "id": "0002",
-        "operation": "sum",
-        "value": 5
+        "operation": "=",
+        "value": "MM-IT_WORKS"
       }
     }
   ]
