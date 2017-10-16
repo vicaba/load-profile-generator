@@ -3,7 +3,7 @@ import domain.value.Value;
 import domain.out.field.OutputField;
 import infrastructure.in.config.json.deserializer.InputConfigReader;
 import infrastructure.out.config.serialization.json.deserializer.OutputConfigReader;
-import infrastructure.DataPreparation;
+import infrastructure.value.preparation.DataPreparation;
 import domain.transform.rule.RulesCheck;
 import example.stream.test.StreamExample;
 import example.template.CreateTemplate;

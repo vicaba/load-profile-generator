@@ -1,13 +1,12 @@
-package infrastructure;
+package infrastructure.value.preparation;
 
-import domain.transform.calculations.DateEqualCalculations;
-import domain.transform.calculations.NumberEqualCalculations;
-import domain.transform.calculations.StringEqualCalculations;
 import domain.in.config.ConfigHolder;
 import domain.in.field.InputField;
 import domain.in.field.options.OptionsDate;
 import domain.in.field.options.OptionsNumber;
 import domain.in.field.options.OptionsString;
+import domain.transform.calculations.DateEqualCalculations;
+import domain.transform.calculations.NumberEqualCalculations;
 import domain.value.Value;
 
 import java.time.LocalDateTime;
@@ -41,13 +40,8 @@ public class DataPreparation {
               + inputField.getOptions().toString());
       */
       if (inputField.getOptions().getClass() == OptionsString.class) {
-
-        OptionsString optionsString = (OptionsString) inputField.getOptions();
-        StringEqualCalculations stringEqualCalculations =
-            new StringEqualCalculations(optionsString.getAcceptedStrings());
-        Value<String> output =
-            new Value<>(inputField.getId(), "string", stringEqualCalculations.calculate());
-        data.add(output);
+        DataStringPreparation dataPreparation = new DataStringPreparation(inputField);
+        data.add(dataPreparation.obtainPreparedValue());
 
       } else if (inputField.getOptions().getClass() == OptionsNumber.class) {
 
