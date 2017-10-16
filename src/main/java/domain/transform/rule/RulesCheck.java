@@ -43,12 +43,14 @@ public class RulesCheck {
                     .checkResults();
 
           } else if (output.getValue() instanceof LocalDateTime) {
+
             InputRule<LocalDateTime> _inputRule =
                 ((InputRule<String>) rule)
                     .map(
                         (dateAsString) ->
                             LocalDateTime.parse(
                                 dateAsString, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+
 
             resultsChecked =
                 (new CreateRuleLocalDateTime())
