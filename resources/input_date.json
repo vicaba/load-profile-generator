@@ -30,7 +30,7 @@
       "comparator": "18-09-2017 12:00",
       "result": {
         "id": "0002",
-        "operation": "sum",
+        "operation": "+",
         "value": 3600
       }
     }

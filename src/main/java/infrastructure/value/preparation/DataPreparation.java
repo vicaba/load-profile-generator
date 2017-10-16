@@ -71,15 +71,9 @@ public class DataPreparation {
         }
 
       } else if (inputField.getOptions().getClass() == OptionsDate.class) {
+        DataDatePreparation dataPreparation = new DataDatePreparation(inputField, cycle);
+        data.add(dataPreparation.obtainPreparedValue());
 
-        OptionsDate optionsDate = (OptionsDate) inputField.getOptions();
-        DateEqualCalculations dateEqualCalculations =
-            new DateEqualCalculations(
-                optionsDate.getStartingDate(), optionsDate.getTimeIncrement(), cycle);
-
-        Value<LocalDateTime> output =
-            new Value<>(inputField.getId(), "date", dateEqualCalculations.calculate());
-        data.add(output);
       }
     }
 

@@ -3,33 +3,35 @@
     {
       "info": {
         "id": "0001",
-        "name": "Name",
-        "type": "string"
+        "name": "Date",
+        "type": "date"
       },
       "options": {
-        "acceptedStrings": ["GG","GL","GM"]
+        "startingDate": "18-09-2017 08:00",
+        "timeIncrement": 3600
       }
     },
     {
       "info": {
         "id": "0002",
-        "name": "Name",
-        "type": "string"
+        "name": "Date",
+        "type": "date"
       },
       "options": {
-        "acceptedStrings": ["MM","ML","MN"]
+        "startingDate": "18-09-2017 08:00",
+        "timeIncrement": 3600
       }
     }
   ],
   "rules": [
     {
       "id": "0002",
-      "condition": "isEqualThan",
-      "comparator": "MM",
+      "condition": "isLessThan",
+      "comparator": "18-09-2017 12:00",
       "result": {
         "id": "0002",
-        "operation": "=",
-        "value": "MM-IT_WORKS"
+        "operation": "+",
+        "value": 3600
       }
     }
   ]
