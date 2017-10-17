@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class OptionsNumber extends Options {
 
-  private String type;
   private ArrayList<NumberRange> ranges;
 
   public OptionsNumber() {
@@ -15,7 +14,4 @@ public class OptionsNumber extends Options {
     return this.ranges;
   }
 
-  public String getType() {
-    return this.type;
-  }
 }
