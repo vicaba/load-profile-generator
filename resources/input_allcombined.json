@@ -15,10 +15,9 @@
       "info": {
         "id": "0002",
         "name": "Temperature",
-        "type": "number"
+        "type": "integer"
       },
       "options": {
-        "type": "integer",
         "ranges": [
           {
             "min": 4,

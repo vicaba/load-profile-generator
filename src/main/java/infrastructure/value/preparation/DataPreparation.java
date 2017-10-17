@@ -37,8 +37,8 @@ public class DataPreparation {
       */
       if (inputField.getOptions().getClass() == OptionsString.class) {
         OptionsString options = (OptionsString) inputField.getOptions();
-        StringValueGeneration dataPreparation =
-            new StringValueGeneration(
+        StringValueGenerator dataPreparation =
+            new StringValueGenerator(
                 inputField, new StringEqualCalculations(options.getAcceptedStrings()));
         data.add(dataPreparation.obtainNext());
 

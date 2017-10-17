@@ -1,15 +1,7 @@
 import java.lang
 
-import domain.in.field.InputField
-import domain.in.field.options.OptionsNumber
 import domain.transform.calculations.NumberEqualCalculations
-import infrastructure.value.preparation.{NumberValueGeneration, ValueGeneration}
+import infrastructure.value.preparation.ValueGenerator
 
-class SourceValueNumber(override val inputField: InputField[OptionsNumber]) extends SourceValueT[OptionsNumber, java.lang.Float, NumberEqualCalculations](inputField) {
-
-  override protected var calculations: NumberEqualCalculations =
-    new NumberEqualCalculations(inputField.getOptions.getRanges)
-
-  override protected def dataGenerator: ValueGeneration[lang.Float, NumberEqualCalculations] =
-    new NumberValueGeneration(inputField, calculations)
-}
+class SourceValueNumber(override val dataGenerator: ValueGenerator[lang.Float, NumberEqualCalculations])
+  extends SourceValueT[java.lang.Float, NumberEqualCalculations](dataGenerator) {}

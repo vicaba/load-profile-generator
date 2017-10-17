@@ -6,9 +6,9 @@ import domain.transform.calculations.DateEqualCalculations;
 
 import java.time.LocalDateTime;
 
-public class DateValueGeneration extends ValueGeneration<LocalDateTime, DateEqualCalculations> {
+public class DateValueGenerator extends ValueGenerator<LocalDateTime, DateEqualCalculations> {
 
-  public DateValueGeneration(
+  public DateValueGenerator(
       InputField<OptionsDate> inputField, DateEqualCalculations calculations) {
     super(inputField, calculations);
   }

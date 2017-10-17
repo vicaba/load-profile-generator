@@ -5,38 +5,53 @@ import akka.stream.scaladsl.{Sink, Source}
 import domain.in.config.ConfigHolder
 import domain.in.field.InputField
 import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
+import domain.transform.calculations.{DateEqualCalculations, NumberEqualCalculations, StringEqualCalculations}
 import infrastructure.in.config.json.deserializer.InputConfigReader
+import infrastructure.value.preparation.{DateValueGenerator, NumberValueGenerator, StringValueGenerator}
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 
 object Test extends App {
-  //val outputs = Seq(new Value[String]("0001","string","GL"))
-  //val inputConfig: InputConfigReader = new InputConfigReader("resources/input_string.json")
-  val inputConfig: InputConfigReader = new InputConfigReader("resources/input_number.json")
-  //val inputConfig: InputConfigReader = new InputConfigReader("resources/input_date.json")
-  var configGen: ConfigHolder = inputConfig.getConfigGenerator
-  val inputField = configGen.getField(0)
-
-  //val sourceStringGraph = new SourceValueString(inputField.asInstanceOf[InputField[OptionsString]])
-  val sourceNumberGraph = new SourceValueNumber(inputField.asInstanceOf[InputField[OptionsNumber]])
-  //val sourceDateGraph = new SourceValueDate(inputField.asInstanceOf[InputField[OptionsDate]])
-
-  //val mySourceString = Source.fromGraph(sourceStringGraph)
-  val mySourceNumber = Source.fromGraph(sourceNumberGraph)
-  //val mySourceDate = Source.fromGraph(sourceDateGraph)
-
-  //val source: Source[Value[String], NotUsed] = Source(outputs.to[scala.collection.immutable.Seq])
-
   implicit val system: ActorSystem = ActorSystem("QuickStart")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
-
-  //val doneString: Future[Done] = mySourceString.take(10).runWith(Sink.foreach(i => println(i.getId+" "+i.getType+" "+i.getValue)))
-  val doneNumber: Future[Done] = mySourceNumber.take(10).runWith(Sink.foreach(i => println(i.getId+" "+i.getType+" "+i.getValue)))
-  //val doneDate: Future[Done] = mySourceDate.take(10).runWith(Sink.foreach(i => println(i.getId + " " + i.getType + " " + i.getValue.toString)))
-
   implicit val ec: ExecutionContextExecutor = system.dispatcher
-  //doneString.onComplete(_ => system.terminate())
-  doneNumber.onComplete(_ => system.terminate())
-  //doneDate.onComplete(_ => system.terminate())
+
+  val inputConfig: InputConfigReader = new InputConfigReader("resources/input_allcombined.json")
+
+  var configGen: ConfigHolder = inputConfig.getConfigGenerator
+
+  val inputFieldNumber = configGen.getField(1).asInstanceOf[InputField[OptionsNumber]]
+  val dataGeneratorNumber = new NumberValueGenerator(
+    inputFieldNumber,
+    new NumberEqualCalculations(inputFieldNumber.getOptions.getRanges)
+  )
+  val sourceGraphNumber = new SourceValueNumber(dataGeneratorNumber)
+  val mySourceNumber= Source.fromGraph(sourceGraphNumber)
+  val doneNumber: Future[Done] = mySourceNumber.take(10).runWith(
+    Sink.foreach(i => println(i.getId + " " + i.getType + " " + i.getValue.toString)))
+
+
+  val inputFieldString = configGen.getField(0).asInstanceOf[InputField[OptionsString]]
+  val dataGeneratorString = new StringValueGenerator(
+    inputFieldString,
+    new StringEqualCalculations(inputFieldString.getOptions.getAcceptedStrings)
+  )
+  val sourceGraphString = new SourceValueString(dataGeneratorString)
+  val mySourceString= Source.fromGraph(sourceGraphString)
+  val doneString: Future[Done] = mySourceString.take(10).runWith(
+    Sink.foreach(i => println(i.getId + " " + i.getType + " " + i.getValue.toString)))
+
+  val inputFieldDate = configGen.getField(2).asInstanceOf[InputField[OptionsDate]]
+  val dataGeneratorDate = new DateValueGenerator(
+    inputFieldDate,
+    new DateEqualCalculations(
+      inputFieldDate.getOptions.getStartingDate,
+      inputFieldDate.getOptions.getTimeIncrement
+    )
+  )
+  val sourceGraphDate = new SourceValueDate(dataGeneratorDate)
+  val mySourceDate= Source.fromGraph(sourceGraphDate)
+  val doneDate: Future[Done] = mySourceDate.take(10).runWith(
+    Sink.foreach(i => println(i.getId + " " + i.getType + " " + i.getValue.toString)))
 
 }
