@@ -16,13 +16,9 @@ public class DateEqualCalculations implements EqualCalculations<LocalDateTime> {
   private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm";
 
   /** Starting date. Date values will never go below this one. */
-  private String startingDate;
+  private LocalDateTime currentDate;
   /** How much time in seconds there is between created dates */
   private int timeIncrement;
-  /** The total amount of dates we will have. */
-  private int cycle;
-
-  private DateTimeFormatter dateTimeFormatter;
 
   /**
    * Constructor.
@@ -31,13 +27,11 @@ public class DateEqualCalculations implements EqualCalculations<LocalDateTime> {
    *     generated.
    * @param timeIncrement Integer with the amount of time that will pass every time a new date is
    *     generated.
-   * @param cycle Current date cycle.
    */
-  public DateEqualCalculations(String startingDate, int timeIncrement, int cycle) {
-    this.dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-    this.startingDate = startingDate;
+  public DateEqualCalculations(String startingDate, int timeIncrement) {
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
+    this.currentDate = LocalDateTime.parse(startingDate, dateTimeFormatter);
     this.timeIncrement = timeIncrement;
-    this.cycle = cycle;
   }
 
   /**
@@ -49,12 +43,7 @@ public class DateEqualCalculations implements EqualCalculations<LocalDateTime> {
    */
   @Override
   public LocalDateTime calculate() {
-    LocalDateTime localDateTime =
-        LocalDateTime.parse(this.startingDate, this.dateTimeFormatter)
-            .plusSeconds(
-                this.timeIncrement * this.cycle);
-
-    return localDateTime;
-    //return localDateTime.format(dateTimeFormatter);
+    this.currentDate = this.currentDate.plusSeconds(this.timeIncrement);
+    return currentDate;
   }
 }
