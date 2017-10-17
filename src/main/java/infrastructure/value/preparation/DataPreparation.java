@@ -5,18 +5,14 @@ import domain.in.field.InputField;
 import domain.in.field.options.OptionsDate;
 import domain.in.field.options.OptionsNumber;
 import domain.in.field.options.OptionsString;
-import domain.transform.calculations.DateEqualCalculations;
 import domain.transform.calculations.NumberEqualCalculations;
+import domain.transform.calculations.StringEqualCalculations;
 import domain.value.Value;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 // TODO: I don't understand this class. Is it still necessary?
 public class DataPreparation {
-  private static final String INTEGER_TYPE = "integer";
-  private static final String DECIMAL_TYPE = "decimal";
-
   private ConfigHolder configGenerator;
   // private int totalData;
 
@@ -40,40 +36,26 @@ public class DataPreparation {
               + inputField.getOptions().toString());
       */
       if (inputField.getOptions().getClass() == OptionsString.class) {
-        DataStringPreparation dataPreparation = new DataStringPreparation(inputField);
-        data.add(dataPreparation.obtainPreparedValue());
+        OptionsString options = (OptionsString) inputField.getOptions();
+        StringValueGeneration dataPreparation =
+            new StringValueGeneration(
+                inputField, new StringEqualCalculations(options.getAcceptedStrings()));
+        data.add(dataPreparation.obtainNext());
 
       } else if (inputField.getOptions().getClass() == OptionsNumber.class) {
 
         OptionsNumber optionsNumber = (OptionsNumber) inputField.getOptions();
         NumberEqualCalculations numberEqualCalculations =
             new NumberEqualCalculations(optionsNumber.getRanges());
-
-        /*
-        for (NumberRange range : optionsNumber.getRanges()) {
-
-          System.out.println(range.getMin() + " - " + range.getMax());
-        }
-        */
-
-        switch (optionsNumber.getType()) {
-          case INTEGER_TYPE:
-            int iResult = numberEqualCalculations.calculate().intValue();
-            Value<Integer> outputInt = new Value<>(inputField.getId(), "integer", iResult);
-            data.add(outputInt);
-            break;
-
-          case DECIMAL_TYPE:
-            float fResult = numberEqualCalculations.calculate();
-            Value<Float> outputFloat = new Value<>(inputField.getId(), "decimal", fResult);
-            data.add(outputFloat);
-            break;
-        }
+        float fResult = numberEqualCalculations.calculate();
+        Value<Float> outputNumber = new Value<>(inputField.getId(), inputField.getType(), fResult);
+        data.add(outputNumber);
 
       } else if (inputField.getOptions().getClass() == OptionsDate.class) {
-        DataDatePreparation dataPreparation = new DataDatePreparation(inputField, cycle);
-        data.add(dataPreparation.obtainPreparedValue());
+        // TODO This no longer works if data is increased inside class.
 
+        // DataGeneration dataPreparation = new DataGeneration(inputField, cycle);
+        // data.add(dataPreparation.obtainNext());
       }
     }
 
