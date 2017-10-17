@@ -2,17 +2,17 @@ package domain.transform.rule.operation;
 
 import domain.value.Value;
 
-public class RulesOperationInteger implements RulesOperationT<Integer> {
+public class RulesOperationNumber implements RulesOperationT<Float> {
   private String operation;
-  private Integer value;
+  private Float value;
 
-  public RulesOperationInteger(String operation, Double value) {
+  public RulesOperationNumber(String operation, Double value) {
     this.operation = operation;
-    this.value = value.intValue();
+    this.value = value.floatValue();
   }
 
   @Override
-  public void applyChanges(Value<Integer> output) {
+  public void applyChanges(Value<Float> output) {
     switch (operation) {
       case "+":
         output.setValue(output.getValue() + this.value);

@@ -1,11 +1,10 @@
 package domain.transform.rule;
 
-import domain.value.Value;
 import domain.in.rule.InputRule;
-import domain.transform.rule.create.CreateRuleFloat;
-import domain.transform.rule.create.CreateRuleInteger;
 import domain.transform.rule.create.CreateRuleLocalDateTime;
+import domain.transform.rule.create.CreateRuleNumber;
 import domain.transform.rule.create.CreateRuleString;
+import domain.value.Value;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -26,13 +25,9 @@ public class RulesCheck {
         if (rule.getId().equals(output.getId())) {
           boolean resultsChecked = false;
 
-          if (output.getValue() instanceof Integer) {
+          if (output.getValue() instanceof Float) {
             resultsChecked =
-                (new CreateRuleInteger()).getCondition((Value<Integer>) output, (InputRule<Double>) rule).checkResults();
-
-          } else if (output.getValue() instanceof Float) {
-            resultsChecked =
-                (new CreateRuleFloat())
+                (new CreateRuleNumber())
                     .getCondition((Value<Float>) output, (InputRule<Double>) rule)
                     .checkResults();
 
@@ -51,7 +46,6 @@ public class RulesCheck {
                             LocalDateTime.parse(
                                 dateAsString, DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
 
-
             resultsChecked =
                 (new CreateRuleLocalDateTime())
                     .getCondition((Value<LocalDateTime>) output, _inputRule)
@@ -59,9 +53,9 @@ public class RulesCheck {
           }
 
           if (resultsChecked) {
-            RulesApplication rulesApplication = new RulesApplication(rule.getId(),rule.getResult());
+            RulesApplication rulesApplication =
+                new RulesApplication(rule.getId(), rule.getResult());
             rulesApplication.applyRules(outputs);
-
           }
         }
       }
