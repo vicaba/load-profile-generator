@@ -5,7 +5,9 @@ import domain.transform.calculations.Calculations;
 import domain.value.Value;
 
 public abstract class ValueGenerator<T, V extends Calculations<T>> {
+
   private InputField inputField;
+
   private V calculations;
 
   public ValueGenerator(InputField inputField, V calculations) {
@@ -25,4 +27,5 @@ public abstract class ValueGenerator<T, V extends Calculations<T>> {
   public String getName() {
     return this.inputField.getName();
   }
+
 }
