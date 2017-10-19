@@ -4,6 +4,7 @@ import akka.stream.scaladsl._
 import domain.in.config.ConfigHolder
 import domain.in.field.InputField
 import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
+import domain.stream.stage.conversion.{ConvertListFieldToListGenerator, ConvertListGeneratorToListSource}
 import domain.stream.stage.merge.MergeNode
 import domain.stream.stage.source.{SourceValueDate, SourceValueNumber, SourceValueString}
 import domain.transform.calculations.{DateEqualCalculations, NumberEqualCalculations, StringEqualCalculations}
@@ -33,34 +34,12 @@ object Test extends App {
   val inputFieldDate =
     configGen.getField(2).asInstanceOf[InputField[OptionsDate]]
 
-  val values = List(inputFieldString, inputFieldNumber, inputFieldDate)
-    .map(field => field.getOptions match {
-      case _: OptionsString =>
-        new StringValueGenerator(
-          field,
-          new StringEqualCalculations(field.getOptions.asInstanceOf[OptionsString].getAcceptedStrings))
-      case _: OptionsNumber =>
-        new NumberValueGenerator(
-          field,
-          new NumberEqualCalculations(field.getOptions.asInstanceOf[OptionsNumber].getRanges)
-        )
-      case _: OptionsDate =>
-        new DateValueGenerator(
-          field,
-          new DateEqualCalculations(
-            field.getOptions.asInstanceOf[OptionsDate].getStartingDate,
-            field.getOptions.asInstanceOf[OptionsDate].getTimeIncrement)
-        )
-    })
-    .map {
-      case value@(_: StringValueGenerator) =>
-        Source.fromGraph(new SourceValueString(value))
-      case value@(_: NumberValueGenerator) =>
-        Source.fromGraph(new SourceValueNumber(value))
-      case value@(_: DateValueGenerator) =>
-        Source.fromGraph(new SourceValueDate(value))
-    }
-
+  val values = new ConvertListGeneratorToListSource(
+    new ConvertListFieldToListGenerator(
+      List(inputFieldString, inputFieldNumber, inputFieldDate)
+    ).convert()
+  ).convert()
+  
   val mergeRun: Unit = new MergeNode().connectSourcesWithMerge(values)
 
   //TODO The combine method merges all sources into one.
