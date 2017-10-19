@@ -1,11 +1,9 @@
 package domain.stream.stage.merge
 
-import java.time.LocalDateTime
-
 import akka.NotUsed
 import akka.actor.ActorSystem
+import akka.stream.scaladsl.{Flow, GraphDSL, RunnableGraph, Sink, Source, ZipN}
 import akka.stream.{ActorMaterializer, ClosedShape}
-import akka.stream.scaladsl.{Flow, GraphDSL, Merge, RunnableGraph, Sink, Source}
 import domain.value.Value
 
 import scala.concurrent.ExecutionContextExecutor
@@ -20,9 +18,17 @@ class MergeNode {
     RunnableGraph.fromGraph(GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
       import GraphDSL.Implicits._
 
-      val merge = builder.add(Merge[Value[_]](values.size))
+      val zipper = builder.add(ZipN[Value[_]](values.size))
+      values.foreach(src => {
+        src ~> zipper
+      })
+      zipper ~> Flow[Seq[Value[_]]].map(s => s.foreach(
+        src => println(src.getId + "||" + src.getType + "||" + src.getValue)
+      )) ~> Sink.ignore
+
+      /*val merge = builder.add(Merge[Value[_]](values.size))
       values.foreach(src => src ~> merge)
-      merge ~> Flow[Value[_]].map { s => println(s.getId+"-"+s.getType+"-"+s.getValue.toString); s } ~> Sink.ignore
+      merge ~> Flow[Value[_]].map { s => println(s.getId+"-"+s.getType+"-"+s.getValue.toString); s } ~> Sink.ignore*/
       ClosedShape
     }).run()
 

@@ -5,9 +5,10 @@ import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
 import domain.transform.calculations.{DateEqualCalculations, NumberEqualCalculations, StringEqualCalculations}
 import infrastructure.value.preparation.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
 
-class ConvertListFieldToListGenerator(val in: List[InputField[_]]) extends ConvertListXToListY[InputField[_],ValueGenerator[_, _]] {
+class ConvertListFieldToListGenerator(val in: List[InputField[_]])
+  extends ConvertListXToListY[InputField[_], ValueGenerator[_, _]] {
 
-  override def convert(): List[ValueGenerator[_,_]] = {
+  override def convert(): List[ValueGenerator[_, _]] = {
     in.map(field => field.getOptions match {
       case _: OptionsString =>
         new StringValueGenerator(

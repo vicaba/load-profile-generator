@@ -1,15 +1,11 @@
 import akka.actor.ActorSystem
 import akka.stream._
-import akka.stream.scaladsl._
 import domain.in.config.ConfigHolder
 import domain.in.field.InputField
 import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
 import domain.stream.stage.conversion.{ConvertListFieldToListGenerator, ConvertListGeneratorToListSource}
 import domain.stream.stage.merge.MergeNode
-import domain.stream.stage.source.{SourceValueDate, SourceValueNumber, SourceValueString}
-import domain.transform.calculations.{DateEqualCalculations, NumberEqualCalculations, StringEqualCalculations}
 import infrastructure.in.config.json.deserializer.InputConfigReader
-import infrastructure.value.preparation.{DateValueGenerator, NumberValueGenerator, StringValueGenerator}
 
 import scala.concurrent.ExecutionContextExecutor
 import scala.languageFeature.implicitConversions
@@ -39,7 +35,7 @@ object Test extends App {
       List(inputFieldString, inputFieldNumber, inputFieldDate)
     ).convert()
   ).convert()
-  
+
   val mergeRun: Unit = new MergeNode().connectSourcesWithMerge(values)
 
   //TODO The combine method merges all sources into one.
