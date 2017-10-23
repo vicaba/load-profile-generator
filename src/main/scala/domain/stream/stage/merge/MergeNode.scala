@@ -8,12 +8,14 @@ import domain.value.Value
 
 import scala.concurrent.ExecutionContextExecutor
 
-class MergeNode {
+class MergeNode(values: List[Source[Value[_], NotUsed]]) {
   implicit val system2: ActorSystem = ActorSystem("QuickStart")
   implicit val materializer2: ActorMaterializer = ActorMaterializer()
   implicit val ec2: ExecutionContextExecutor = system2.dispatcher
 
-  def connectSourcesWithMerge(values: List[Source[Value[_], NotUsed]]): Unit =
+  val listSources: List[Source[Value[_], NotUsed]] = values
+
+  def connectSourcesWithMerge(values: List[Source[Value[_], NotUsed]]): NotUsed = {
 
     RunnableGraph.fromGraph(GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
       import GraphDSL.Implicits._
@@ -26,10 +28,10 @@ class MergeNode {
         src => println(src.getId + "||" + src.getType + "||" + src.getValue)
       )) ~> Sink.ignore
 
-      /*val merge = builder.add(Merge[Value[_]](values.size))
-      values.foreach(src => src ~> merge)
-      merge ~> Flow[Value[_]].map { s => println(s.getId+"-"+s.getType+"-"+s.getValue.toString); s } ~> Sink.ignore*/
+
       ClosedShape
     }).run()
+
+  }
 
 }

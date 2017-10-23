@@ -1,6 +1,7 @@
 package domain.in.config;
 
 import domain.in.field.InputField;
+import domain.in.field.options.Options;
 import domain.in.rule.InputRule;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 public class ConfigHolder {
   /** ArrayList with the list of fields obtained from the config file. */
-  private ArrayList<InputField> fields;
+  private ArrayList<InputField<Options>> fields;
   /** ArrayList with the list of rules obtained from the config file. */
   private ArrayList<InputRule> rules;
 
@@ -29,7 +30,7 @@ public class ConfigHolder {
    *
    * @return ArrayList with the list of fields.
    */
-  public ArrayList<InputField> getFields() {
+  public ArrayList<InputField<Options>> getFields() {
     return this.fields;
   }
 

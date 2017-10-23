@@ -1,37 +1,44 @@
 {
+  "length": 3,
   "fields": [
     {
       "info": {
         "id": "0001",
-        "name": "Date",
-        "type": "date"
+        "name": "Name",
+        "type": "string"
       },
       "options": {
-        "startingDate": "18-09-2017 08:00",
-        "timeIncrement": 3600
+        "acceptedStrings": ["GG","GL","GM"]
       }
     },
     {
       "info": {
         "id": "0002",
+        "name": "Temperature",
+        "type": "integer"
+      },
+      "options": {
+        "ranges": [
+          {
+            "min": 4,
+            "max": 100
+          },
+          {
+            "min": -50,
+            "max": -1
+          }
+        ]
+      }
+    },
+    {
+      "info": {
+        "id": "0003",
         "name": "Date",
         "type": "date"
       },
       "options": {
         "startingDate": "18-09-2017 08:00",
         "timeIncrement": 3600
-      }
-    }
-  ],
-  "rules": [
-    {
-      "id": "0002",
-      "condition": "isLessThan",
-      "comparator": "18-09-2017 12:00",
-      "result": {
-        "id": "0002",
-        "operation": "+",
-        "value": 3600
       }
     }
   ]

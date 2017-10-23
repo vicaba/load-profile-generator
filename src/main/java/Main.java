@@ -26,6 +26,8 @@ public class Main {
       ConfigHolder configGen;
 
       if ((configGen = inputConfig.getConfigGenerator()) != null) {
+        GeneratorGraph generatorGraph = new GeneratorGraph();
+        generatorGraph.startDataGeneration(inputConfig.getConfigGenerator().getFields());
         OutputField outputField = new OutputConfigReader(args[1]).getOutputField();
         DataPreparation dataPreparation = new DataPreparation(configGen);
         ArrayList<ArrayList<Value>> outputs = new ArrayList<>();

@@ -2,6 +2,7 @@ package infrastructure.value.preparation;
 
 import domain.in.config.ConfigHolder;
 import domain.in.field.InputField;
+import domain.in.field.options.Options;
 import domain.in.field.options.OptionsDate;
 import domain.in.field.options.OptionsNumber;
 import domain.in.field.options.OptionsString;
@@ -21,7 +22,7 @@ public class DataPreparation {
   }
 
   public ArrayList<Value> prepareData(int cycle) {
-    ArrayList<InputField> inputFields = this.configGenerator.getFields();
+    ArrayList<InputField<Options>> inputFields = this.configGenerator.getFields();
     ArrayList<Value> data = new ArrayList<>();
 
     for (InputField inputField : inputFields) {

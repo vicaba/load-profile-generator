@@ -7,7 +7,7 @@ import domain.value.Value
 import infrastructure.value.preparation.ValueGenerator
 
 abstract class SourceValueT[V, T <: Calculations[V]](val dataGenerator: ValueGenerator[V, T])
-    extends GraphStage[SourceShape[Value[V]]] {
+  extends GraphStage[SourceShape[Value[V]]] {
 
   val output: Outlet[Value[V]] =
     Outlet[Value[V]](s"Source${dataGenerator.getName}${dataGenerator.getId}.out")
