@@ -52,6 +52,26 @@
         "operation": "+",
         "value": 5
       }
+    },
+    {
+      "id": "0001",
+      "condition": "isEqualThan",
+      "comparator": "GG",
+      "result": {
+        "id": "0001",
+        "operation": "=",
+        "value": "GG-IT_WORKS"
+      }
+    },
+    {
+      "id": "0003",
+      "condition": "isGreaterThan",
+      "comparator": "18-09-2017 12:00",
+      "result": {
+        "id": "0003",
+        "operation": "+",
+        "value": 3600
+      }
     }
   ]
 }
