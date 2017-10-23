@@ -1,12 +1,12 @@
 import domain.in.config.ConfigHolder;
-import domain.value.Value;
 import domain.out.field.OutputField;
+import domain.transform.rule.RulesCheck;
+import domain.value.Value;
+import example.stream.test.StreamExample;
+import example.template.CreateTemplate;
 import infrastructure.in.config.json.deserializer.InputConfigReader;
 import infrastructure.out.config.serialization.json.deserializer.OutputConfigReader;
 import infrastructure.value.preparation.DataPreparation;
-import domain.transform.rule.RulesCheck;
-import example.stream.test.StreamExample;
-import example.template.CreateTemplate;
 
 import java.util.ArrayList;
 
@@ -27,11 +27,11 @@ public class Main {
 
       if ((configGen = inputConfig.getConfigGenerator()) != null) {
         GeneratorGraph generatorGraph = new GeneratorGraph();
-        generatorGraph.startDataGeneration(inputConfig.getConfigGenerator().getFields());
+        RulesCheck rulesCheck = new RulesCheck(configGen.getRules());
+        generatorGraph.startDataGeneration(configGen.getFields(), rulesCheck);
         OutputField outputField = new OutputConfigReader(args[1]).getOutputField();
         DataPreparation dataPreparation = new DataPreparation(configGen);
         ArrayList<ArrayList<Value>> outputs = new ArrayList<>();
-        RulesCheck rulesCheck = new RulesCheck(configGen.getRules());
 
         for (int i = 0; i < outputField.getAmount(); i++) {
           ArrayList<Value> auxOutput = dataPreparation.prepareData(i);

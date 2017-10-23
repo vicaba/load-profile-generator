@@ -1,16 +1,19 @@
 import domain.in.field.InputField
 import domain.in.field.options.Options
 import domain.stream.stage.conversion.{ConvertListFieldToListGenerator, ConvertListGeneratorToListSource}
+import domain.stream.stage.flow.RulesFlow
 import domain.stream.stage.merge.MergeNode
+import domain.transform.rule.RulesCheck
 
-import scala.languageFeature.implicitConversions
 import scala.collection.JavaConverters._
+import scala.languageFeature.implicitConversions
 
 
 class GeneratorGraph {
   //implicit def sourceValueTToSource[V](st: SourceValueT[V, _]): Source[Value[V], NotUsed] = Source.fromGraph(st)
 
-  def startDataGeneration(listFields: java.util.ArrayList[InputField[Options]]): Unit = {
+  def startDataGeneration(listFields: java.util.ArrayList[InputField[Options]],
+                          rulesCheck: RulesCheck): Unit = {
 
     val scalaFields = listFields.asScala.toList
 
@@ -22,8 +25,10 @@ class GeneratorGraph {
         ).convert()
       ).convert()
 
-      val mergeRun = new MergeNode(values)
-      mergeRun.connectSourcesWithMerge(values)
+      val rulesFlow = new RulesFlow(rulesCheck)
+
+      val mergeRun = new MergeNode(values, rulesFlow)
+      mergeRun.connectAndRunGraph()
 
     }
 

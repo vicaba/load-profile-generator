@@ -41,5 +41,17 @@
         "timeIncrement": 3600
       }
     }
+  ],
+  "rules": [
+    {
+      "id": "0002",
+      "condition": "isLessThan",
+      "comparator": 50,
+      "result": {
+        "id": "0002",
+        "operation": "+",
+        "value": 5
+      }
+    }
   ]
 }

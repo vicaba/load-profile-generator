@@ -8,16 +8,16 @@ import domain.value.Value;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.List;
 
 public class RulesCheck {
-  private ArrayList<InputRule> rules;
+  private List<InputRule> rules;
 
-  public RulesCheck(ArrayList<InputRule> rules) {
+  public RulesCheck(List<InputRule> rules) {
     this.rules = rules;
   }
 
-  public void applyRules(ArrayList<Value> outputs) {
+  public List<Value> applyRules(List<Value> outputs) {
     for (InputRule rule : this.rules) {
 
       for (Value output : outputs) {
@@ -63,5 +63,6 @@ public class RulesCheck {
     for (Value output : outputs) {
       System.out.println("Value value is " + output.getValue());
     }
+    return outputs;
   }
 }
