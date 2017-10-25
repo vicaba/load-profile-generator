@@ -1,5 +1,6 @@
 package domain.in.config;
 
+import domain.in.distribution.InputDistribution;
 import domain.in.field.InputField;
 import domain.in.field.options.Options;
 import domain.in.rule.InputRule;
@@ -18,11 +19,13 @@ public class ConfigHolder {
   private ArrayList<InputField<Options>> fields;
   /** ArrayList with the list of rules obtained from the config file. */
   private ArrayList<InputRule> rules;
+  private ArrayList<InputDistribution> distributions;
 
   /** Constructor. */
   public ConfigHolder() {
     this.fields = new ArrayList<>();
     this.rules = new ArrayList<>();
+    this.distributions = new ArrayList<>();
   }
 
   /**
@@ -61,5 +64,9 @@ public class ConfigHolder {
    */
   public InputRule getRule(int rule) {
     return this.rules.get(rule);
+  }
+
+  public ArrayList<InputDistribution> getDistributions() {
+    return this.distributions;
   }
 }

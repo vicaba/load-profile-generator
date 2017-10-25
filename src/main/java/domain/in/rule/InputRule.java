@@ -1,5 +1,6 @@
 package domain.in.rule;
 
+import domain.in.condition.ConditionModifier;
 import util.functional.Functor;
 
 import java.util.function.Function;

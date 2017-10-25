@@ -1,6 +1,6 @@
 package domain.transform.rule;
 
-import domain.in.rule.ConditionModifier;
+import domain.in.condition.ConditionModifier;
 import domain.transform.rule.operation.RulesOperationDate;
 import domain.transform.rule.operation.RulesOperationNumber;
 import domain.transform.rule.operation.RulesOperationString;
