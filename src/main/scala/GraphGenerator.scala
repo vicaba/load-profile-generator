@@ -1,5 +1,5 @@
 import akka.NotUsed
-import akka.stream.scaladsl.Source
+import akka.stream.scaladsl.{Broadcast, Source}
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.in.field.options.Options
@@ -50,6 +50,17 @@ class GraphGenerator {
         .toMap
 
       println(s"Elements in map1 = $mapSources")
+
+      val mapBroadcasts = distributions
+        .map(broad => broad.getId -> Broadcast[Value[_]](2))
+        .toMap
+
+      println(s"Elements in map2 = $mapBroadcasts")
+
+      //TODO Distribution nodes will have as key idSourceThatAffectsDistribution:idSourceToBeDistributed
+      //TODO We will always check if id exists in Broadcast, if it doesn't we will use Source.
+      //TODO First outlet of Broadcast (0) will always be the outlet that is not used for distribution
+      //TODO Second (1) will only be used for Distribution purposes, and nothing more.
 
       val rulesFlow = new RulesFlow(rulesCheck)
 
