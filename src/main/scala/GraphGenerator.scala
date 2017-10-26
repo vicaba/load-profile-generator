@@ -51,7 +51,6 @@ class GraphGenerator {
 
       println(s"Elements in map1 = $mapSources")
 
-
       val rulesFlow = new RulesFlow(rulesCheck)
 
       val mergeRun = new MergeNode(mapSources.values.toList, rulesFlow)
