@@ -16,15 +16,35 @@ import scala.languageFeature.implicitConversions
 class GeneratorGraph {
   //implicit def sourceValueTToSource[V](st: SourceValueT[V, _]): Source[Value[V], NotUsed] = Source.fromGraph(st)
 
-  def startDataGeneration(listFields: java.util.ArrayList[InputField[Options]],
+  /**
+   * Java API
+   * @param listFields
+   * @param rulesCheck
+   * @param distributions
+   */
+  def startDataGeneration(
+    listFields: java.util.ArrayList[InputField[Options]],
     rulesCheck: RulesCheck,
     distributions: java.util.ArrayList[InputDistribution]): Unit = {
 
-    val scalaFields = listFields.asScala.toList
+    startDataGeneration(listFields.asScala.toList, rulesCheck, distributions.asScala.toList)
 
-    if (scalaFields.nonEmpty) {
+  }
 
-      val mapSources = scalaFields
+  /**
+   * Scala API
+   * @param inputFields
+   * @param rulesCheck
+   * @param distributions
+   */
+  def startDataGeneration(
+    inputFields: List[InputField[Options]],
+    rulesCheck: RulesCheck,
+    distributions: List[InputDistribution]): Unit = {
+
+    if (inputFields.nonEmpty) {
+
+      val mapSources = inputFields
         .map(InputFieldConversions.inputFieldToValueGenerator)
         .map(vg => vg.getId -> InputFieldConversions.valueGeneratorToSource(vg))
         .toMap
@@ -38,7 +58,6 @@ class GeneratorGraph {
       //mergeRun.connectAndRunGraph()
 
     }
-
 
   }
 
