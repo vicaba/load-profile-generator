@@ -23,7 +23,7 @@
       }
     }
   ],
-  "distribution": [
+  "distributions": [
     {
       "id": "0001",
       "condition": "count",
