@@ -3,7 +3,7 @@ import akka.stream.scaladsl.Source
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.in.field.options.Options
-import domain.stream.stage.conversion.{ConvertListFieldToListGenerator, ConvertListGeneratorToListSource}
+import domain.stream.stage.conversion.InputFieldConversions
 import domain.stream.stage.flow.RulesFlow
 import domain.stream.stage.merge.MergeNode
 import domain.transform.rule.RulesCheck
@@ -17,31 +17,24 @@ class GeneratorGraph {
   //implicit def sourceValueTToSource[V](st: SourceValueT[V, _]): Source[Value[V], NotUsed] = Source.fromGraph(st)
 
   def startDataGeneration(listFields: java.util.ArrayList[InputField[Options]],
-                          rulesCheck: RulesCheck,
-                          distributions: java.util.ArrayList[InputDistribution]): Unit = {
+    rulesCheck: RulesCheck,
+    distributions: java.util.ArrayList[InputDistribution]): Unit = {
 
     val scalaFields = listFields.asScala.toList
 
     if (scalaFields.nonEmpty) {
 
-      val values = new ConvertListGeneratorToListSource(
-        new ConvertListFieldToListGenerator(
-          scalaFields
-        ).convert()
-      ).convert()
+      val mapSources = scalaFields
+        .map(InputFieldConversions.inputFieldToValueGenerator)
+        .map(vg => vg.getId -> InputFieldConversions.valueGeneratorToSource(vg))
+        .toMap
 
-      var mapSources = Map[String, Source[Value[_], NotUsed]]()
-      var count = 0
-      values.foreach(src => {
-        mapSources += (listFields.get(count).getId -> src)
-        count += 1
-      })
       println(s"Elements in map1 = $mapSources")
 
 
       val rulesFlow = new RulesFlow(rulesCheck)
 
-      val mergeRun = new MergeNode(values, rulesFlow)
+      val mergeRun = new MergeNode(mapSources.values.toList, rulesFlow)
       //mergeRun.connectAndRunGraph()
 
     }

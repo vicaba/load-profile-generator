@@ -9,8 +9,9 @@ import infrastructure.value.preparation.ValueGenerator
 abstract class SourceValueT[V, T <: Calculations[V]](val dataGenerator: ValueGenerator[V, T])
   extends GraphStage[SourceShape[Value[V]]] {
 
+  // Outlet identifier is the inputField.id
   val output: Outlet[Value[V]] =
-    Outlet[Value[V]](s"Source${dataGenerator.getName}${dataGenerator.getId}.out")
+    Outlet[Value[V]](s"${dataGenerator.getId}")
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic =
     new GraphStageLogic(shape) {
