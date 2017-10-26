@@ -3,7 +3,7 @@ import akka.stream.scaladsl.Source
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.in.field.options.Options
-import domain.stream.stage.conversion.{ConvertListFieldToListGenerator, ConvertListGeneratorToListSource}
+import domain.stream.stage.conversion.InputFieldConversions
 import domain.stream.stage.flow.RulesFlow
 import domain.stream.stage.merge.MergeNode
 import domain.transform.rule.RulesCheck
@@ -13,39 +13,50 @@ import scala.collection.JavaConverters._
 import scala.languageFeature.implicitConversions
 
 
-class GeneratorGraph {
+class GraphGenerator {
   //implicit def sourceValueTToSource[V](st: SourceValueT[V, _]): Source[Value[V], NotUsed] = Source.fromGraph(st)
 
-  def startDataGeneration(listFields: java.util.ArrayList[InputField[Options]],
-                          rulesCheck: RulesCheck,
-                          distributions: java.util.ArrayList[InputDistribution]): Unit = {
+  /**
+   * Java API
+   * @param listFields
+   * @param rulesCheck
+   * @param distributions
+   */
+  def generate(
+    listFields: java.util.ArrayList[InputField[Options]],
+    rulesCheck: RulesCheck,
+    distributions: java.util.ArrayList[InputDistribution]): Unit = {
 
-    val scalaFields = listFields.asScala.toList
+    generate(listFields.asScala.toList, rulesCheck, distributions.asScala.toList)
 
-    if (scalaFields.nonEmpty) {
+  }
 
-      val values = new ConvertListGeneratorToListSource(
-        new ConvertListFieldToListGenerator(
-          scalaFields
-        ).convert()
-      ).convert()
+  /**
+   * Scala API
+   * @param inputFields
+   * @param rulesCheck
+   * @param distributions
+   */
+  def generate(
+    inputFields: List[InputField[Options]],
+    rulesCheck: RulesCheck,
+    distributions: List[InputDistribution]): Unit = {
 
-      var mapSources = Map[String, Source[Value[_], NotUsed]]()
-      var count = 0
-      values.foreach(src => {
-        mapSources += (listFields.get(count).getId -> src)
-        count += 1
-      })
+    if (inputFields.nonEmpty) {
+
+      val mapSources = inputFields
+        .map(InputFieldConversions.inputFieldToValueGenerator)
+        .map(vg => vg.getId -> InputFieldConversions.valueGeneratorToSource(vg))
+        .toMap
+
       println(s"Elements in map1 = $mapSources")
-
 
       val rulesFlow = new RulesFlow(rulesCheck)
 
-      val mergeRun = new MergeNode(values, rulesFlow)
+      val mergeRun = new MergeNode(mapSources.values.toList, rulesFlow)
       //mergeRun.connectAndRunGraph()
 
     }
-
 
   }
 

@@ -26,9 +26,9 @@ public class Main {
       ConfigHolder configGen;
 
       if ((configGen = inputConfig.getConfigGenerator()) != null) {
-        GeneratorGraph generatorGraph = new GeneratorGraph();
+        GraphGenerator graphGenerator = new GraphGenerator();
         RulesCheck rulesCheck = new RulesCheck(configGen.getRules());
-        generatorGraph.startDataGeneration(
+        graphGenerator.generate(
             configGen.getFields(), rulesCheck, configGen.getDistributions()
         );
         OutputField outputField = new OutputConfigReader(args[1]).getOutputField();
