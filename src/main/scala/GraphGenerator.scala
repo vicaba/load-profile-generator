@@ -13,7 +13,7 @@ import scala.collection.JavaConverters._
 import scala.languageFeature.implicitConversions
 
 
-class GeneratorGraph {
+class GraphGenerator {
   //implicit def sourceValueTToSource[V](st: SourceValueT[V, _]): Source[Value[V], NotUsed] = Source.fromGraph(st)
 
   /**
@@ -22,12 +22,12 @@ class GeneratorGraph {
    * @param rulesCheck
    * @param distributions
    */
-  def startDataGeneration(
+  def generate(
     listFields: java.util.ArrayList[InputField[Options]],
     rulesCheck: RulesCheck,
     distributions: java.util.ArrayList[InputDistribution]): Unit = {
 
-    startDataGeneration(listFields.asScala.toList, rulesCheck, distributions.asScala.toList)
+    generate(listFields.asScala.toList, rulesCheck, distributions.asScala.toList)
 
   }
 
@@ -37,7 +37,7 @@ class GeneratorGraph {
    * @param rulesCheck
    * @param distributions
    */
-  def startDataGeneration(
+  def generate(
     inputFields: List[InputField[Options]],
     rulesCheck: RulesCheck,
     distributions: List[InputDistribution]): Unit = {
