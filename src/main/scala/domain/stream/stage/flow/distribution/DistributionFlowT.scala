@@ -16,10 +16,15 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) {
 
+    private var dataCounter = 1
+
     setHandler(inlet, new InHandler {
       override def onPush(): Unit = {
+        //TODO Things that DistributionFlow must do, to think later.
+        //TODO 1. Needs to increase dataCounter.
+        //TODO 2. if dataCounter surpassed amount mentioned by inputDistribution, DataGenerator must apply the distribution rule
+        //TODO 3. once rule is applied, data will be generated and passed through outlet.
         val data = dataGenerator.obtainNext()
-        //TODO Apply rule with inputDistr and data
         push(outlet, data)
       }
     })

@@ -64,8 +64,8 @@ class GraphGenerator {
 
       val rulesFlow = new RulesFlow(rulesCheck)
 
-      val mergeRun = new MergeNode(mapSources.values.toList, rulesFlow)
-      //mergeRun.connectAndRunGraph()
+      val mergeRun = new MergeNode(mapSources, mapBroadcasts, rulesFlow)
+      mergeRun.connectAndRunGraph()
 
     }
 
