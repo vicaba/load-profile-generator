@@ -4,7 +4,7 @@ import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.scaladsl.{Flow, GraphDSL, RunnableGraph, Sink, Source, ZipN}
 import akka.stream.{ActorMaterializer, ClosedShape}
-import domain.stream.stage.flow.RulesFlow
+import domain.stream.stage.flow.rules.RulesFlow
 import domain.value.Value
 
 import scala.concurrent.ExecutionContextExecutor

@@ -1,5 +1,4 @@
-package domain.stream.stage.flow
-
+package domain.stream.stage.flow.rules
 
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler, OutHandler}
 import akka.stream.{Attributes, FlowShape, Inlet, Outlet}
