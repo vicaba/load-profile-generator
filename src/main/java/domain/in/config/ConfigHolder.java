@@ -70,10 +70,12 @@ public class ConfigHolder {
     return this.distributions;
   }
 
+  /*
   public boolean isDistribution(String id) {
     for (InputDistribution dist : distributions) {
       if (dist.isDistribution(id)) return true;
     }
     return false;
   }
+  */
 }
