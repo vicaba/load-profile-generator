@@ -1,4 +1,6 @@
-package domain.transform.calculations;
+package domain.transform.calculations.equal;
+
+import domain.transform.calculations.Calculations;
 
 /**
  * Interface used for calculating with the probabilistic method 1/n, n being the total amount of

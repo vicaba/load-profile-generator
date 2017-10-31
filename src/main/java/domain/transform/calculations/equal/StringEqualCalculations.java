@@ -1,4 +1,4 @@
-package domain.transform.calculations;
+package domain.transform.calculations.equal;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
