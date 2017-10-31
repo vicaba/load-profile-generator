@@ -30,4 +30,8 @@ public class InputDistribution {
     public ConditionModifier getResult() {
         return result;
     }
+
+    public boolean isDistribution(String id) {
+        return result.getId().equals(id);
+    }
 }

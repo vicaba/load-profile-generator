@@ -2,6 +2,8 @@ package infrastructure.value.preparation;
 
 import domain.in.field.InputField;
 import domain.transform.calculations.Calculations;
+import domain.transform.calculations.distribution.DateDistributionCalculations;
+import domain.transform.calculations.distribution.DistributionCalculations;
 import domain.value.Value;
 
 public abstract class ValueGenerator<T, V extends Calculations<T>> {
@@ -28,4 +30,11 @@ public abstract class ValueGenerator<T, V extends Calculations<T>> {
     return this.inputField.getName();
   }
 
+  /*
+  public void resetGenerator() {
+    if (calculations instanceof DistributionCalculations) {
+      ((DistributionCalculations) calculations).resetCounter();
+    }
+  }
+  */
 }

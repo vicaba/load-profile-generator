@@ -10,7 +10,7 @@ import akka.stream.stage.AbstractOutHandler;
 import akka.stream.stage.GraphStage;
 import akka.stream.stage.GraphStageLogic;
 import domain.transform.calculations.Calculations;
-import domain.transform.calculations.MyStatefulDateEqualCalculations;
+import domain.transform.calculations.equal.MyStatefulDateEqualCalculations;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.CompletionStage;

@@ -1,7 +1,7 @@
 package infrastructure.value.preparation;
 
 import domain.in.field.InputField;
-import domain.transform.calculations.StringEqualCalculations;
+import domain.transform.calculations.equal.StringEqualCalculations;
 
 public class StringValueGenerator extends ValueGenerator<String, StringEqualCalculations> {
 

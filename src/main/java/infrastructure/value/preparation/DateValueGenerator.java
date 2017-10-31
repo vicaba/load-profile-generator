@@ -1,7 +1,7 @@
 package infrastructure.value.preparation;
 
 import domain.in.field.InputField;
-import domain.transform.calculations.DateEqualCalculations;
+import domain.transform.calculations.equal.DateEqualCalculations;
 
 import java.time.LocalDateTime;
 
