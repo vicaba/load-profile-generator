@@ -31,9 +31,9 @@ public class InputDistribution {
         return result;
     }
 
-    /*
+
     public boolean isDistribution(String id) {
         return result.getId().equals(id);
     }
-    */
+
 }

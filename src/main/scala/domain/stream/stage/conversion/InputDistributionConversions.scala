@@ -34,16 +34,6 @@ object InputDistributionConversions {
       )
   }
 
-  def valueGeneratorToSource(vg: ValueGenerator[_, _]): Source[Value[_], NotUsed] = vg match {
-    case value @ (_: StringValueGenerator) =>
-      val g: Source[Value[String], NotUsed] = Source.fromGraph(new SourceValueString(value));g
-    case value @ (_: NumberValueGenerator) =>
-      Source.fromGraph(new SourceValueNumber(value))
-    case value @ (_: DateValueGenerator) =>
-      Source.fromGraph(new SourceValueDate(value))
-      val a: Graph[SourceShape[Value[_]], NotUsed]  = new SourceValueDate(value)
-  }
-
   def valueGeneratorToDistribution(vg: ValueGenerator[_, _],
                                    dist: InputDistribution): Flow[Value[_], Value[_], NotUsed] = vg match {
 /*    case value : StringValueGenerator =>

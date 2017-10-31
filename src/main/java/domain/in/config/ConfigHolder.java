@@ -70,12 +70,18 @@ public class ConfigHolder {
     return this.distributions;
   }
 
-  /*
+  public boolean isBroadcast(String id) {
+    for (InputDistribution dist : distributions) {
+      if (dist.getId().equals(id)) return true;
+    }
+    return false;
+  }
+
   public boolean isDistribution(String id) {
     for (InputDistribution dist : distributions) {
       if (dist.isDistribution(id)) return true;
     }
     return false;
   }
-  */
+
 }

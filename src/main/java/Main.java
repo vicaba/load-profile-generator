@@ -28,9 +28,12 @@ public class Main {
       if ((configGen = inputConfig.getConfigGenerator()) != null) {
         GraphGenerator graphGenerator = new GraphGenerator();
         RulesCheck rulesCheck = new RulesCheck(configGen.getRules());
+        /*
         graphGenerator.generate(
             configGen.getFields(), rulesCheck, configGen.getDistributions()
         );
+        */
+        graphGenerator.generate(configGen,rulesCheck);
         OutputField outputField = new OutputConfigReader(args[1]).getOutputField();
         DataPreparation dataPreparation = new DataPreparation(configGen);
         ArrayList<ArrayList<Value>> outputs = new ArrayList<>();
