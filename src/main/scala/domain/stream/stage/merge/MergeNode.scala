@@ -11,6 +11,7 @@ import scala.concurrent.ExecutionContextExecutor
 
 class MergeNode(values: Map[String, Source[Value[_], NotUsed]],
                 broadcastValues: Map[String, Broadcast[Value[_]]],
+                distributionValues: Map[String, Flow[Value[_],Value[_], NotUsed]],
                 rulesNode: RulesFlow) {
   implicit val system2: ActorSystem = ActorSystem("QuickStart")
   implicit val materializer2: ActorMaterializer = ActorMaterializer()
@@ -34,7 +35,7 @@ class MergeNode(values: Map[String, Source[Value[_], NotUsed]],
           values(src) ~> broadcast.in
           broadcast.out(0) ~> zipper
           //TODO Connect Broadcast to Distribution, and distribution to zipper
-          broadcast.out(1) ~> Sink.ignore //TO BE CHANGED
+          broadcast.out(1) ~> distributionValues(src) ~> zipper //TO BE CHANGED
         } else {
           println("No Broadcast, ID is "+src)
           values(src) ~> zipper

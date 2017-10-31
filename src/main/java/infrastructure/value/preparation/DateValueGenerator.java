@@ -1,13 +1,13 @@
 package infrastructure.value.preparation;
 
 import domain.in.field.InputField;
-import domain.transform.calculations.equal.DateEqualCalculations;
+import domain.transform.calculations.Calculations;
 
 import java.time.LocalDateTime;
 
-public class DateValueGenerator extends ValueGenerator<LocalDateTime, DateEqualCalculations> {
+public class DateValueGenerator extends ValueGenerator<LocalDateTime, Calculations<LocalDateTime>> {
 
-  public DateValueGenerator(InputField inputField, DateEqualCalculations calculations) {
+  public DateValueGenerator(InputField inputField, Calculations<LocalDateTime> calculations) {
     super(inputField, calculations);
   }
 }

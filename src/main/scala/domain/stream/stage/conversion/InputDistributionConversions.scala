@@ -1,15 +1,19 @@
 package domain.stream.stage.conversion
 
 import akka.NotUsed
-import akka.stream.scaladsl.Source
+import akka.stream.{FlowShape, Graph, SourceShape}
+import akka.stream.scaladsl.{Flow, Source}
+import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
+import domain.stream.stage.flow.distribution.{DistributionFlowDate, DistributionFlowNumber, DistributionFlowString}
 import domain.stream.stage.source.{SourceValueDate, SourceValueNumber, SourceValueString}
-import domain.transform.calculations.equal.{DateEqualCalculations, NumberEqualCalculations, StringEqualCalculations}
+import domain.transform.calculations.distribution.DateDistributionCalculations
+import domain.transform.calculations.equal.{NumberEqualCalculations, StringEqualCalculations}
 import domain.value.Value
 import infrastructure.value.preparation.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
 
-object InputFieldConversions {
+object InputDistributionConversions {
 
   def inputFieldToValueGenerator(in: InputField[_]): ValueGenerator[_, _] = in.getOptions match {
     case _: OptionsString =>
@@ -24,7 +28,7 @@ object InputFieldConversions {
     case _: OptionsDate =>
       new DateValueGenerator(
         in,
-        new DateEqualCalculations(
+        new DateDistributionCalculations(
           in.getOptions.asInstanceOf[OptionsDate].getStartingDate,
           in.getOptions.asInstanceOf[OptionsDate].getTimeIncrement)
       )
@@ -37,6 +41,18 @@ object InputFieldConversions {
       Source.fromGraph(new SourceValueNumber(value))
     case value @ (_: DateValueGenerator) =>
       Source.fromGraph(new SourceValueDate(value))
+      val a: Graph[SourceShape[Value[_]], NotUsed]  = new SourceValueDate(value)
   }
+
+  def valueGeneratorToDistribution(vg: ValueGenerator[_, _],
+                                   dist: InputDistribution): Flow[Value[_], Value[_], NotUsed] = vg match {
+/*    case value : StringValueGenerator =>
+       Flow.fromGraph(new DistributionFlowString(value, dist))
+    case value: NumberValueGenerator =>
+      Flow.fromGraph(new DistributionFlowNumber(value, dist))*/
+    case value: DateValueGenerator =>
+      Flow.fromGraph(new DistributionFlowDate(value, dist)).asInstanceOf[Flow[Value[_], Value[_], NotUsed]]
+  }
+
 
 }

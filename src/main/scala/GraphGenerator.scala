@@ -3,7 +3,7 @@ import akka.stream.scaladsl.{Broadcast, Source}
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.in.field.options.Options
-import domain.stream.stage.conversion.InputFieldConversions
+import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
 import domain.stream.stage.flow.rules.RulesFlow
 import domain.stream.stage.merge.MergeNode
 import domain.transform.rule.RulesCheck
@@ -57,6 +57,15 @@ class GraphGenerator {
 
       println(s"Elements in map2 = $mapBroadcasts")
 
+      val mapListDist = distributions
+        .map(mapDist => mapDist.getResult.getId -> mapDist)
+        .toMap
+
+      val mapDistributions = inputFields
+        .map(InputDistributionConversions.inputFieldToValueGenerator)
+        .map(mapDist => mapListDist(mapDist.getId).getResult.getId -> InputDistributionConversions.valueGeneratorToDistribution(mapDist,mapListDist(mapDist.getId)))
+        .toMap
+
       //TODO Distribution nodes will have as key idSourceThatAffectsDistribution:idSourceToBeDistributed
       //TODO We will always check if id exists in Broadcast, if it doesn't we will use Source.
       //TODO First outlet of Broadcast (0) will always be the outlet that is not used for distribution
@@ -64,7 +73,7 @@ class GraphGenerator {
 
       val rulesFlow = new RulesFlow(rulesCheck)
 
-      val mergeRun = new MergeNode(mapSources, mapBroadcasts, rulesFlow)
+      val mergeRun = new MergeNode(mapSources, mapBroadcasts, mapDistributions, rulesFlow)
       mergeRun.connectAndRunGraph()
 
     }
