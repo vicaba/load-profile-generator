@@ -1,5 +1,4 @@
-import akka.NotUsed
-import akka.stream.scaladsl.{Broadcast, Flow, Source}
+import akka.stream.scaladsl.Broadcast
 import domain.in.config.ConfigHolder
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
@@ -18,15 +17,16 @@ class GraphGenerator {
   //implicit def sourceValueTToSource[V](st: SourceValueT[V, _]): Source[Value[V], NotUsed] = Source.fromGraph(st)
 
   /**
-   * Java API
-   * @param listFields
-   * @param rulesCheck
-   * @param distributions
-   */
+    * Java API
+    *
+    * @param listFields
+    * @param rulesCheck
+    * @param distributions
+    */
   def generate(
-    listFields: java.util.ArrayList[InputField[Options]],
-    rulesCheck: RulesCheck,
-    distributions: java.util.ArrayList[InputDistribution]): Unit = {
+                listFields: java.util.ArrayList[InputField[Options]],
+                rulesCheck: RulesCheck,
+                distributions: java.util.ArrayList[InputDistribution]): Unit = {
 
     generate(listFields.asScala.toList, rulesCheck, distributions.asScala.toList)
 
@@ -52,25 +52,33 @@ class GraphGenerator {
         .toMap
       println(s"Elements in map2 = $mapSources")
 
+      val listConnections = inputFields
+        .filter(field => configHolder.isDistribution(field.getId))
+        .map(vg => vg.getId -> configHolder.isDistributedBy(vg.getId).asScala.toList)
+        .toMap
+
+      println(s"Elements in map3 = $listConnections")
+
       val mapDistributions = inputFields
         .filter(field => configHolder.isDistribution(field.getId))
         .map(InputDistributionConversions.inputFieldToValueGenerator)
-        .map(vg => vg.getId -> InputDistributionConversions.valueGeneratorToDistribution(vg,inputDist(vg.getId)))
+        .map(vg => vg.getId -> InputDistributionConversions.valueGeneratorToDistribution(vg, inputDist(vg.getId)))
         .toMap
-      println(s"Elements in map3 = $mapDistributions")
+      println(s"Elements in map4 = $mapDistributions")
     }
   }
 
   /**
-   * Scala API
-   * @param inputFields
-   * @param rulesCheck
-   * @param distributions
-   */
+    * Scala API
+    *
+    * @param inputFields
+    * @param rulesCheck
+    * @param distributions
+    */
   def generate(
-    inputFields: List[InputField[Options]],
-    rulesCheck: RulesCheck,
-    distributions: List[InputDistribution]): Unit = {
+                inputFields: List[InputField[Options]],
+                rulesCheck: RulesCheck,
+                distributions: List[InputDistribution]): Unit = {
 
     if (inputFields.nonEmpty) {
 
@@ -93,7 +101,9 @@ class GraphGenerator {
 
       val mapDistributions = inputFields
         .map(InputDistributionConversions.inputFieldToValueGenerator)
-        .map(mapDist => mapListDist(mapDist.getId).getResult.getId -> InputDistributionConversions.valueGeneratorToDistribution(mapDist,mapListDist(mapDist.getId)))
+        .map(mapDist => mapListDist(mapDist.getId).getResult.getId
+          -> InputDistributionConversions.valueGeneratorToDistribution(
+          mapDist, mapListDist(mapDist.getId)))
         .toMap
 
       //TODO Distribution nodes will have as key idSourceThatAffectsDistribution:idSourceToBeDistributed

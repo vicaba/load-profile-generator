@@ -5,6 +5,7 @@ import domain.in.field.InputField;
 import domain.in.field.options.Options;
 import domain.in.rule.InputRule;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -82,6 +83,16 @@ public class ConfigHolder {
       if (dist.isDistribution(id)) return true;
     }
     return false;
+  }
+
+  public ArrayList<InputDistribution> isDistributedBy(String idDist) {
+    ArrayList<InputDistribution> listIDs = new ArrayList<>();
+    for (InputDistribution distribution: distributions) {
+      if (distribution.getResult().getId().equals(idDist)) {
+        listIDs.add(distribution);
+      }
+    }
+    return listIDs;
   }
 
 }
