@@ -35,7 +35,7 @@ object InputDistributionConversions {
   }
 
   def valueGeneratorToDistribution(vg: ValueGenerator[_, _],
-                                   dist: InputDistribution): Flow[Value[_], Value[_], NotUsed] = vg match {
+                                   dist: List[InputDistribution]): Flow[Value[_], Value[_], NotUsed] = vg match {
 /*    case value : StringValueGenerator =>
        Flow.fromGraph(new DistributionFlowString(value, dist))
     case value: NumberValueGenerator =>

@@ -7,5 +7,5 @@ import domain.transform.calculations.Calculations
 import infrastructure.value.preparation.ValueGenerator
 
 class DistributionFlowDate(override val dataGenerator: ValueGenerator[LocalDateTime, Calculations[LocalDateTime]],
-                           override val inputDistribution: InputDistribution)
+                           override val inputDistribution: List[InputDistribution])
   extends DistributionFlowT[LocalDateTime, Calculations[LocalDateTime]](dataGenerator, inputDistribution)

@@ -7,5 +7,5 @@ import domain.transform.calculations.Calculations
 import infrastructure.value.preparation.ValueGenerator
 
 class DistributionFlowNumber(override val dataGenerator: ValueGenerator[lang.Float, Calculations[lang.Float]],
-                             override val inputDistribution: InputDistribution)
+                             override val inputDistribution: List[InputDistribution])
   extends DistributionFlowT[java.lang.Float, Calculations[java.lang.Float]](dataGenerator, inputDistribution)

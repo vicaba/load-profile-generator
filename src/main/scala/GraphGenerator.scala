@@ -62,7 +62,7 @@ class GraphGenerator {
       val mapDistributions = inputFields
         .filter(field => configHolder.isDistribution(field.getId))
         .map(InputDistributionConversions.inputFieldToValueGenerator)
-        .map(vg => vg.getId -> InputDistributionConversions.valueGeneratorToDistribution(vg, inputDist(vg.getId)))
+        .map(vg => vg.getId -> InputDistributionConversions.valueGeneratorToDistribution(vg, listConnections(vg.getId)))
         .toMap
       println(s"Elements in map4 = $mapDistributions")
 
@@ -108,7 +108,7 @@ class GraphGenerator {
         .map(InputDistributionConversions.inputFieldToValueGenerator)
         .map(mapDist => mapListDist(mapDist.getId).getResult.getId
           -> InputDistributionConversions.valueGeneratorToDistribution(
-          mapDist, mapListDist(mapDist.getId)))
+          mapDist, List(mapListDist(mapDist.getId))))
         .toMap
 
       //TODO Distribution nodes will have as key idSourceThatAffectsDistribution:idSourceToBeDistributed
