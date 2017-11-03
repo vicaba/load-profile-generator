@@ -48,8 +48,8 @@
   "rules": [
     {
       "id": "0002",
-      "condition": "isLessThan",
-      "comparator": "18-09-2017 12:00",
+      "condition": "isGreaterThan",
+      "comparator": "18-09-2018 12:00",
       "result": {
         "id": "0002",
         "operation": "+",

@@ -1,6 +1,6 @@
 package domain.stream.stage.flow.distribution
 
-import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler}
+import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler, OutHandler}
 import akka.stream.{Attributes, FlowShape, Inlet, Outlet}
 import domain.in.distribution.InputDistribution
 import domain.transform.calculations.Calculations
@@ -9,7 +9,7 @@ import domain.value.Value
 import infrastructure.value.preparation.ValueGenerator
 
 abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: ValueGenerator[V, T],
-                                                 val inputDistribution: List[InputDistribution])
+                                                          val inputDistribution: List[InputDistribution])
   extends GraphStage[FlowShape[Value[V], Value[V]]] {
 
   val inlet: Inlet[Value[V]] = Inlet[Value[V]]("FB" + inputDistribution(0).getId + ".in")
@@ -25,10 +25,16 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
         val distcheck = new DistributionsCheck(inputDistribution(0))
         if (distcheck.checkDistribution(dataCounter)) {
           dataCounter = 0
-          //dataGenerator.resetGenerator()
+          dataGenerator.resetGenerator()
         }
         val data = dataGenerator.obtainNext()
         push(outlet, data)
+      }
+    })
+
+    setHandler(outlet, new OutHandler {
+      override def onPull(): Unit = {
+        pull(inlet)
       }
     })
   }
