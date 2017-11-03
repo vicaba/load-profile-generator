@@ -5,7 +5,7 @@ import domain.in.field.InputField
 import domain.in.field.options.Options
 import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
 import domain.stream.stage.flow.rules.RulesFlow
-import domain.stream.stage.merge.MergeNode
+import domain.stream.stage.merge.{MergeNode, MergeNodeTest}
 import domain.transform.rule.RulesCheck
 import domain.value.Value
 
@@ -46,7 +46,7 @@ class GraphGenerator {
       println(s"Elements in map1 = $mapBroadcasts")
 
       val mapSources = inputFields
-        .filter(field => !configHolder.isBroadcast(field.getId) && !configHolder.isDistribution(field.getId))
+        .filter(field => !configHolder.isDistribution(field.getId))
         .map(InputFieldConversions.inputFieldToValueGenerator)
         .map(vg => vg.getId -> InputFieldConversions.valueGeneratorToSource(vg))
         .toMap
@@ -65,6 +65,11 @@ class GraphGenerator {
         .map(vg => vg.getId -> InputDistributionConversions.valueGeneratorToDistribution(vg, inputDist(vg.getId)))
         .toMap
       println(s"Elements in map4 = $mapDistributions")
+
+      val rulesFlow = new RulesFlow(rulesCheck)
+
+      val mergeNodeTest = new MergeNodeTest(mapSources, mapBroadcasts, mapDistributions, listConnections, rulesFlow)
+      mergeNodeTest.connectAndRunGraph()
     }
   }
 

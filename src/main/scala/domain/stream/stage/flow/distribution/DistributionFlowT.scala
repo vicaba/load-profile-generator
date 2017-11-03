@@ -12,8 +12,8 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
                                                  val inputDistribution: InputDistribution)
   extends GraphStage[FlowShape[Value[V], Value[V]]] {
 
-  val inlet: Inlet[Value[V]] = Inlet[Value[V]]("Broadcast" + inputDistribution.getId + ".in")
-  val outlet: Outlet[Value[V]] = Outlet[Value[V]]("Distribution" + inputDistribution.getResult.getId + ".out")
+  val inlet: Inlet[Value[V]] = Inlet[Value[V]]("FB" + inputDistribution.getId + ".in")
+  val outlet: Outlet[Value[V]] = Outlet[Value[V]]("FD" + inputDistribution.getResult.getId + ".out")
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) {
 
