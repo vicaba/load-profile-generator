@@ -10,6 +10,7 @@ import domain.in.field.options.OptionsString;
 import domain.transform.calculations.equal.NumberEqualCalculations;
 import domain.transform.calculations.equal.StringEqualCalculations;
 import domain.value.Value;
+import domain.value.generator.StringValueGenerator;
 
 import java.util.ArrayList;
 

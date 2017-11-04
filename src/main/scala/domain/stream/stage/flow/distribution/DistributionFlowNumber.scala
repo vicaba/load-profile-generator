@@ -4,7 +4,7 @@ import java.lang
 
 import domain.in.distribution.InputDistribution
 import domain.transform.calculations.Calculations
-import infrastructure.value.preparation.ValueGenerator
+import domain.value.generator.ValueGenerator
 
 class DistributionFlowNumber(override val dataGenerator: ValueGenerator[lang.Float, Calculations[lang.Float]],
                              override val inputDistribution: List[InputDistribution])

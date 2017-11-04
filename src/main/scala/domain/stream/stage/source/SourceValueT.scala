@@ -4,7 +4,7 @@ import akka.stream.stage.{GraphStage, GraphStageLogic, OutHandler}
 import akka.stream.{Attributes, Outlet, SourceShape}
 import domain.transform.calculations.Calculations
 import domain.value.Value
-import infrastructure.value.preparation.ValueGenerator
+import domain.value.generator.ValueGenerator
 
 abstract class SourceValueT[V, T <: Calculations[V]](val dataGenerator: ValueGenerator[V, T])
   extends GraphStage[SourceShape[Value[V]]] {

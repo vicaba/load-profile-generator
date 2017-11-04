@@ -1,4 +1,4 @@
-package infrastructure.value.preparation;
+package domain.value.generator;
 
 import domain.in.field.InputField;
 import domain.transform.calculations.Calculations;

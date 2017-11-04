@@ -11,7 +11,8 @@ import domain.stream.stage.source.{SourceValueDate, SourceValueNumber, SourceVal
 import domain.transform.calculations.distribution.DateDistributionCalculations
 import domain.transform.calculations.equal.{NumberEqualCalculations, StringEqualCalculations}
 import domain.value.Value
-import infrastructure.value.preparation.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
+import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
+import infrastructure.value.preparation.{NumberValueGenerator, StringValueGenerator, ValueGenerator}
 
 object InputDistributionConversions {
 
