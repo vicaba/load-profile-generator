@@ -8,7 +8,6 @@ import domain.stream.stage.source.{SourceValueDate, SourceValueNumber, SourceVal
 import domain.transform.calculations.equal.{DateEqualCalculations, NumberEqualCalculations, StringEqualCalculations}
 import domain.value.Value
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
-import infrastructure.value.preparation.{NumberValueGenerator, StringValueGenerator, ValueGenerator}
 
 object InputFieldConversions {
 

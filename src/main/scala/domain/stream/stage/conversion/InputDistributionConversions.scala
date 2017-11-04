@@ -1,18 +1,15 @@
 package domain.stream.stage.conversion
 
 import akka.NotUsed
-import akka.stream.{FlowShape, Graph, SourceShape}
-import akka.stream.scaladsl.{Flow, Source}
+import akka.stream.scaladsl.Flow
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
 import domain.stream.stage.flow.distribution.{DistributionFlowDate, DistributionFlowNumber, DistributionFlowString}
-import domain.stream.stage.source.{SourceValueDate, SourceValueNumber, SourceValueString}
 import domain.transform.calculations.distribution.DateDistributionCalculations
 import domain.transform.calculations.equal.{NumberEqualCalculations, StringEqualCalculations}
 import domain.value.Value
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
-import infrastructure.value.preparation.{NumberValueGenerator, StringValueGenerator, ValueGenerator}
 
 object InputDistributionConversions {
 
