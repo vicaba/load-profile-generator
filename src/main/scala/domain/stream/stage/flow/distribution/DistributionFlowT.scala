@@ -25,7 +25,7 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
         val distcheck = new DistributionsCheck(inputDistribution(0))
         if (distcheck.checkDistribution(dataCounter)) {
           dataCounter = 0
-          dataGenerator.resetGenerator()
+          dataGenerator.reset()
         }
         val data = dataGenerator.obtainNext()
         push(outlet, data)
