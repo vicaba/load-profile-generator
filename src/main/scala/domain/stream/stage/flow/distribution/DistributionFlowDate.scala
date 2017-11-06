@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 import domain.in.distribution.InputDistribution
 import domain.transform.calculations.Calculations
-import infrastructure.value.preparation.ValueGenerator
+import domain.value.generator.ValueGenerator
 
 class DistributionFlowDate(override val dataGenerator: ValueGenerator[LocalDateTime, Calculations[LocalDateTime]],
                            override val inputDistribution: List[InputDistribution])

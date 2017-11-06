@@ -7,7 +7,7 @@ import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
 import domain.stream.stage.source.{SourceValueDate, SourceValueNumber, SourceValueString}
 import domain.transform.calculations.equal.{DateEqualCalculations, NumberEqualCalculations, StringEqualCalculations}
 import domain.value.Value
-import infrastructure.value.preparation.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
+import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
 
 object InputFieldConversions {
 

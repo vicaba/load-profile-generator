@@ -1,4 +1,4 @@
-package infrastructure.value.preparation;
+package domain.value.generator;
 
 import domain.in.field.InputField;
 import domain.transform.calculations.Calculations;
@@ -29,7 +29,7 @@ public abstract class ValueGenerator<T, V extends Calculations<T>> {
     return this.inputField.getName();
   }
 
-  public void resetGenerator() {
+  public void reset() {
     if (calculations instanceof DistributionCalculations) {
       ((DistributionCalculations) calculations).resetCounter();
     }
