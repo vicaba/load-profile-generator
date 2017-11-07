@@ -17,16 +17,18 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) {
 
-    private var dataCounter = 0
+    private val distributionsCheck = new DistributionsCheck(inputDistribution)
 
     setHandler(inlet, new InHandler {
       override def onPush(): Unit = {
-        dataCounter += 1
-        val distcheck = new DistributionsCheck(inputDistribution(0))
-        if (distcheck.checkDistribution(dataCounter)) {
-          dataCounter = 0
+        val input = grab(inlet)
+
+        distributionsCheck.increaseCounter(input.getId)
+        if (distributionsCheck.checkDistribution()) {
+          distributionCheck.resetCounter()
           dataGenerator.reset()
         }
+        
         val data = dataGenerator.obtainNext()
         push(outlet, data)
       }

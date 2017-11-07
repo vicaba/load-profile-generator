@@ -2,7 +2,7 @@ package domain.stream.stage.merge
 
 import akka.NotUsed
 import akka.actor.ActorSystem
-import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, RunnableGraph, Sink, Source, ZipN}
+import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, Merge, RunnableGraph, Sink, Source, ZipN}
 import akka.stream.{ActorMaterializer, ClosedShape}
 import domain.in.distribution.InputDistribution
 import domain.stream.stage.flow.rules.RulesFlow
@@ -51,10 +51,19 @@ class MergeNodeTest(sourceValues: Map[String, Source[Value[_], NotUsed]],
 
       println("3. Time to connect Broadcast with Distribution")
       distributionValues foreach { flow =>
-        listConnections(flow._1).foreach { conn =>
-          println("---Connecting " + broadBuild(conn.getId).out(1) + " with " + flow._2)
-          broadBuild(conn.getId).out(1) ~> flow._2 ~> zipper
+        val conn = listConnections(flow._1)
+        if (conn.size == 1) {
+          println("---Connecting " + broadBuild(conn.head.getId).out(1) + " with " + flow._2)
+          broadBuild(conn.head.getId).out(1) ~> flow._2 ~> zipper
           println("---Connected")
+        } else {
+          val merge = builder.add(Merge[Value[_]](conn.size))
+          conn.foreach { conn =>
+            println("---Connecting " + broadBuild(conn.getId).out(1) + " with " + flow._2)
+            broadBuild(conn.getId).out(1) ~> merge
+            println("---Connected")
+          }
+          merge ~> flow._2 ~> zipper
         }
       }
 
