@@ -48,7 +48,7 @@ public class DistributionsCheck {
           break;
       }
     }
-    System.out.println("There's "+totalOkay+ "totalOkay and size of listCounters is "+listCounters.size());
+    System.out.println("There's "+totalOkay+ " totalOkay and size of listCounters is "+listCounters.size());
     return totalOkay == listCounters.size();
   }
 }

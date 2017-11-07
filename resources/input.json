@@ -43,6 +43,15 @@
         "id": "0002",
         "operation": "reset"
       }
+    },
+    {
+      "id": "0003",
+      "condition": "count",
+      "comparator": 3,
+      "result": {
+        "id": "0002",
+        "operation": "reset"
+      }
     }
   ],
   "rules": [

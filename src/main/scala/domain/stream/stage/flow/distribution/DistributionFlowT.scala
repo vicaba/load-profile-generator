@@ -25,20 +25,24 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
       override def onPush(): Unit = {
         val input = grab(inlet)
 
+        println("Proceeding to increase counter of ID "+input.getId)
         distributionsCheck.increaseCounter(input.getId)
         if (distributionsCheck.checkDistribution()) {
           println("--Check worked, time to reset values")
           distributionsCheck.resetCounter()
           dataGenerator.reset()
         }
-
+        println("Proceeding to get next value")
         val data = dataGenerator.obtainNext()
+        println("Value of data obtained is ID: "+data.getId+" and value: "+data.getValue)
         push(outlet, data)
+        println("Finished with value")
       }
     })
 
     setHandler(outlet, new OutHandler {
       override def onPull(): Unit = {
+        println("flowIn.onPull")
         pull(inlet)
       }
     })
