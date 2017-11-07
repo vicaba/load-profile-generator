@@ -8,6 +8,8 @@ import domain.transform.distribution.DistributionsCheck
 import domain.value.Value
 import domain.value.generator.ValueGenerator
 
+import scala.collection.JavaConverters._
+
 abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: ValueGenerator[V, T],
                                                           val inputDistribution: List[InputDistribution])
   extends GraphStage[FlowShape[Value[V], Value[V]]] {
@@ -17,7 +19,7 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) {
 
-    private val distributionsCheck = new DistributionsCheck(inputDistribution)
+    private val distributionsCheck = new DistributionsCheck(inputDistribution.asJava)
 
     setHandler(inlet, new InHandler {
       override def onPush(): Unit = {
@@ -25,10 +27,11 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
 
         distributionsCheck.increaseCounter(input.getId)
         if (distributionsCheck.checkDistribution()) {
-          distributionCheck.resetCounter()
+          println("--Check worked, time to reset values")
+          distributionsCheck.resetCounter()
           dataGenerator.reset()
         }
-        
+
         val data = dataGenerator.obtainNext()
         push(outlet, data)
       }

@@ -7,7 +7,7 @@
         "type": "date"
       },
       "options": {
-        "startingDate": "18-09-2017 08:00",
+        "startingDate": "18-09-2018 08:00",
         "timeIncrement": 3600
       }
     },
@@ -29,7 +29,7 @@
         "type": "date"
       },
       "options": {
-        "startingDate": "18-09-2017 08:00",
+        "startingDate": "18-09-2019 08:00",
         "timeIncrement": 3600
       }
     }

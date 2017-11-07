@@ -3,7 +3,7 @@ import domain.in.config.ConfigHolder
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.in.field.options.Options
-import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
+import domain.stream.stage.conversion.{InputDistributionConversions, InputDistributionConversionsInvalid, InputFieldConversions}
 import domain.stream.stage.flow.rules.RulesFlow
 import domain.stream.stage.merge.{MergeNode, MergeNodeTest}
 import domain.transform.rule.RulesCheck
