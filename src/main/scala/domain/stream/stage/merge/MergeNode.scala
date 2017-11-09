@@ -62,16 +62,16 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
           println("---Connected")
         } else {
           println("---There's multiple distributions")
-          val merge = builder.add(Merge[Value[_]](conn.size))
+          val zipperMerge = builder.add(ZipN[Value[_]](conn.size))
           conn.foreach { conn =>
-            println("---Connecting " + broadBuild(conn.getId).out(1) + " with " + merge)
+            println("---Connecting " + broadBuild(conn.getId).out(1) + " with " + zipperMerge)
             val strCounted2 = "LOL"+counted2
-            broadBuild(conn.getId).out(1) ~> Flow[Value[_]].map {src => println(strCounted2+": "+src.getId + "||" + src.getType + "||" + src.getValue); src} ~> merge
+            broadBuild(conn.getId).out(1) ~> Flow[Value[_]].map {src => println(strCounted2+": "+src.getId + "||" + src.getType + "||" + src.getValue); src} ~> zipperMerge
             println("---Connected")
             counted2 += 1
           }
-          println("---Connecting " + merge + " with " + flow._2)
-          merge ~> flow._2 ~> zipper
+          println("---Connecting " + zipperMerge + " with " + flow._2)
+          zipperMerge ~> Flow[Seq[Value[_]]].map(src => src.toList.head) ~>  flow._2 ~> zipper
           println("---Connected")
         }
       }
