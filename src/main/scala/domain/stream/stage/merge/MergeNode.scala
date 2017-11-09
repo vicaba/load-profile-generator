@@ -45,7 +45,7 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
       for ((id, broad) <- broadBuild) {
         println("---Connecting " + sourceValues(id).toString() + " with " + broad.in.toString())
         val strCount = "NOPE"+counted
-        sourceValues(id) ~> Flow[Value[_]].map {src => println(strCount+":"+src.getId + "||" + src.getType + "||" + src.getValue); src}  ~> broad.in
+        sourceValues(id) ~> broad.in
         println("---Connecting " + broad.out(0).toString() + " with zipper")
         broad.out(0) ~> zipper
         println("---Connected")
@@ -66,7 +66,7 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
           conn.foreach { conn =>
             println("---Connecting " + broadBuild(conn.getId).out(1) + " with " + zipperMerge)
             val strCounted2 = "LOL"+counted2
-            broadBuild(conn.getId).out(1) ~> Flow[Value[_]].map {src => println(strCounted2+": "+src.getId + "||" + src.getType + "||" + src.getValue); src} ~> zipperMerge
+            broadBuild(conn.getId).out(1) ~> zipperMerge
             println("---Connected")
             counted2 += 1
           }
