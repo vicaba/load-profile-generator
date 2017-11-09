@@ -26,8 +26,8 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
         val input = grab(inlet)
 
         println("Proceeding to increase counter of ID "+input.getId)
-        //distributionsCheck.increaseCounter(input.getId)
-        distributionsCheck.increaseAllCounters()
+        distributionsCheck.increaseCounter(input.getId)
+        //distributionsCheck.increaseAllCounters()
         if (distributionsCheck.checkDistribution()) {
           println("--Check worked, time to reset values")
           distributionsCheck.resetCounter()

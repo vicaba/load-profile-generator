@@ -9,11 +9,13 @@ import java.util.Map;
 public class DistributionsCheck {
   private List<InputDistribution> inputDistribution;
   private Map<String, Integer> listCounters = new HashMap<>();
+  private Map<String, InputDistribution> listDistribution = new HashMap<>();
 
   public DistributionsCheck(List<InputDistribution> inputDistribution) {
     this.inputDistribution = inputDistribution;
     for(InputDistribution input: inputDistribution) {
       listCounters.put(input.getId(),0);
+      listDistribution.put(input.getId(),input);
     }
   }
 
@@ -35,7 +37,7 @@ public class DistributionsCheck {
     int count = 0;
     for (Map.Entry<String, Integer> entry : listCounters.entrySet()) {
       System.out.println("++Counter of ID "+entry.getKey()+" is currently "+this.listCounters.get(entry.getKey()));
-      listCounters.put(entry.getKey(), entry.getValue()-inputDistribution.get(count).getComparator());
+      listCounters.put(entry.getKey(), entry.getValue()-this.listDistribution.get(entry.getKey()).getComparator());
       System.out.println("++Counter of ID "+entry.getKey()+" is reset to "+this.listCounters.get(entry.getKey()));
       count++;
     }

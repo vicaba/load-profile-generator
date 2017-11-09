@@ -3,7 +3,7 @@ package domain.stream.stage.merge
 import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, Merge, RunnableGraph, Sink, Source, ZipN}
-import akka.stream.{ActorMaterializer, ClosedShape}
+import akka.stream._
 import domain.in.distribution.InputDistribution
 import domain.stream.stage.flow.rules.RulesFlow
 import domain.value.Value
@@ -20,13 +20,13 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
   implicit val ec2: ExecutionContextExecutor = system2.dispatcher
 
   def connectAndRunGraph(): NotUsed = {
-
     RunnableGraph.fromGraph(GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
       import GraphDSL.Implicits._
 
-      val zipper = builder.add(ZipN[Value[_]](sourceValues.size + distributionValues.size))
-
-
+      val zipper = builder.add(ZipN[Value[_]](sourceValues.size + distributionValues.size)
+        .async
+        .addAttributes(Attributes.inputBuffer(initial = 1024, max = 1024))  //Only works with power of two.
+      )
       println("1. Time to connect sources to zipper")
       sourceValues foreach (src =>
         if (!broadcastValues.contains(src._1)) {
@@ -44,7 +44,6 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
       var counted = 0
       for ((id, broad) <- broadBuild) {
         println("---Connecting " + sourceValues(id).toString() + " with " + broad.in.toString())
-        val strCount = "NOPE"+counted
         sourceValues(id) ~> broad.in
         println("---Connecting " + broad.out(0).toString() + " with zipper")
         broad.out(0) ~> zipper
@@ -56,22 +55,26 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
       var counted2 = 0
       distributionValues foreach { flow =>
         val conn = listConnections(flow._1)
+        flow._2.async
+        flow._2.buffer(10,OverflowStrategy.dropHead)
         if (conn.size == 1) {
           println("---Connecting " + broadBuild(conn.head.getId).out(1) + " with " + flow._2)
           broadBuild(conn.head.getId).out(1) ~> flow._2 ~> zipper
           println("---Connected")
         } else {
           println("---There's multiple distributions")
-          val zipperMerge = builder.add(ZipN[Value[_]](conn.size))
+          //val zipperMerge = builder.add(ZipN[Value[_]](conn.size))
+          val zipperMerge = builder.add(Merge[Value[_]](conn.size))
           conn.foreach { conn =>
             println("---Connecting " + broadBuild(conn.getId).out(1) + " with " + zipperMerge)
-            val strCounted2 = "LOL"+counted2
             broadBuild(conn.getId).out(1) ~> zipperMerge
             println("---Connected")
             counted2 += 1
           }
+
           println("---Connecting " + zipperMerge + " with " + flow._2)
-          zipperMerge ~> Flow[Seq[Value[_]]].map(src => src.toList.head) ~>  flow._2 ~> zipper
+          //zipperMerge ~> Flow[Seq[Value[_]]].map(src => src.toList.head) ~>  flow._2 ~> zipper
+          zipperMerge ~> flow._2 ~> zipper
           println("---Connected")
         }
       }
