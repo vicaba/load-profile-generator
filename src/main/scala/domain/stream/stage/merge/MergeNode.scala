@@ -4,6 +4,7 @@ import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, Merge, RunnableGraph, Sink, Source, ZipN}
 import akka.stream._
+import com.typesafe.config.{Config, ConfigFactory}
 import domain.in.distribution.InputDistribution
 import domain.stream.stage.flow.rules.RulesFlow
 import domain.value.Value
@@ -15,7 +16,8 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
                 distributionValues: Map[String, Flow[Value[_], Value[_], NotUsed]],
                 listConnections: Map[String, List[InputDistribution]],
                 rulesNode: RulesFlow) {
-  implicit val system2: ActorSystem = ActorSystem("QuickStart")
+  implicit val config: Config = ConfigFactory.load()
+  implicit val system2: ActorSystem = ActorSystem("QuickStart", config.getConfig("akka").withFallback(config))
   implicit val materializer2: ActorMaterializer = ActorMaterializer()
   implicit val ec2: ExecutionContextExecutor = system2.dispatcher
 
