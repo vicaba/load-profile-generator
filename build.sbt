@@ -10,5 +10,6 @@ libraryDependencies ++= Seq(
   gson,
   akkaStream,
   akkaStreamTest,
-  apacheFreemaker
+  apacheFreemaker,
+  sl4fj
 )

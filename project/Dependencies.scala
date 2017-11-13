@@ -12,4 +12,6 @@ object Dependencies {
 
   val apacheFreemaker: ModuleID = "org.freemarker" % "freemarker" % "2.3.26-incubating"
 
+  val sl4fj: ModuleID = "ch.qos.logback" % "logback-classic" % "1.2.3"
+
 }

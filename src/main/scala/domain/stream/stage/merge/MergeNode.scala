@@ -29,7 +29,6 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
         .addAttributes(Attributes.inputBuffer(initial = 1024, max = 1024))  //Only works with power of two.
         */
       )
-
       println("1. Time to connect sources to zipper")
       sourceValues foreach (src =>
         if (!broadcastValues.contains(src._1)) {

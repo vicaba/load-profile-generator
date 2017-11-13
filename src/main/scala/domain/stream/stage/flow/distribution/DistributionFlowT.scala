@@ -1,6 +1,6 @@
 package domain.stream.stage.flow.distribution
 
-import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler, OutHandler}
+import akka.stream.stage._
 import akka.stream.{Attributes, FlowShape, Inlet, Outlet}
 import domain.in.distribution.InputDistribution
 import domain.transform.calculations.Calculations
@@ -17,7 +17,7 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
   val inlet: Inlet[Value[V]] = Inlet[Value[V]]("FB" + inputDistribution(0).getId + ".in")
   val outlet: Outlet[Value[V]] = Outlet[Value[V]]("FD" + inputDistribution(0).getResult.getId + ".out")
 
-  override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) {
+  override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) with StageLogging {
 
     private val distributionsCheck = new DistributionsCheck(inputDistribution.asJava)
 
@@ -35,7 +35,8 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
         }
         println("Proceeding to get next value")
         val data = dataGenerator.obtainNext()
-        println("Value of data obtained is ID: "+data.getId+" and value: "+data.getValue)
+        log.debug("Randomly generated: [{}]", data)
+
         push(outlet, data)
         println("Finished with value")
       }

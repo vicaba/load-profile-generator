@@ -1,6 +1,6 @@
 package domain.stream.stage.source
 
-import akka.stream.stage.{GraphStage, GraphStageLogic, OutHandler}
+import akka.stream.stage.{GraphStage, GraphStageLogic, OutHandler, StageLogging}
 import akka.stream.{Attributes, Outlet, SourceShape}
 import domain.transform.calculations.Calculations
 import domain.value.Value
@@ -14,10 +14,14 @@ abstract class SourceValueT[V, T <: Calculations[V]](val dataGenerator: ValueGen
     Outlet[Value[V]](s"${dataGenerator.getId}")
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic =
-    new GraphStageLogic(shape) {
+    new GraphStageLogic(shape) with StageLogging {
 
       setHandler(output, new OutHandler {
-        override def onPull(): Unit = push(output, dataGenerator.obtainNext())
+        override def onPull(): Unit = {
+          val data = dataGenerator.obtainNext()
+          log.debug("Randomly generated: [{}]", data)
+          push(output, data)
+        }
       })
     }
 
