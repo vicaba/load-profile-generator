@@ -7,6 +7,7 @@ import domain.transform.calculations.Calculations
 import domain.transform.distribution.DistributionsCheck
 import domain.value.Value
 import domain.value.generator.ValueGenerator
+import org.slf4j.{Logger, LoggerFactory}
 
 import scala.collection.JavaConverters._
 
@@ -17,7 +18,9 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
   val inlet: Inlet[Value[V]] = Inlet[Value[V]]("FB" + inputDistribution(0).getId + ".in")
   val outlet: Outlet[Value[V]] = Outlet[Value[V]]("FD" + inputDistribution(0).getResult.getId + ".out")
 
-  override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) with StageLogging {
+  val logger: Logger = LoggerFactory.getLogger("GraphLogger")
+
+  override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) {
 
     private val distributionsCheck = new DistributionsCheck(inputDistribution.asJava)
 
@@ -25,26 +28,21 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
       override def onPush(): Unit = {
         val input = grab(inlet)
 
-        println("Proceeding to increase counter of ID "+input.getId)
         //distributionsCheck.increaseCounter(input.getId)
         distributionsCheck.increaseAllCounters()
         if (distributionsCheck.checkDistribution()) {
-          println("--Check worked, time to reset values")
           distributionsCheck.resetCounter()
           dataGenerator.reset()
         }
-        println("Proceeding to get next value")
         val data = dataGenerator.obtainNext()
-        log.debug("Randomly generated: [{}]", data)
 
         push(outlet, data)
-        println("Finished with value")
+        logger.debug("Throwing data with ID " + data.getId + " with type " + data.getType + " and value " + data.getValue)
       }
     })
 
     setHandler(outlet, new OutHandler {
       override def onPull(): Unit = {
-        println("flowIn.onPull")
         pull(inlet)
       }
     })

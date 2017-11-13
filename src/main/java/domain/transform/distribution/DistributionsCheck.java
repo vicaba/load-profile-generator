@@ -21,9 +21,9 @@ public class DistributionsCheck {
 
   public void increaseAllCounters() {
     for (Map.Entry<String, Integer> entry : listCounters.entrySet()) {
-      System.out.println("++Counter of ID "+entry.getKey()+" is currently "+this.listCounters.get(entry.getKey()));
+      //System.out.println("++Counter of ID "+entry.getKey()+" is currently "+this.listCounters.get(entry.getKey()));
       listCounters.put(entry.getKey(), entry.getValue()+1);
-      System.out.println("++Counter of ID "+entry.getKey()+" is reset to "+this.listCounters.get(entry.getKey()));
+      //System.out.println("++Counter of ID "+entry.getKey()+" is reset to "+this.listCounters.get(entry.getKey()));
     }
   }
 
@@ -38,10 +38,10 @@ public class DistributionsCheck {
   public void resetCounter() {
     //int count = 0;
     for (Map.Entry<String, Integer> entry : listCounters.entrySet()) {
-      System.out.println("++Counter of ID "+entry.getKey()+" is currently "+this.listCounters.get(entry.getKey()));
+      //System.out.println("++Counter of ID "+entry.getKey()+" is currently "+this.listCounters.get(entry.getKey()));
       //listCounters.put(entry.getKey(), entry.getValue()-this.listDistribution.get(entry.getKey()).getComparator());
       listCounters.put(entry.getKey(), 0);
-      System.out.println("++Counter of ID "+entry.getKey()+" is reset to "+this.listCounters.get(entry.getKey()));
+      //System.out.println("++Counter of ID "+entry.getKey()+" is reset to "+this.listCounters.get(entry.getKey()));
       //count++;
     }
   }
@@ -52,7 +52,7 @@ public class DistributionsCheck {
       switch (input.getCondition()) {
         case "count":
           if (listCounters.get(input.getId()) >= input.getComparator()) {
-            System.out.println("++Counter of ID "+input.getId()+" is currently "+this.listCounters.get(input.getId())+ " and reaches value "+input.getComparator());
+            //System.out.println("++Counter of ID "+input.getId()+" is currently "+this.listCounters.get(input.getId())+ " and reaches value "+input.getComparator());
             totalOkay++;
           }
           break;
@@ -61,7 +61,7 @@ public class DistributionsCheck {
           break;
       }
     }
-    System.out.println("There's "+totalOkay+ " totalOkay and size of listCounters is "+listCounters.size());
+    //System.out.println("There's "+totalOkay+ " totalOkay and size of listCounters is "+listCounters.size());
     return totalOkay == listCounters.size();
   }
 }

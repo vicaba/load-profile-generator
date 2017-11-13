@@ -60,9 +60,9 @@ public class RulesCheck {
         }
       }
     }
-    for (Value output : outputs) {
-      System.out.println("Value value is " + output.getValue());
-    }
+    //for (Value output : outputs) {
+    //  System.out.println("Value value is " + output.getValue());
+    //}
     return outputs;
   }
 }
