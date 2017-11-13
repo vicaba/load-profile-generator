@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Albert Trias
  * @since 28/09/2017
  */
-public class NumberDistributionCalculations implements DistributionCalculations<Number> {
+public class NumberDistributionCalculations implements DistributionCalculations<Float> {
   /** List of ranges, one of them will be chosen at random. */
   private ArrayList<NumberRange> numberRanges;
 
@@ -46,7 +46,7 @@ public class NumberDistributionCalculations implements DistributionCalculations<
         this.numberRanges.get(ThreadLocalRandom.current().nextInt(0, this.numberRanges.size()));
     */
     NumberRange numberRange = this.numberRanges.get(0);    //TODO Make it compatible with multiple ranges.
-    
+
     float fTotal = numberRange.getMin() + this.counterNumber;
     float fMax = numberRange.getMax();
     //return ThreadLocalRandom.current().nextFloat() * (numberRange.getMax() - fMin) + fMin;

@@ -5,8 +5,8 @@ import akka.stream.scaladsl.Flow
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
-import domain.stream.stage.flow.distribution.DistributionFlowDate
-import domain.transform.calculations.distribution.DateDistributionCalculations
+import domain.stream.stage.flow.distribution.{DistributionFlowDate, DistributionFlowNumber}
+import domain.transform.calculations.distribution.{DateDistributionCalculations, NumberDistributionCalculations}
 import domain.transform.calculations.equal.{NumberEqualCalculations, StringEqualCalculations}
 import domain.value.Value
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
@@ -21,7 +21,7 @@ object InputDistributionConversions {
     case _: OptionsNumber =>
       new NumberValueGenerator(
         in,
-        new NumberEqualCalculations(in.getOptions.asInstanceOf[OptionsNumber].getRanges)
+        new NumberDistributionCalculations(in.getOptions.asInstanceOf[OptionsNumber].getRanges)
       )
     case _: OptionsDate =>
       new DateValueGenerator(
@@ -37,8 +37,9 @@ object InputDistributionConversions {
                                    dist: List[InputDistribution]): Flow[Value[_], Value[_], NotUsed] = vg match {
     /*    case value : StringValueGenerator =>
            Flow.fromGraph(new DistributionFlowString(value, dist))
-        case value: NumberValueGenerator =>
-          Flow.fromGraph(new DistributionFlowNumber(value, dist))*/
+     */
+    case value: NumberValueGenerator =>
+      Flow.fromGraph(new DistributionFlowNumber(value, dist)).asInstanceOf[Flow[Value[_], Value[_], NotUsed]]
     case value: DateValueGenerator =>
       Flow.fromGraph(new DistributionFlowDate(value, dist)).asInstanceOf[Flow[Value[_], Value[_], NotUsed]]
   }
