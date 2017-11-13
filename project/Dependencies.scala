@@ -14,4 +14,6 @@ object Dependencies {
 
   val sl4fj: ModuleID = "ch.qos.logback" % "logback-classic" % "1.2.3"
 
+  val apacheCommons: ModuleID = "org.apache.commons" % "commons-math3" % "3.6.1"
+
 }
