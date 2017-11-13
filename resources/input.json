@@ -3,44 +3,60 @@
     {
       "info": {
         "id": "0001",
-        "name": "Date",
-        "type": "date"
+        "name": "Temperature",
+        "type": "integer"
       },
       "options": {
-        "startingDate": "18-09-2018 08:00",
-        "timeIncrement": 3600
+        "ranges": [
+          {
+            "min": 4,
+            "max": 100
+          },
+          {
+            "min": -50,
+            "max": -1
+          }
+        ]
       }
     },
     {
       "info": {
         "id": "0002",
-        "name": "Date",
-        "type": "date"
+        "name": "Temperature",
+        "type": "integer"
       },
       "options": {
-        "startingDate": "18-09-2017 08:00",
-        "timeIncrement": 3600
+        "ranges": [
+          {
+            "min": 1,
+            "max": 5
+          }
+        ]
       }
     },
     {
       "info": {
         "id": "0003",
-        "name": "Date",
-        "type": "date"
+        "name": "Temperature",
+        "type": "integer"
       },
       "options": {
-        "startingDate": "18-09-2019 08:00",
-        "timeIncrement": 3600
+        "ranges": [
+          {
+            "min": 1,
+            "max": 10
+          }
+        ]
       }
     }
   ],
   "distributions": [
     {
-      "id": "0001",
+      "id": "0002",
       "condition": "count",
       "comparator": 5,
       "result": {
-        "id": "0002",
+        "id": "0001",
         "operation": "reset"
       }
     },
@@ -49,20 +65,20 @@
       "condition": "count",
       "comparator": 3,
       "result": {
-        "id": "0002",
+        "id": "0001",
         "operation": "reset"
       }
     }
   ],
   "rules": [
     {
-      "id": "0002",
+      "id": "0001",
       "condition": "isGreaterThan",
-      "comparator": "18-09-2018 12:00",
+      "comparator": 200,
       "result": {
         "id": "0002",
-        "operation": "+",
-        "value": 3600
+        "operation": "sum",
+        "value": 5
       }
     }
   ]
