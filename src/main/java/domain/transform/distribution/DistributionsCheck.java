@@ -27,19 +27,22 @@ public class DistributionsCheck {
     }
   }
 
+  /*
   public void increaseCounter(String id) {
     System.out.println("++Counter of ID "+id+" is currently "+this.listCounters.get(id));
     this.listCounters.put(id, this.listCounters.get(id)+1);
     System.out.println("++Counter of ID "+id+" is now "+this.listCounters.get(id));
   }
+  */
 
   public void resetCounter() {
-    int count = 0;
+    //int count = 0;
     for (Map.Entry<String, Integer> entry : listCounters.entrySet()) {
       System.out.println("++Counter of ID "+entry.getKey()+" is currently "+this.listCounters.get(entry.getKey()));
-      listCounters.put(entry.getKey(), entry.getValue()-this.listDistribution.get(entry.getKey()).getComparator());
+      //listCounters.put(entry.getKey(), entry.getValue()-this.listDistribution.get(entry.getKey()).getComparator());
+      listCounters.put(entry.getKey(), 0);
       System.out.println("++Counter of ID "+entry.getKey()+" is reset to "+this.listCounters.get(entry.getKey()));
-      count++;
+      //count++;
     }
   }
 

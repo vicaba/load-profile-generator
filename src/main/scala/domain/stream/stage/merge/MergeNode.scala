@@ -24,9 +24,12 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
       import GraphDSL.Implicits._
 
       val zipper = builder.add(ZipN[Value[_]](sourceValues.size + distributionValues.size)
+        /*
         .async
         .addAttributes(Attributes.inputBuffer(initial = 1024, max = 1024))  //Only works with power of two.
+        */
       )
+
       println("1. Time to connect sources to zipper")
       sourceValues foreach (src =>
         if (!broadcastValues.contains(src._1)) {
@@ -63,8 +66,8 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
           println("---Connected")
         } else {
           println("---There's multiple distributions")
-          //val zipperMerge = builder.add(ZipN[Value[_]](conn.size))
-          val zipperMerge = builder.add(Merge[Value[_]](conn.size))
+          val zipperMerge = builder.add(ZipN[Value[_]](conn.size))
+          //val zipperMerge = builder.add(Merge[Value[_]](conn.size))
           conn.foreach { conn =>
             println("---Connecting " + broadBuild(conn.getId).out(1) + " with " + zipperMerge)
             broadBuild(conn.getId).out(1) ~> zipperMerge
@@ -73,8 +76,8 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
           }
 
           println("---Connecting " + zipperMerge + " with " + flow._2)
-          //zipperMerge ~> Flow[Seq[Value[_]]].map(src => src.toList.head) ~>  flow._2 ~> zipper
-          zipperMerge ~> flow._2 ~> zipper
+          zipperMerge ~> Flow[Seq[Value[_]]].map(src => src.toList.head) ~> flow._2 ~> zipper
+          //zipperMerge ~> flow._2 ~> zipper
           println("---Connected")
         }
       }
