@@ -4,14 +4,9 @@ import akka.stream.stage._
 import akka.stream.{Attributes, FlowShape, Inlet, Outlet}
 import domain.in.distribution.InputDistribution
 import domain.transform.calculations.Calculations
-import domain.transform.distribution.DistributionsCheck
 import domain.value.Value
 import domain.value.generator.ValueGenerator
-import org.apache.commons.math3.distribution.TDistribution
 import org.slf4j.{Logger, LoggerFactory}
-
-import scala.collection.JavaConverters._
-import scala.util.Random
 
 abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: ValueGenerator[V, T],
                                                           val inputDistribution: List[InputDistribution])

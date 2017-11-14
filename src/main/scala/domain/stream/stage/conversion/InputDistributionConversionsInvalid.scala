@@ -6,7 +6,6 @@ import akka.stream.scaladsl.Flow
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.stream.stage.flow.distribution.{DistributionFlowDate, DistributionFlowNumber, DistributionFlowString}
-
 import domain.value.Value
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
 
@@ -19,7 +18,7 @@ object InputDistributionConversionsInvalid {
 
 
   def valueGeneratorToDistribution(vg: ValueGenerator[_, _],
-    dist: List[InputDistribution]): Flow[Value[_], Value[_], NotUsed] = {
+                                   dist: List[InputDistribution]): Flow[Value[_], Value[_], NotUsed] = {
 
     def eraseType[A, B, C](f: Flow[Value[A], Value[B], C]) = f.asInstanceOf[Flow[Value[_], Value[_], C]]
 
@@ -34,7 +33,6 @@ object InputDistributionConversionsInvalid {
 
 
   }
-  
 
 
 }

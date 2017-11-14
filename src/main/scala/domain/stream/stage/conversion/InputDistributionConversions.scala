@@ -7,7 +7,7 @@ import domain.in.field.InputField
 import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
 import domain.stream.stage.flow.distribution.{DistributionFlowDate, DistributionFlowNumber}
 import domain.transform.calculations.distribution.{DateDistributionCalculations, NumberDistributionCalculations}
-import domain.transform.calculations.equal.{NumberEqualCalculations, StringEqualCalculations}
+import domain.transform.calculations.equal.StringEqualCalculations
 import domain.value.Value
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
 

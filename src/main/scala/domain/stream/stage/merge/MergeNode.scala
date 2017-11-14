@@ -2,8 +2,8 @@ package domain.stream.stage.merge
 
 import akka.NotUsed
 import akka.actor.ActorSystem
-import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, RunnableGraph, Sink, Source, ZipN}
 import akka.stream._
+import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, RunnableGraph, Sink, Source, ZipN}
 import domain.in.distribution.InputDistribution
 import domain.stream.stage.flow.rules.RulesFlow
 import domain.value.Value

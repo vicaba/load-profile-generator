@@ -2,7 +2,7 @@ import akka.stream.scaladsl.Broadcast
 import domain.in.config.ConfigHolder
 import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
 import domain.stream.stage.flow.rules.RulesFlow
-import domain.stream.stage.merge.{MergeNode}
+import domain.stream.stage.merge.MergeNode
 import domain.transform.rule.RulesCheck
 import domain.value.Value
 
