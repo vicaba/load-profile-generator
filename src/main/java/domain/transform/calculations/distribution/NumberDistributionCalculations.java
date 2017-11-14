@@ -1,10 +1,13 @@
 package domain.transform.calculations.distribution;
 
 import domain.in.field.options.NumberRange;
-import domain.transform.calculations.equal.EqualCalculations;
+import org.apache.commons.math3.distribution.TDistribution;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 /**
  * Class responsible of giving a valid number field depending on the input configurations that are
@@ -19,33 +22,53 @@ public class NumberDistributionCalculations implements DistributionCalculations<
   private ArrayList<NumberRange> numberRanges;
 
   private int counterNumber = 0;
+  private TDistribution tDistribution = new TDistribution(10); //We use the Student-T probability
+  private Logger logger = LoggerFactory.getLogger("CalculationsLogger");
+  private SecureRandom random = new SecureRandom();
 
-  /**
-   * Constructor.
-   *
-   * @param numberRanges ArrayList of NumberRange with the list of ranges available for this field.
+  //TODO Next thing is to made the formula so the number put in the json indicates at which point we want the chance to be nearly impossible to miss is after receiving 7 values for example.
+    /*
+     * The initial value, that will go from -5 to -Inf.
+     * If the initial value is -5, at half the counterData you have a 50% chance to apply the distribution.
+     * The smaller the number is, the more data you need to pass so the percentage becomes higher.
+     */
+  private double initialValue = -20;
+  /*
+   * The amount of data you need to pass so the chance to apply the distribution becomes close to 100%.
+   * This works on a 10/counterData formula, so the smaller it is, the less it takes to reach 100%.
+   * Keep in mind that counterData works on a [-5, 5] range, not on a [initialValue, 5] range.
    */
+  private double counterData = 20.0;
+
   public NumberDistributionCalculations(ArrayList<NumberRange> numberRanges) {
     this.numberRanges = numberRanges;
   }
 
-  /**
-   * Function responsible of giving a valid number according to the configuration passed in the
-   * constructor. The number will be chosen by first choosing a random range from the list, and
-   * after that a number will be chosen between the given range
-   *
-   * <p>The formula used to obtain the number between the chosen range is randomFloat * (max-min) +
-   * min, including min and excluding max value.
-   *
-   * @return Float with the random number obtaining after choosing a random range and number.
-   */
   @Override
   public Float calculate() {
-    /*
-    NumberRange numberRange =
-        this.numberRanges.get(ThreadLocalRandom.current().nextInt(0, this.numberRanges.size()));
-    */
     NumberRange numberRange = this.numberRanges.get(0);    //TODO Make it compatible with multiple ranges.
+    /*
+     * Applies a Student-T Continuous Distribution.
+     * Values below 0 have low percentage. From -5 to -Inf, chance is close to 0%.
+     * Values above 0 have high percentages. From +5 to +Int, chance is close to 100%.
+     * The formula used is (count * (10/counterData) + initialValue).
+     */
+    double distValue = tDistribution.cumulativeProbability(counterNumber
+            * (10/counterData) + initialValue);
+    logger.debug("Division is " + (10/counterData) + ", operation is " + ((counterNumber
+            * (10/counterData)) + initialValue) + ", and distValue is " + distValue);
+
+    /*
+     * Once we have a random, we obtain a random using the random class.
+     * The formula to consider if the distribution is applied is P(X <= distValue) = 1, P(X > distValue) = 0.
+     * X being a random double value between 0 and 1.
+     * As you can see in the formula, the bigger distValue is, the highest the chance that we apply distribution.
+     */
+    if (random.nextDouble() <= distValue ) {
+      logger.debug("After receiving " + counterNumber + " data, we succeeded at applying distribution with a probability of " + distValue);
+      this.resetCounter();
+    }
+
 
     float fTotal = numberRange.getMin() + this.counterNumber;
     float fMax = numberRange.getMax();
