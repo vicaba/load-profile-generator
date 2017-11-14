@@ -10,7 +10,6 @@ import akka.stream.stage.AbstractOutHandler;
 import akka.stream.stage.GraphStage;
 import akka.stream.stage.GraphStageLogic;
 import domain.transform.calculations.Calculations;
-import domain.transform.calculations.equal.MyStatefulDateEqualCalculations;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.CompletionStage;
@@ -56,7 +55,7 @@ public class MyCalculationsSource<T> extends GraphStage<SourceShape<T>> {
   public static void main(String[] args) {
     // Especifica la fuente de datos, el primer parámetro indica el tipo de datos que sacará la
     // fuente.
-    final Source<LocalDateTime, NotUsed> source = Source.fromGraph(new MyCalculationsSource<>(new MyStatefulDateEqualCalculations(LocalDateTime.now(), 100)));
+    //final Source<LocalDateTime, NotUsed> source = Source.fromGraph(new MyCalculationsSource<>(new MyStatefulDateEqualCalculations(LocalDateTime.now(), 100)));
     // Necesario ya que necesitamos uno al menos para el Materializer, y es necesario un ActorSystem
     // para tener alguno.
     final ActorSystem system = ActorSystem.create("QuickStart");
@@ -65,8 +64,8 @@ public class MyCalculationsSource<T> extends GraphStage<SourceShape<T>> {
 
     // runForEach hace que la fuente pase al Materializer y que comience a sacar datos,
     // aparte de sacar la info por consola.
-    final CompletionStage<Done> done = source.runForeach(System.out::println, materializer);
-    done.thenRun(system::terminate);
+    //final CompletionStage<Done> done = source.runForeach(System.out::println, materializer);
+    //done.thenRun(system::terminate);
   }
 
 }

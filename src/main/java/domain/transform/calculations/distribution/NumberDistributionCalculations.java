@@ -64,6 +64,7 @@ public class NumberDistributionCalculations implements DistributionCalculations<
             + ", and distValue is "
             + distValue);
 
+    //TODO After testing, this method doesn't work, as the values always seem to be the same ever after a lot of time passes. I need to find a way to define a P(X <= distValue)
     /*
      * Once we have a random, we obtain a random using the random class.
      * The formula to consider if the distribution is applied is P(X <= distValue) = 1, P(X > distValue) = 0.
