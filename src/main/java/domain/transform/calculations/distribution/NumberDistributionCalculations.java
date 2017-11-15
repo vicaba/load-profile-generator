@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Class responsible of giving a valid number field depending on the input configurations that are
@@ -23,7 +24,6 @@ public class NumberDistributionCalculations implements DistributionCalculations<
   private int counterNumber = 0;
   private TDistribution tDistribution = new TDistribution(10); // We use the Student-T probability
   private Logger logger = LoggerFactory.getLogger("CalculationsLogger");
-  private SecureRandom random = new SecureRandom();
 
   // TODO Next thing is to made the formula so the number put in the json indicates at which point
   // we want the chance to be nearly impossible to miss is after receiving 7 values for example.
@@ -38,7 +38,7 @@ public class NumberDistributionCalculations implements DistributionCalculations<
    * This works on a 10/counterData formula, so the smaller it is, the less it takes to reach 100%.
    * Keep in mind that counterData works on a [-5, 5] range, not on a [initialValue, 5] range.
    */
-  private double counterData = 20.0;
+  private double counterData = 10.0;
 
   public NumberDistributionCalculations(ArrayList<NumberRange> numberRanges) {
     this.numberRanges = numberRanges;
@@ -63,15 +63,15 @@ public class NumberDistributionCalculations implements DistributionCalculations<
             + ((counterNumber * (10 / counterData)) + initialValue)
             + ", and distValue is "
             + distValue);
-
-    //TODO After testing, this method doesn't work, as the values always seem to be the same ever after a lot of time passes. I need to find a way to define a P(X <= distValue)
+    
     /*
      * Once we have a random, we obtain a random using the random class.
      * The formula to consider if the distribution is applied is P(X <= distValue) = 1, P(X > distValue) = 0.
      * X being a random double value between 0 and 1.
      * As you can see in the formula, the bigger distValue is, the highest the chance that we apply distribution.
      */
-    if (random.nextDouble() <= distValue) {
+    double comparison = ThreadLocalRandom.current().nextInt(100) * 0.01;
+    if (comparison <= distValue) {
       logger.debug(
           "After receiving "
               + counterNumber

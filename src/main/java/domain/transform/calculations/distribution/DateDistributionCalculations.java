@@ -30,7 +30,7 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
    * This works on a 10/counterData formula, so the smaller it is, the less it takes to reach 100%.
    * Keep in mind that counterData works on a [-5, 5] range, not on a [initialValue, 5] range.
    */
-  private double counterData = 30.0;
+  private double counterData = 10.0;
 
   public DateDistributionCalculations(String startingDate, int timeIncrement) {
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
@@ -50,14 +50,13 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
             + ", and distValue is "
             + distValue);
 
-    //TODO After testing, this method doesn't work, as the values always seem to be the same ever after a lot of time passes. I need to find a way to define a P(X <= distValue)
     /*
      * Once we have a random, we obtain a random using the random class.
      * The formula to consider if the distribution is applied is P(X <= distValue) = 1, P(X > distValue) = 0.
      * X being a random double value between 0 and 1.
      * As you can see in the formula, the bigger distValue is, the highest the chance that we apply distribution.
      */
-    double comparison = ThreadLocalRandom.current().nextDouble(1);
+    double comparison = ThreadLocalRandom.current().nextInt(100) * 0.01;
     if (comparison <= distValue) {
       logger.debug(
           "After receiving "
