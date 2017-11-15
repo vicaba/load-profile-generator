@@ -15,7 +15,7 @@ class RulesFlow(rulesCheck: RulesCheck) extends GraphStage[FlowShape[Seq[Value[_
   val output: Outlet[Seq[Value[_]]] = Outlet[Seq[Value[_]]]("RulesFlow.out")
 
   val rules: RulesCheck = rulesCheck
-  val logger: Logger = LoggerFactory.getLogger("GraphLogger")
+  //val logger: Logger = LoggerFactory.getLogger("GraphLogger")
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic =
     new GraphStageLogic(shape) {
@@ -24,7 +24,7 @@ class RulesFlow(rulesCheck: RulesCheck) extends GraphStage[FlowShape[Seq[Value[_
         override def onPush(): Unit = {
           val javaList = grab(input).asJava
           val scalaList = rulesCheck.applyRules(javaList).asScala
-          logger.debug("Result of rules from list values: {}", scalaList.map(value => value.getId + ":" + value.getType + ":" + value.getValue))
+          //logger.debug("Result of rules from list values: {}", scalaList.map(value => value.getId + ":" + value.getType + ":" + value.getValue))
 
           push(output, scalaList)
         }

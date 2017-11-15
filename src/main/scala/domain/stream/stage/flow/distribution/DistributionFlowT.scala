@@ -15,7 +15,7 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
   val inlet: Inlet[Value[V]] = Inlet[Value[V]]("FB" + inputDistribution(0).getId + ".in")
   val outlet: Outlet[Value[V]] = Outlet[Value[V]]("FD" + inputDistribution(0).getResult.getId + ".out")
 
-  val logger: Logger = LoggerFactory.getLogger("GraphLogger")
+  //val logger: Logger = LoggerFactory.getLogger("GraphLogger")
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) {
 
@@ -37,7 +37,7 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
         val data = dataGenerator.obtainNext()
 
         push(outlet, data)
-        logger.debug("Throwing data with ID " + data.getId + " with type " + data.getType + " and value " + data.getValue)
+        //logger.debug("Throwing data with ID " + data.getId + " with type " + data.getType + " and value " + data.getValue)
       }
     })
 

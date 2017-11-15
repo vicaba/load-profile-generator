@@ -17,7 +17,7 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
   //implicit val config: Config = ConfigFactory.load()
   implicit val system2: ActorSystem = ActorSystem(/*"QuickStart", config.getConfig("akka").withFallback(config)*/)
   implicit val materializer2: ActorMaterializer = ActorMaterializer()
-  implicit val logger: Logger = LoggerFactory.getLogger("GraphLogger")
+  //implicit val logger: Logger = LoggerFactory.getLogger("GraphLogger")
 
   def connectAndRunGraph(): NotUsed = RunnableGraph.fromGraph(GraphDSL.create() { implicit builder: GraphDSL.Builder[NotUsed] =>
     import GraphDSL.Implicits._

@@ -14,7 +14,7 @@ abstract class SourceValueT[V, T <: Calculations[V]](val dataGenerator: ValueGen
   val output: Outlet[Value[V]] =
     Outlet[Value[V]](s"${dataGenerator.getId}")
 
-  val logger: Logger = LoggerFactory.getLogger("GraphLogger")
+  //val logger: Logger = LoggerFactory.getLogger("GraphLogger")
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic =
     new GraphStageLogic(shape) {
@@ -22,7 +22,7 @@ abstract class SourceValueT[V, T <: Calculations[V]](val dataGenerator: ValueGen
       setHandler(output, new OutHandler {
         override def onPull(): Unit = {
           val data = dataGenerator.obtainNext()
-          logger.debug("From source throwing data with ID " + data.getId + " with type " + data.getType + " and value " + data.getValue)
+          //logger.debug("From source throwing data with ID " + data.getId + " with type " + data.getType + " and value " + data.getValue)
           push(output, data)
         }
       })
