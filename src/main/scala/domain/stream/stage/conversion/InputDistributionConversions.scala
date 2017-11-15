@@ -21,14 +21,21 @@ object InputDistributionConversions {
     case _: OptionsNumber =>
       new NumberValueGenerator(
         in,
-        new NumberDistributionCalculations(in.getOptions.asInstanceOf[OptionsNumber].getRanges)
+        new NumberDistributionCalculations(
+          in.getOptions.asInstanceOf[OptionsNumber].getRanges,
+          in.getDistributionInfo.getOffset,
+          in.getDistributionInfo.getTotalData
+        )
       )
     case _: OptionsDate =>
       new DateValueGenerator(
         in,
         new DateDistributionCalculations(
           in.getOptions.asInstanceOf[OptionsDate].getStartingDate,
-          in.getOptions.asInstanceOf[OptionsDate].getTimeIncrement)
+          in.getOptions.asInstanceOf[OptionsDate].getTimeIncrement,
+          in.getDistributionInfo.getOffset,
+          in.getDistributionInfo.getTotalData
+        )
       )
   }
 

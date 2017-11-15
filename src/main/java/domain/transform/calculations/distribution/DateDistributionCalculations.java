@@ -13,29 +13,32 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
 
   private LocalDateTime startingDate;
   private int timeIncrement;
-  private int counterDate = 0;
-
-  private TDistribution tDistribution = new TDistribution(10); // We use the Student-T probability
-  private Logger logger = LoggerFactory.getLogger("CalculationsLogger");
-
   /*
    * The initial value, that will go from -5 to -Inf.
    * If the initial value is -5, at half the counterData you have a 50% chance to apply the distribution.
    * The smaller the number is, the more data you need to pass so the percentage becomes higher.
    */
-  private double offset = -20;
+  private double offset;
   /*
    * The amount of data you need to pass so the chance to apply the distribution becomes close to 100%.
    * This works on a 10/counterData formula, so the smaller it is, the less it takes to reach 100%.
    * Keep in mind that counterData works on a [-5, 5] range, not on a [initialValue, 5] range.
    */
-  private double totalData = 10.0;
+  private double totalData;
+  private int counterDate = 0;
   private int counterDistribution = 0;
 
-  public DateDistributionCalculations(String startingDate, int timeIncrement) {
+  private TDistribution tDistribution = new TDistribution(10); // We use the Student-T probability
+  private Logger logger = LoggerFactory.getLogger("CalculationsLogger");
+
+  public DateDistributionCalculations(
+      String startingDate, int timeIncrement, double offset, double totalData) {
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
     this.startingDate = LocalDateTime.parse(startingDate, dateTimeFormatter);
     this.timeIncrement = timeIncrement;
+    this.offset = offset;
+    this.totalData = totalData;
+    System.out.println("Offset is "+offset+" and totalData is "+totalData);
   }
 
   @Override

@@ -1,6 +1,7 @@
 package infrastructure.in.serialization.json.deserializer;
 
 import com.google.gson.*;
+import domain.in.field.DistributionInfo;
 import domain.in.field.InputField;
 import domain.in.field.InputFieldInfo;
 import domain.in.field.options.Options;
@@ -14,6 +15,7 @@ public class FieldDeserializer implements JsonDeserializer<InputField> {
 
   private static final String OPTIONS_FIELD = "options";
   private static final String INFO_FIELD = "info";
+  private static final String DISTRIBUTION_INFO = "distributionInfo";
 
   // ----- FOR ANY NEW OPTION TYPE, ADD ITS NAME HERE ----
   private static final String STRING_TYPE = "string";
@@ -38,8 +40,9 @@ public class FieldDeserializer implements JsonDeserializer<InputField> {
     InputFieldInfo inputFieldInfo =
         new Gson().fromJson(jo.get(INFO_FIELD).getAsJsonObject(), InputFieldInfo.class);
     Options options = getOptionsFromJSON(jo, inputFieldInfo.getType());
+    DistributionInfo distributionInfo = new Gson().fromJson(jo.get(DISTRIBUTION_INFO).getAsJsonObject(), DistributionInfo.class);
 
-    return new InputField<>(inputFieldInfo, options);
+    return new InputField<>(inputFieldInfo, options, distributionInfo);
   }
 
   private Options getOptionsFromJSON(JsonObject jo, String sType) {

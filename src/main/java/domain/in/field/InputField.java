@@ -3,10 +3,12 @@ package domain.in.field;
 public class InputField<Opt> {
   private InputFieldInfo fields;
   private Opt options;
+  private DistributionInfo distributionInfo;
 
-  public InputField(InputFieldInfo inputFieldInfo, Opt options) {
+  public InputField(InputFieldInfo inputFieldInfo, Opt options, DistributionInfo distributionInfo) {
     this.fields = inputFieldInfo;
     this.options = options;
+    this.distributionInfo = distributionInfo;
   }
 
   public String getId() {
@@ -23,5 +25,9 @@ public class InputField<Opt> {
 
   public Opt getOptions() {
     return this.options;
+  }
+
+  public DistributionInfo getDistributionInfo() {
+     return this.distributionInfo;
   }
 }

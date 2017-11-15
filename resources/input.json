@@ -9,7 +9,8 @@
       "options": {
         "startingDate": "18-09-2018 08:00",
         "timeIncrement": 3600
-      }
+      },
+      "distributionInfo": {}
     },
     {
       "info": {
@@ -20,6 +21,11 @@
       "options": {
         "startingDate": "18-09-2017 08:00",
         "timeIncrement": 3600
+      },
+      "distributionInfo": {
+        "distributionMethod": "Student-T",
+        "offset": -20,
+        "totalData": 20.0
       }
     },
     {
@@ -31,7 +37,8 @@
       "options": {
         "startingDate": "18-09-2019 08:00",
         "timeIncrement": 3600
-      }
+      },
+      "distributionInfo": {}
     }
   ],
   "distributions": [
