@@ -12,7 +12,9 @@ object Dependencies {
 
   val apacheFreemaker: ModuleID = "org.freemarker" % "freemarker" % "2.3.26-incubating"
 
-  val sl4fj: ModuleID = "ch.qos.logback" % "logback-classic" % "1.2.3"
+  val scalaLogging: ModuleID = "com.typesafe.scala-logging" %% "scala-logging" % "3.7.2"
+
+  val logback: ModuleID = "ch.qos.logback" % "logback-classic" % "1.2.3"
 
   val apacheCommons: ModuleID = "org.apache.commons" % "commons-math3" % "3.6.1"
 
