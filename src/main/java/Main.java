@@ -56,7 +56,10 @@ public class Main {
       exit(0);
     }
 
-    InputConfigReader inputConfig = new InputConfigReader(args[0]);
+    final String inputConfigurationFile = args[0];
+    final String outputConfigurationFile = args[1];
+
+    InputConfigReader inputConfig = new InputConfigReader(inputConfigurationFile);
     ConfigHolder configGen;
 
     if ((configGen = inputConfig.getConfigGenerator()) != null) {
@@ -68,7 +71,7 @@ public class Main {
       );
       */
       graphGenerator.generate(configGen, rulesCheck);
-      OutputField outputField = new OutputConfigReader(args[1]).getOutputField();
+      OutputField outputField = new OutputConfigReader(outputConfigurationFile).getOutputField();
       DataPreparation dataPreparation = new DataPreparation(configGen);
       ArrayList<ArrayList<Value>> outputs = new ArrayList<>();
 
