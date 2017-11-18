@@ -29,7 +29,8 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
   private int counterDistribution = 0;
 
   private TDistribution tDistribution = new TDistribution(10); // We use the Student-T probability
-  private Logger logger = LoggerFactory.getLogger("CalculationsLogger");
+  private Logger logger = LoggerFactory.getLogger("distribution.logger");
+  private Logger traceLogger = LoggerFactory.getLogger("distribution.trace");
 
   public DateDistributionCalculations(
       String startingDate, int timeIncrement, double offset, double totalData) {
@@ -55,8 +56,8 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
     double comparison = ThreadLocalRandom.current().nextInt(100) * 0.01;
     if (comparison <= distValue) {
       // TODO THIS IS THE IMPORTANT PART IN THE LOGGER
-      logger.debug(counterDistribution + ",1");
-      System.out.println(
+      traceLogger.trace(counterDistribution + ",1\n");
+      logger.debug(
           "Division is "
               + (10 / totalData)
               + ", operation is "
@@ -66,8 +67,8 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
       this.counterDistribution = 0;
     } else {
       // TODO THIS IS THE IMPORTANT PART IN THE LOGGER
-      logger.debug(counterDistribution + ",0");
-      System.out.println(
+      traceLogger.trace(counterDistribution + ",0\n");
+      logger.debug(
           "Division is "
               + (10 / totalData)
               + ", operation is "

@@ -46,12 +46,13 @@ public class Main {
 
     configureLogger(LOGGER_CONFIGURATION_PATH);
 
-    Logger logger = LoggerFactory.getLogger("AppLogger");
+    Logger appLogger = LoggerFactory.getLogger("app.logger");
 
-    logger.info("Starting Application");
+    appLogger.info("Starting Application");
     if (args.length != 2) {
       final String usage =
           "./application <path/to/input/configuration/file> <path/to/output/configuration/file>";
+      appLogger.info(usage);
       System.out.println(usage);
       exit(0);
     }

@@ -5,6 +5,8 @@ import domain.transform.rule.operation.RulesOperationDate;
 import domain.transform.rule.operation.RulesOperationNumber;
 import domain.transform.rule.operation.RulesOperationString;
 import domain.value.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 public class RulesApplication {
   private ConditionModifier conditionModifier;
   private String idRule;
+  private final Logger logger = LoggerFactory.getLogger("app.logger");
 
   public RulesApplication(String idRule, ConditionModifier conditionModifier) {
     this.idRule = idRule;
@@ -21,7 +24,7 @@ public class RulesApplication {
   public void applyRules(List<Value> outputs) {
     for (Value output : outputs) {
       if (idRule.equals(output.getId())) {
-        System.out.println("Changes will be made to output with value " + output.getValue());
+        logger.debug("Changes will be made to output with value " + output.getValue());
 
         if (output.getValue() instanceof String) {
           RulesOperationString rulesOperation =
@@ -45,7 +48,7 @@ public class RulesApplication {
           rulesOperation.applyChanges((Value<Float>) output);
         }
 
-        System.out.println("Found id with value " + output.getValue() + ". Changing value. ");
+        logger.debug("Found id with value " + output.getValue() + ". Changing value. ");
       }
     }
   }
