@@ -6,19 +6,21 @@ import infrastructure.helper.BufferedFileReader;
 
 import java.io.BufferedReader;
 
-public class OutputConfigReader {
-  private OutputField outputField;
+public class OutputConfigurationJsonReader {
 
-  public OutputConfigReader(String jsonPath) {
+
+  public OutputConfigurationJsonReader() {
+  }
+
+  public OutputField read(String jsonPath) {
     BufferedFileReader bufferedReaderTreatment = new BufferedFileReader(jsonPath);
     BufferedReader br = bufferedReaderTreatment.getReader();
 
-    this.outputField = new Gson().fromJson(br, OutputField.class);
+    final OutputField outputField =  new Gson().fromJson(br, OutputField.class);
 
     bufferedReaderTreatment.closeReader();
+
+    return outputField;
   }
 
-  public OutputField getOutputField() {
-    return this.outputField;
-  }
 }

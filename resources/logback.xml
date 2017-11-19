@@ -46,7 +46,7 @@
     <appender-ref ref="DISTRIBUTION_TRACE_FILE_ASYNC"/>
   </logger>
 
-  <root level="DEBUG">
+  <root level="OFF">
     <appender-ref ref="ASYNCSTDOUT"/>
   </root>
 

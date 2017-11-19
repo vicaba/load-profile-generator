@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author Albert Trias
  * @since 28/09/2017
  */
-public class ConfigHolder {
+public class InputConfiguration {
   /** ArrayList with the list of fields obtained from the config file. */
   private ArrayList<InputField<Options>> fields;
   /** ArrayList with the list of rules obtained from the config file. */
@@ -23,7 +23,7 @@ public class ConfigHolder {
   private ArrayList<InputDistribution> distributions;
 
   /** Constructor. */
-  public ConfigHolder() {
+  public InputConfiguration() {
     this.fields = new ArrayList<>();
     this.rules = new ArrayList<>();
     this.distributions = new ArrayList<>();

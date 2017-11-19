@@ -1,6 +1,6 @@
 package infrastructure.value.preparation;
 
-import domain.in.config.ConfigHolder;
+import domain.in.config.InputConfiguration;
 import domain.in.distribution.InputDistribution;
 import domain.in.field.InputField;
 import domain.in.field.options.Options;
@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 // TODO: I don't understand this class. Is it still necessary?
 public class DataPreparation {
-  private ConfigHolder configGenerator;
+  private InputConfiguration configGenerator;
   // private int totalData;
 
-  public DataPreparation(ConfigHolder configGenerator) {
+  public DataPreparation(InputConfiguration configGenerator) {
     this.configGenerator = configGenerator;
   }
 

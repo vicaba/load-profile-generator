@@ -8,8 +8,8 @@ import akka.stream.*;
 import akka.stream.javadsl.Source;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import domain.in.config.ConfigHolder;
-import infrastructure.in.config.json.deserializer.InputConfigReader;
+import domain.in.config.InputConfiguration;
+import infrastructure.in.config.json.deserializer.InputConfigurationJsonReader;
 import example.stream.test.Greeter.Greet;
 import example.stream.test.Greeter.WhoToGreet;
 import scala.concurrent.duration.Duration;
@@ -20,41 +20,6 @@ import java.util.concurrent.CompletionStage;
 import java.util.concurrent.TimeUnit;
 
 public class StreamExample {
-  public void example() {
-
-    final Source<Integer, NotUsed> source = Source.repeat(1);
-    final ActorSystem system = ActorSystem.create("QuickStart");
-    final Materializer materializer = ActorMaterializer.create(system);
-    OutputCalculations outputCalculations = new OutputCalculations();
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    InputConfigReader inputConfig = new InputConfigReader("resources/input.json");
-    ConfigHolder configGen;
-
-    if ((configGen = inputConfig.getConfigGenerator()) != null) {
-
-      /*
-      InputField inputField = configGen.getField(0);
-      DataPreparation dataPreparation = new DataPreparation(configGen);
-      Source<JsonArray, NotUsed> source3 = Source.single(dataPreparation.prepareData());
-      final CompletionStage<Done> done2 =
-          source3.runForeach(i -> System.out.println(gson.toJson(i)), materializer);
-      done2.thenRun(system::terminate);
-      */
-
-      /*
-      Source<JsonObject, NotUsed> source2 =
-          source
-              .map(i -> ((OptionsString) inputField.getOptions()))
-              .map(j -> j.getAcceptedString(outputCalculations.calculateRangeInteger(0, 2, 'E')))
-              .map(stringJsonSerializer::write);
-      */
-      /*
-        final CompletionStage<Done> done =
-            source2.runForeach(i -> System.out.println(gson.toJson(i)), materializer);
-        done.thenRun(system::terminate);
-      */
-    }
-  }
 
   public void example2() {
     try {
@@ -139,7 +104,7 @@ public class StreamExample {
     result.thenRun(system::terminate);
   }
 
-  public void example6(ConfigHolder configGenerator) {
+  public void example6(InputConfiguration configGenerator) {
     /*
     DataPreparation dataPreparation = new DataPreparation(configGenerator);
     final ActorSystem system = ActorSystem.create("QuickStart");
