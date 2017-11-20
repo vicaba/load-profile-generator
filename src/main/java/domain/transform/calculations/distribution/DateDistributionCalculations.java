@@ -56,7 +56,7 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
     double comparison = ThreadLocalRandom.current().nextInt(1,100) * 0.01;
     if (comparison <= distValue) {
       // TODO THIS IS THE IMPORTANT PART IN THE LOGGER
-      traceLogger.trace(counterDistribution + ",1");
+      traceLogger.trace(counterDistribution + ",1|");
       logger.debug(
           "Division is "
               + (10 / totalData)
@@ -67,7 +67,7 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
       this.counterDistribution = 0;
     } else {
       // TODO THIS IS THE IMPORTANT PART IN THE LOGGER
-      traceLogger.trace(counterDistribution + ",0");
+      traceLogger.trace(counterDistribution + ",0|");
       logger.debug(
           "Division is "
               + (10 / totalData)

@@ -81,7 +81,7 @@ object Main {
       outputs.add(auxOutput)
 
       {
-        i += 1;
+        i += 1
         i - 1
       }
     }

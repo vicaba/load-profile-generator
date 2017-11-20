@@ -67,7 +67,7 @@ public class NumberDistributionCalculations implements DistributionCalculations<
     double comparison = ThreadLocalRandom.current().nextInt(1,100) * 0.01;
     if (comparison <= distValue) {
       // TODO THIS IS THE IMPORTANT PART IN THE LOGGER
-      logger.debug(counterDistribution + ",1");
+      logger.debug(counterDistribution + ",1|");
       System.out.println(
           "Division is "
               + (10 / totalData)
@@ -78,7 +78,7 @@ public class NumberDistributionCalculations implements DistributionCalculations<
       this.counterDistribution = 0;
     } else {
       // TODO THIS IS THE IMPORTANT PART IN THE LOGGER
-      logger.debug(counterDistribution + ",0");
+      logger.debug(counterDistribution + ",0|");
       System.out.println(
           "Division is "
               + (10 / totalData)
