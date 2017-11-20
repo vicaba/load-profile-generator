@@ -26,7 +26,7 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
    */
   private double totalData;
   private int counterDate = 0;
-  private int counterDistribution = 0;
+  private double counterDistribution = 0;
 
   private TDistribution tDistribution = new TDistribution(10); // We use the Student-T probability
   private Logger logger = LoggerFactory.getLogger("distribution.logger");
@@ -53,28 +53,28 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
      * X being a random double value between 0 and 1.
      * As you can see in the formula, the bigger distValue is, the highest the chance that we apply distribution.
      */
-    double comparison = ThreadLocalRandom.current().nextInt(100) * 0.01;
+    double comparison = ThreadLocalRandom.current().nextInt(1,100) * 0.01;
     if (comparison <= distValue) {
       // TODO THIS IS THE IMPORTANT PART IN THE LOGGER
-      traceLogger.trace(counterDistribution + ",1\n");
+      traceLogger.trace(counterDistribution + ",1");
       logger.debug(
           "Division is "
               + (10 / totalData)
               + ", operation is "
               + ((counterDistribution * (10 / totalData)) + offset)
-              + ", and distValue is "
-              + distValue);
+              + ", and comparison<=distValue is "
+              + comparison+"<="+distValue+"\n");
       this.counterDistribution = 0;
     } else {
       // TODO THIS IS THE IMPORTANT PART IN THE LOGGER
-      traceLogger.trace(counterDistribution + ",0\n");
+      traceLogger.trace(counterDistribution + ",0");
       logger.debug(
           "Division is "
               + (10 / totalData)
               + ", operation is "
               + ((counterDistribution * (10 / totalData)) + offset)
-              + ", and distValue is "
-              + distValue);
+                  + ", and comparison>distValue is "
+                  + comparison+">"+distValue+"\n");
       this.counterDistribution++;
     }
 

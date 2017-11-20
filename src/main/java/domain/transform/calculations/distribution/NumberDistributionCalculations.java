@@ -64,7 +64,7 @@ public class NumberDistributionCalculations implements DistributionCalculations<
      * X being a random double value between 0 and 1.
      * As you can see in the formula, the bigger distValue is, the highest the chance that we apply distribution.
      */
-    double comparison = ThreadLocalRandom.current().nextInt(100) * 0.01;
+    double comparison = ThreadLocalRandom.current().nextInt(1,100) * 0.01;
     if (comparison <= distValue) {
       // TODO THIS IS THE IMPORTANT PART IN THE LOGGER
       logger.debug(counterDistribution + ",1");
