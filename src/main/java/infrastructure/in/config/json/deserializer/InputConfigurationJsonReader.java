@@ -1,32 +1,31 @@
 package infrastructure.in.config.json.deserializer;
 
 import com.google.gson.GsonBuilder;
-import domain.in.config.ConfigHolder;
+import domain.in.config.InputConfiguration;
 import domain.in.field.InputField;
 import infrastructure.helper.BufferedFileReader;
 import infrastructure.in.serialization.json.deserializer.FieldDeserializer;
 
 import java.io.BufferedReader;
 
-public class InputConfigReader {
+public class InputConfigurationJsonReader {
 
-  private ConfigHolder configGenerator;
+  public InputConfigurationJsonReader() {
 
-  public InputConfigReader(String jsonPath) {
+  }
+
+  public InputConfiguration read(String jsonPath) {
+
     BufferedFileReader bufferedReaderTreatment = new BufferedFileReader(jsonPath);
     BufferedReader bufferedReader = bufferedReaderTreatment.getReader();
 
     GsonBuilder gsonBuilder = new GsonBuilder();
     gsonBuilder.registerTypeAdapter(InputField.class, new FieldDeserializer());
-    this.configGenerator = gsonBuilder.create().fromJson(bufferedReader, ConfigHolder.class);
+    final InputConfiguration inputConfiguration = gsonBuilder.create().fromJson(bufferedReader, InputConfiguration.class);
 
     bufferedReaderTreatment.closeReader();
 
-    System.out.println(gsonBuilder.create().toJson(this.configGenerator));
+    return inputConfiguration;
   }
 
-  public ConfigHolder getConfigGenerator() {
-
-    return this.configGenerator;
-  }
 }

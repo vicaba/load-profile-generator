@@ -1,0 +1,53 @@
+<configuration level="OFF">
+
+  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>log/app.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>[%level] [%d{dd/MM/YYYY HH:mm:ss.SSS}] [%thread] [%logger] %message%n%xException</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="ASYNCFILE" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="FILE" />
+  </appender>
+
+  <appender name="DISTRIBUTION_TRACE_FILE" class="ch.qos.logback.core.FileAppender">
+    <file>log/distribution_trace.log</file>
+    <append>false</append>
+    <encoder>
+      <pattern>%message</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="DISTRIBUTION_TRACE_FILE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="DISTRIBUTION_TRACE_FILE" />
+  </appender>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>[%level] [%d{dd/MM/YYYY HH:mm:ss.SSS}] [%thread] [%logger] %message%n%xException</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="STDOUT" />
+  </appender>
+
+  <logger name="app.logger" level="INFO">
+    <appender-ref ref="ASYNCFILE"/>
+  </logger>
+
+  <logger name="distribution.logger" level="ALL">
+    <appender-ref ref="ASYNCSTDOUT"/>
+  </logger>
+
+  <logger name="distribution.trace" level="TRACE">
+    <appender-ref ref="DISTRIBUTION_TRACE_FILE_ASYNC"/>
+  </logger>
+
+  <root level="OFF">
+    <appender-ref ref="ASYNCSTDOUT"/>
+  </root>
+
+</configuration>
