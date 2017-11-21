@@ -82,7 +82,7 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
     this.counterDate++;
     return currentDate;
   }
-  
+
   public void resetCounter() {
     this.counterDate = 0;
     this.counterDistribution = 0;
