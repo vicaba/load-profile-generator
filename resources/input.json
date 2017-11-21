@@ -24,8 +24,8 @@
       },
       "distributionInfo": {
         "distributionMethod": "Student-T",
-        "offset": -20,
-        "totalData": 20.0
+        "offset": 0,
+        "totalData": 10.0
       }
     },
     {

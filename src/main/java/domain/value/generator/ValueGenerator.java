@@ -29,9 +29,17 @@ public abstract class ValueGenerator<T, V extends Calculations<T>> {
     return this.inputField.getName();
   }
 
+  /*
   public void reset() {
     if (calculations instanceof DistributionCalculations) {
       ((DistributionCalculations) calculations).resetCounter();
+    }
+  }
+  */
+
+  public void increaseCounter() {
+    if (calculations instanceof DistributionCalculations) {
+      ((DistributionCalculations) calculations).increaseDistributionCounter();
     }
   }
 }

@@ -75,7 +75,7 @@ public class NumberDistributionCalculations implements DistributionCalculations<
               + ((counterDistribution * (10 / totalData)) + offset)
               + ", and distValue is "
               + distValue);
-      this.counterDistribution = 0;
+      this.resetCounter();
     } else {
       // TODO THIS IS THE IMPORTANT PART IN THE LOGGER
       logger.debug(counterDistribution + ",0|");
@@ -86,7 +86,6 @@ public class NumberDistributionCalculations implements DistributionCalculations<
               + ((counterDistribution * (10 / totalData)) + offset)
               + ", and distValue is "
               + distValue);
-      this.counterDistribution++;
     }
 
     float fTotal = numberRange.getMin() + this.counterNumber;
@@ -97,8 +96,13 @@ public class NumberDistributionCalculations implements DistributionCalculations<
     return fTotal;
   }
 
-  @Override
   public void resetCounter() {
     this.counterNumber = 0;
+    this.counterDistribution = 0;
+  }
+
+  @Override
+  public void increaseDistributionCounter() {
+    this.counterDistribution++;
   }
 }

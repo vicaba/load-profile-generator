@@ -64,7 +64,7 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
               + ((counterDistribution * (10 / totalData)) + offset)
               + ", and comparison<=distValue is "
               + comparison+"<="+distValue+"\n");
-      this.counterDistribution = 0;
+      this.resetCounter();
     } else {
       // TODO THIS IS THE IMPORTANT PART IN THE LOGGER
       traceLogger.trace(counterDistribution + ",0|");
@@ -75,7 +75,6 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
               + ((counterDistribution * (10 / totalData)) + offset)
                   + ", and comparison>distValue is "
                   + comparison+">"+distValue+"\n");
-      this.counterDistribution++;
     }
 
     LocalDateTime currentDate =
@@ -83,9 +82,14 @@ public class DateDistributionCalculations implements DistributionCalculations<Lo
     this.counterDate++;
     return currentDate;
   }
-
-  @Override
+  
   public void resetCounter() {
     this.counterDate = 0;
+    this.counterDistribution = 0;
+  }
+
+  @Override
+  public void increaseDistributionCounter() {
+    this.counterDistribution++;
   }
 }
