@@ -11,6 +11,7 @@ import domain.transform.rule.RulesCheck
 import domain.value.Value
 import example.stream.test.StreamExample
 import example.template.CreateTemplate
+import infrastructure.helper.BufferedFileReader
 import infrastructure.in.config.json.deserializer.InputConfigurationJsonReader
 import infrastructure.out.config.serialization.json.deserializer.OutputConfigurationJsonReader
 import infrastructure.value.preparation.DataPreparation
@@ -58,11 +59,12 @@ object Main {
     appLogger.info("Starting Application")
 
     val inputConfigurationFile = args(0)
-    //val outputConfigurationFile = args(1)
+    val outputConfigurationFile = args(1)
     val inputConfiguration = (new InputConfigurationJsonReader).read(inputConfigurationFile)
+    val outputConfiguration = (new OutputConfigurationJsonReader).read(outputConfigurationFile)
     val graphGenerator = new GraphGenerator
     val rulesCheck = new RulesCheck(inputConfiguration.getRules)
-    val createTemplate: CreateTemplate = new CreateTemplate
+    val createTemplate: CreateTemplate = new CreateTemplate(outputConfiguration.getType)
 
     val graph = graphGenerator.generate(inputConfiguration, rulesCheck, createTemplate)
     appLogger.debug(graph.toString)

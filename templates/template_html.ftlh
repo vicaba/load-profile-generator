@@ -8,7 +8,7 @@
         <h1>Data Outputs</h1>
         <table style="width:100%">
             <tr>
-                <#list headers as header>
+                <#list outputs[0] as header>
                 <th>${header.type}</th>
                 </#list>
             </tr>

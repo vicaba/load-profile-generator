@@ -9,7 +9,8 @@ import scala.collection.JavaConverters._
 
 class SinkNode(val template: CreateTemplate) extends GraphStage[SinkShape[Seq[Value[_]]]]{
   val in: Inlet[Seq[Value[_]]] = Inlet[Seq[Value[_]]]("Sink.in")
-  //var counter = 0   //For testing only, must be deleted later
+  var counter = 0   //For testing only, must be deleted later
+  var firstTime = 1
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic =
     new GraphStageLogic(shape) {
@@ -21,12 +22,16 @@ class SinkNode(val template: CreateTemplate) extends GraphStage[SinkShape[Seq[Va
           val data = grab(in)
 
           template.addNewInfo(data.asJava)
-          //counter += 1
+          counter += 1
           /*
            * createObject is for testing only. As it takes some time to generate the file, this interrupts the flow of data
            * for a noticeable time, which is not a desired behavior.
            */
-          //if (counter > 100) template.createObjectTemplate()
+          if (firstTime == 1 && counter > 100) {
+            template.createObjectTemplate()
+            counter = 0
+            firstTime = 0
+          }
           pull(in)
         }
       })
