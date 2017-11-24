@@ -26,7 +26,7 @@ class SinkNode(val template: CreateTemplate) extends GraphStage[SinkShape[Seq[Va
            * createObject is for testing only. As it takes some time to generate the file, this interrupts the flow of data
            * for a noticeable time, which is not a desired behavior.
            */
-          //if (counter > 100000) template.createObjectTemplate()
+          //if (counter > 100) template.createObjectTemplate()
           pull(in)
         }
       })

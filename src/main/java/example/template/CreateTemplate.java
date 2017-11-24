@@ -6,10 +6,7 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,17 +37,17 @@ public class CreateTemplate {
   public void createObjectTemplate() {
     try {
       Map<String, Object> root = new HashMap<>();
-      root.put("headers", outputs.get(0));
+      //root.put("headers", outputs.get(0));
 
       root.put("outputs", outputs);
 
-      Template template = cfg.getTemplate("template_html.ftlh");
+      Template template = cfg.getTemplate("template_json.ftl");
 
       // For output in console, use this one. Testing only.
-      // Writer out = new OutputStreamWriter(System.out);
+      //Writer out = new OutputStreamWriter(System.out);
 
       // For output in file, use this one.
-      Writer out = new FileWriter(new File("output/data.html"));
+      Writer out = new FileWriter(new File("output/data.json"));
 
       template.process(root, out);
       out.flush();
