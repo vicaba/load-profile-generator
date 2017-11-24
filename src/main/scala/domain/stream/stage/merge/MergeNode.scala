@@ -6,6 +6,7 @@ import akka.stream._
 import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, RunnableGraph, Sink, Source, ZipN}
 import domain.in.distribution.InputDistribution
 import domain.stream.stage.flow.rules.RulesFlow
+import domain.stream.stage.sink.SinkNode
 import domain.value.Value
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -13,7 +14,8 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
                 broadcastValues: Map[String, Broadcast[Value[_]]],
                 distributionValues: Map[String, Flow[Value[_], Value[_], NotUsed]],
                 listConnections: Map[String, List[InputDistribution]],
-                rulesNode: RulesFlow) {
+                rulesNode: RulesFlow,
+                sinkNode: SinkNode) {
   //implicit val config: Config = ConfigFactory.load()
 
   //implicit val logger: Logger = LoggerFactory.getLogger("GraphLogger")

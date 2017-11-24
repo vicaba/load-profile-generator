@@ -4,8 +4,10 @@ import domain.in.config.InputConfiguration
 import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
 import domain.stream.stage.flow.rules.RulesFlow
 import domain.stream.stage.merge.MergeNode
+import domain.stream.stage.sink.SinkNode
 import domain.transform.rule.RulesCheck
 import domain.value.Value
+import example.template.CreateTemplate
 
 import scala.collection.JavaConverters._
 import scala.languageFeature.implicitConversions
@@ -14,10 +16,11 @@ import scala.languageFeature.implicitConversions
 class GraphGenerator {
 
   def generate(inputConfiguration: InputConfiguration,
-               rulesCheck: RulesCheck): RunnableGraph[NotUsed] = {
+               rulesCheck: RulesCheck,
+               createTemplate: CreateTemplate): RunnableGraph[NotUsed] = {
 
     val inputFields = inputConfiguration.getFields.asScala.toList
-    val inputDist = inputConfiguration.getDistributions.asScala.map(dist => dist.getResult.getId -> dist).toMap
+    //val inputDist = inputConfiguration.getDistributions.asScala.map(dist => dist.getResult.getId -> dist).toMap
     if (inputFields.nonEmpty) {
 
       val mapBroadcasts = inputFields
@@ -48,8 +51,9 @@ class GraphGenerator {
       println(s"Elements in map4 = $mapDistributions")
 
       val rulesFlow = new RulesFlow(rulesCheck)
+      val sinkNode = new SinkNode(createTemplate)
 
-      val mergeNodeTest = new MergeNode(mapSources, mapBroadcasts, mapDistributions, listConnections, rulesFlow)
+      val mergeNodeTest = new MergeNode(mapSources, mapBroadcasts, mapDistributions, listConnections, rulesFlow, sinkNode)
 
       mergeNodeTest.connect()
     } else {

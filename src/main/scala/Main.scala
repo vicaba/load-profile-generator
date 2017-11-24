@@ -58,17 +58,21 @@ object Main {
     appLogger.info("Starting Application")
 
     val inputConfigurationFile = args(0)
-    val outputConfigurationFile = args(1)
+    //val outputConfigurationFile = args(1)
     val inputConfiguration = (new InputConfigurationJsonReader).read(inputConfigurationFile)
     val graphGenerator = new GraphGenerator
     val rulesCheck = new RulesCheck(inputConfiguration.getRules)
+    val createTemplate: CreateTemplate = new CreateTemplate
 
-    val graph = graphGenerator.generate(inputConfiguration, rulesCheck)
+    val graph = graphGenerator.generate(inputConfiguration, rulesCheck, createTemplate)
     appLogger.debug(graph.toString)
+    graph.async
     graph.run()
 
 
+
     // TODO: Do you still need DataPreparation?
+    /*
     val outputField = (new OutputConfigurationJsonReader).read(outputConfigurationFile)
     val dataPreparation = new DataPreparation(inputConfiguration)
     val outputs = new util.ArrayList[util.ArrayList[Value[_]]]
@@ -85,8 +89,10 @@ object Main {
         i - 1
       }
     }
-    val createTemplate: CreateTemplate = new CreateTemplate
-    createTemplate.createObjectTemplate(outputs)
+    */
+
+
+    /*
     outputField.getMethod match {
       case FileMethod =>
         outputField.getType match {
@@ -99,6 +105,7 @@ object Main {
         new StreamExample().example6(inputConfiguration)
       case _ =>
     }
+    */
   }
 }
 
