@@ -12,12 +12,13 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CreateTemplate {
 
   private Configuration cfg;
-  private ArrayList<ArrayList<Value>> outputs;
+  private ArrayList<List<Value>> outputs;
 
   public CreateTemplate() {
     try {
@@ -32,7 +33,7 @@ public class CreateTemplate {
     }
   }
 
-  public void addNewInfo(ArrayList<Value> data) {
+  public void addNewInfo(List<Value> data) {
     outputs.add(data);
   }
 
