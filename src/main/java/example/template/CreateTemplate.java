@@ -17,6 +17,7 @@ import java.util.Map;
 public class CreateTemplate {
 
   private Configuration cfg;
+  private ArrayList<ArrayList<Value>> outputs;
 
   public CreateTemplate() {
     try {
@@ -25,12 +26,17 @@ public class CreateTemplate {
       cfg.setDefaultEncoding("UTF-8");
       cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
       cfg.setLogTemplateExceptions(false);
+      outputs = new ArrayList<>();
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
-  public void createObjectTemplate(ArrayList<ArrayList<Value>> outputs) {
+  public void addNewInfo(ArrayList<Value> data) {
+    outputs.add(data);
+  }
+
+  public void createObjectTemplate() {
     try {
       Map<String, Object> root = new HashMap<>();
       root.put("headers", outputs.get(0));

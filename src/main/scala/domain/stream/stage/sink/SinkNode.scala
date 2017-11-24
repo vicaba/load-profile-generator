@@ -12,7 +12,7 @@ class SinkNode extends GraphStage[SinkShape[Seq[Value[_]]]]{
       setHandler(in, new InHandler {
         override def onPush(): Unit = {
           val data = grab(in)
-          
+
         }
       })
     }
