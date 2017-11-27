@@ -8,9 +8,9 @@
         <h1>Data Outputs</h1>
         <table style="width:100%">
             <tr>
-                <#list outputs[0] as header>
+<#list outputs[0] as header>
                 <th>${header.type}</th>
-                </#list>
+</#list>
             </tr>
             <#list outputs as datalist>
             <tr>

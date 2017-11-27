@@ -68,7 +68,7 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
     )) ~> Sink.ignore
     */
 
-    zipper ~> rulesNode ~> Sink.ignore //sinkNode
+    zipper ~> rulesNode ~> sinkNode  //Sink.ignore //sinkNode
 
     ClosedShape
   })

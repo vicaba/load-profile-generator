@@ -13,7 +13,7 @@ public class CreateTemplate {
 
   private Configuration cfg;
   private ArrayList<List<Value>> outputs;
-  private static final List<String> ACCEPTED_TYPES = Arrays.asList("html", "json");
+  private static final List<String> ACCEPTED_TYPES = Arrays.asList("html", "json", "csv");
   private String type = "";
 
   public CreateTemplate(String type) {
@@ -41,7 +41,7 @@ public class CreateTemplate {
 
       root.put("outputs", this.outputs);
 
-
+      //TODO SET A DEFAULT BEHAVIOR
       if (ACCEPTED_TYPES.contains(this.type)) {
         Template template = this.cfg.getTemplate("template_" + this.type + ".ftlh");
         // For output in console, use this one. Testing only.
