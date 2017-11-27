@@ -5,7 +5,6 @@ import domain.in.field.InputField;
 import domain.in.field.options.Options;
 import domain.in.rule.InputRule;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -13,13 +12,14 @@ import java.util.ArrayList;
  *
  * @version 1.0
  * @author Albert Trias
- * @since 28/09/2017
+ * @since 27/11/2017
  */
 public class InputConfiguration {
   /** ArrayList with the list of fields obtained from the config file. */
   private ArrayList<InputField<Options>> fields;
   /** ArrayList with the list of rules obtained from the config file. */
   private ArrayList<InputRule> rules;
+  /** ArrayList with the list of distributions from the config file. */
   private ArrayList<InputDistribution> distributions;
 
   /** Constructor. */
@@ -67,10 +67,21 @@ public class InputConfiguration {
     return this.rules.get(rule);
   }
 
+  /**
+   * Getter for the list of distributions.
+   *
+   * @return ArrayList with the list of distributions.
+   */
   public ArrayList<InputDistribution> getDistributions() {
     return this.distributions;
   }
 
+  /**
+   * Function that indicates if a specific id has to be connected to a Broadcast Node in the Graph.
+   *
+   * @param id String with the id of the node that is being checked.
+   * @return Returns true if it has to be connected, and false if it doesn't need to be connected.
+   */
   public boolean isBroadcast(String id) {
     for (InputDistribution dist : distributions) {
       if (dist.getId().equals(id)) return true;
@@ -78,6 +89,12 @@ public class InputConfiguration {
     return false;
   }
 
+  /**
+   * Function that indicates if a specific id will be distributed by other nodes.
+   *
+   * @param id String with the id of the node that is being checked.
+   * @return Returns true if it has to be distributed, and false if it doesn't.
+   */
   public boolean isDistribution(String id) {
     for (InputDistribution dist : distributions) {
       if (dist.isDistribution(id)) return true;
@@ -85,14 +102,20 @@ public class InputConfiguration {
     return false;
   }
 
+  /**
+   * Function that returns the distribution rules of the nodes that distribute the node with the id
+   * passed as parameter.
+   *
+   * @param idDist String with the id of the field that we want to check who distributes it.
+   * @return An ArrayList of the InputDistribution that deal with the passed id as parameter.
+   */
   public ArrayList<InputDistribution> isDistributedBy(String idDist) {
     ArrayList<InputDistribution> listIDs = new ArrayList<>();
-    for (InputDistribution distribution: distributions) {
+    for (InputDistribution distribution : distributions) {
       if (distribution.getResult().getId().equals(idDist)) {
         listIDs.add(distribution);
       }
     }
     return listIDs;
   }
-
 }
