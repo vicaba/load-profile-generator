@@ -3,7 +3,7 @@ package domain.stream.stage.sink
 import akka.stream.{Attributes, Inlet, SinkShape}
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler}
 import domain.value.Value
-import example.template.CreateTemplate
+import domain.out.template.CreateTemplate
 
 import scala.collection.JavaConverters._
 

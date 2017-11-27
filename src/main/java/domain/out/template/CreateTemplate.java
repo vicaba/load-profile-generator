@@ -1,4 +1,4 @@
-package example.template;
+package domain.out.template;
 
 import domain.value.Value;
 import freemarker.template.Configuration;

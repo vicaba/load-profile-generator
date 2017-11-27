@@ -7,7 +7,7 @@ import domain.stream.stage.merge.MergeNode
 import domain.stream.stage.sink.SinkNode
 import domain.transform.rule.RulesCheck
 import domain.value.Value
-import example.template.CreateTemplate
+import domain.out.template.CreateTemplate
 
 import scala.collection.JavaConverters._
 import scala.languageFeature.implicitConversions

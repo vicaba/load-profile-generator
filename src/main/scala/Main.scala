@@ -10,7 +10,7 @@ import ch.qos.logback.core.util.StatusPrinter
 import domain.transform.rule.RulesCheck
 import domain.value.Value
 import example.stream.test.StreamExample
-import example.template.CreateTemplate
+import domain.out.template.CreateTemplate
 import infrastructure.helper.BufferedFileReader
 import infrastructure.in.config.json.deserializer.InputConfigurationJsonReader
 import infrastructure.out.config.serialization.json.deserializer.OutputConfigurationJsonReader
