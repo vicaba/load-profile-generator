@@ -28,18 +28,15 @@ public class NumberEqualCalculations implements EqualCalculations<Float> {
 
   /**
    * Function responsible of giving a valid number according to the configuration passed in the
-   * constructor. The number will be chosen by first choosing a random range from the list, and
-   * after that a number will be chosen between the given range
-   *
-   * <p>The formula used to obtain the number between the chosen range is randomFloat * (max-min) +
-   * min, including min and excluding max value.
+   * constructor. The number will be chosen by first choosing a random range from the list with a
+   * probability of 1/numberRanges.size, and after that a number will be chosen between the given
+   * range using the formula randomFloat * (max-min) + min, including min and excluding max value.
    *
    * @return Float with the random number obtaining after choosing a random range and number.
    */
   @Override
   public Float calculate() {
     // First we obtain the random range from the list of ranges
-    //System.out.println("Number of ranges is " + this.numberRanges.size());
     NumberRange numberRange =
         this.numberRanges.get(ThreadLocalRandom.current().nextInt(0, this.numberRanges.size()));
 

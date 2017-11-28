@@ -12,7 +12,7 @@ import java.util.List;
  * @author Albert Trias
  * @since 27/11/2017
  */
-interface TemplateSystem {
+public interface TemplateSystem {
   /**
    * Method used to configure the template engine at the beginning.
    *

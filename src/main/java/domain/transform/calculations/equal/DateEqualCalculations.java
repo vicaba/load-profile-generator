@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Class responsible of giving a valid date field depending on the input configurations that are
- * passed.
+ * passed, using a counter that increases to get the next date.
  *
  * @version 1.0
  * @author Albert Trias
@@ -15,7 +15,7 @@ public class DateEqualCalculations implements EqualCalculations<LocalDateTime> {
   /** Defines the format in which the date will appear in the output data. */
   private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm";
 
-  /** Starting date. Date values will never go below this one. */
+  /** Current date, which will constantly be updated every time we calculate next value. */
   private LocalDateTime currentDate;
   /** How much time in seconds there is between created dates */
   private int timeIncrement;
@@ -36,14 +36,14 @@ public class DateEqualCalculations implements EqualCalculations<LocalDateTime> {
 
   /**
    * Function responsible of giving a valid date according to the configuration passed in the
-   * constructor. The next date will be based according to the formula startingDate +
-   * timeIncrement*random(1,maxDates+1).
+   * constructor. The next date will be based according to the formula
+   * currentDate=currentDate+timeIncrement.
    *
    * @return A random date that follows the formula mentioned above.
    */
   @Override
   public LocalDateTime calculate() {
     this.currentDate = this.currentDate.plusSeconds(this.timeIncrement);
-    return currentDate;
+    return this.currentDate;
   }
 }
