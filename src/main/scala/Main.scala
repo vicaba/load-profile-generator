@@ -1,5 +1,4 @@
 import java.lang.System.exit
-import java.util
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
@@ -7,14 +6,10 @@ import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.joran.JoranConfigurator
 import ch.qos.logback.core.joran.spi.JoranException
 import ch.qos.logback.core.util.StatusPrinter
+import domain.out.template.TemplateOutput
 import domain.transform.rule.RulesCheck
-import domain.value.Value
-import example.stream.test.StreamExample
-import domain.out.template.CreateTemplate
-import infrastructure.helper.BufferedFileReader
 import infrastructure.in.config.json.deserializer.InputConfigurationJsonReader
 import infrastructure.out.config.serialization.json.deserializer.OutputConfigurationJsonReader
-import infrastructure.value.preparation.DataPreparation
 import org.slf4j.{Logger, LoggerFactory}
 
 object Main {
@@ -64,7 +59,8 @@ object Main {
     val outputConfiguration = (new OutputConfigurationJsonReader).read(outputConfigurationFile)
     val graphGenerator = new GraphGenerator
     val rulesCheck = new RulesCheck(inputConfiguration.getRules)
-    val createTemplate: CreateTemplate = new CreateTemplate(outputConfiguration.getType)
+    val createTemplate: TemplateOutput = new TemplateOutput()
+    createTemplate.configureTemplateSystem(outputConfiguration.getType)
 
     val graph = graphGenerator.generate(inputConfiguration, rulesCheck, createTemplate)
     appLogger.debug(graph.toString)

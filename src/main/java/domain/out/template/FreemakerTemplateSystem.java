@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.*;
 
-public class CreateTemplate {
+public class FreemakerTemplateSystem implements TemplateSystem {
   private static final Version CONFIGURATION_VERSION = Configuration.VERSION_2_3_26;
   private static final String TEMPLATES_FOLDER = "templates";
   private static final String DEFAULT_ENCODING = "UTF-8";
@@ -20,7 +20,8 @@ public class CreateTemplate {
   private ArrayList<List<Value>> outputs;
   private String type = DEFAULT_ACCEPTED_TYPE;
 
-  public CreateTemplate(String type) {
+  @Override
+  public void configureTemplateSystem(String type) {
     try {
       this.cfg = new Configuration(CONFIGURATION_VERSION);
       this.cfg.setDirectoryForTemplateLoading(new File(TEMPLATES_FOLDER));
@@ -34,11 +35,13 @@ public class CreateTemplate {
     }
   }
 
-  public void addNewInfo(List<Value> data) {
+  @Override
+  public void addNewInfoToTemplateSystem(List<Value> data) {
     this.outputs.add(data);
   }
 
-  public void createObjectTemplate() {
+  @Override
+  public void generateFromTemplate() {
     try {
       Map<String, Object> root = new HashMap<>();
       // root.put("headers", outputs.get(0));
@@ -49,7 +52,8 @@ public class CreateTemplate {
        * If value doesn't exist inside the accepted types,
        * it will use the default value specified instead so program is not interrupted by this error.
        */
-      //TODO Create a log informing the user that the type added doesn't exist and that it has defaulted to another.
+      // TODO Create a log informing the user that the type added doesn't exist and that it has
+      // defaulted to another.
       if (!ACCEPTED_TYPES.contains(this.type)) {
         this.type = DEFAULT_ACCEPTED_TYPE;
       }

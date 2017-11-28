@@ -1,13 +1,13 @@
 import akka.NotUsed
 import akka.stream.scaladsl.{Broadcast, RunnableGraph, Sink, Source}
 import domain.in.config.InputConfiguration
+import domain.out.template.{TemplateOutput, TemplateSystem}
 import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
 import domain.stream.stage.flow.rules.RulesFlow
 import domain.stream.stage.merge.MergeNode
 import domain.stream.stage.sink.SinkNode
 import domain.transform.rule.RulesCheck
 import domain.value.Value
-import domain.out.template.CreateTemplate
 
 import scala.collection.JavaConverters._
 import scala.languageFeature.implicitConversions
@@ -17,7 +17,7 @@ class GraphGenerator {
 
   def generate(inputConfiguration: InputConfiguration,
                rulesCheck: RulesCheck,
-               createTemplate: CreateTemplate): RunnableGraph[NotUsed] = {
+               createTemplate: TemplateOutput): RunnableGraph[NotUsed] = {
 
     val inputFields = inputConfiguration.getFields.asScala.toList
     //val inputDist = inputConfiguration.getDistributions.asScala.map(dist => dist.getResult.getId -> dist).toMap

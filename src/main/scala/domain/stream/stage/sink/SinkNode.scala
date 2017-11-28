@@ -2,12 +2,12 @@ package domain.stream.stage.sink
 
 import akka.stream.{Attributes, Inlet, SinkShape}
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler}
+import domain.out.template.{TemplateOutput, TemplateSystem}
 import domain.value.Value
-import domain.out.template.CreateTemplate
 
 import scala.collection.JavaConverters._
 
-class SinkNode(val template: CreateTemplate) extends GraphStage[SinkShape[Seq[Value[_]]]]{
+class SinkNode(val template: TemplateOutput) extends GraphStage[SinkShape[Seq[Value[_]]]]{
   val in: Inlet[Seq[Value[_]]] = Inlet[Seq[Value[_]]]("Sink.in")
   var counter = 0   //For testing only, must be deleted later
   var firstTime = 1
@@ -21,14 +21,14 @@ class SinkNode(val template: CreateTemplate) extends GraphStage[SinkShape[Seq[Va
         override def onPush(): Unit = {
           val data = grab(in)
 
-          template.addNewInfo(data.asJava)
+          template.addNewInfoToTemplateSystem(data.asJava)
           counter += 1
           /*
            * createObject is for testing only. As it takes some time to generate the file, this interrupts the flow of data
            * for a noticeable time, which is not a desired behavior.
            */
           if (firstTime == 1 && counter > 10000) {
-            template.createObjectTemplate()
+            template.generateFromTemplate()
             counter = 0
             firstTime = 0
           }
