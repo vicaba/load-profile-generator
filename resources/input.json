@@ -3,7 +3,7 @@
     {
       "info": {
         "id": "0001",
-        "name": "Date",
+        "name": "Date1",
         "type": "date"
       },
       "options": {
@@ -15,7 +15,7 @@
     {
       "info": {
         "id": "0002",
-        "name": "Date",
+        "name": "Date2",
         "type": "date"
       },
       "options": {
@@ -31,7 +31,7 @@
     {
       "info": {
         "id": "0003",
-        "name": "Date",
+        "name": "Date3",
         "type": "date"
       },
       "options": {

@@ -28,9 +28,7 @@ public class FreemakerTemplateSystem implements TemplateSystem {
   private static final String TEMPLATES_FOLDER = "templates";
   /** Constant that defines a list of files that are compatible with this class: {@value} */
   private static final List<String> ACCEPTED_TYPES = Arrays.asList("json", "html", "csv");
-  /**
-   * Constant that defines the name of the variable used inside the template to pass data: {@value}
-   */
+  /** Constant that defines the name of the variable used to pass data to the template: {@value} */
   private static final String TEMPLATE_VAL = "outputs";
   /** Constant hat defines part of the name used for the template file: {@value} */
   private static final String TEMPLATE_NAME = "template_";

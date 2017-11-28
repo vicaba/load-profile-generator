@@ -52,7 +52,7 @@ public class DataPreparation {
         NumberEqualCalculations numberEqualCalculations =
             new NumberEqualCalculations(optionsNumber.getRanges());
         float fResult = numberEqualCalculations.calculate();
-        Value<Float> outputNumber = new Value<>(inputField.getId(), inputField.getType(), fResult);
+        Value<Float> outputNumber = new Value<>(inputField.getId(), inputField.getType(), inputField.getName(), fResult);
         data.add(outputNumber);
 
       } else if (inputField.getOptions().getClass() == OptionsDate.class) {

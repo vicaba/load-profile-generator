@@ -1,10 +1,6 @@
 package domain.transform.rule;
 
 public class RulesCondition<T extends Comparable<? super T>> {
-  private T leftCondition;
-  private String condition;
-  private T rightCondition;
-
   private static final String IS_LESS_THAN = "isLessThan";
   private static final String IS_GREATER_THAN = "isGreaterThan";
   private static final String IS_EQUAL_THAN = "isEqualThan";
@@ -12,7 +8,9 @@ public class RulesCondition<T extends Comparable<? super T>> {
   private static final String IS_GREATER_EQUAL_THAN = "isGreaterEqualThan";
   private static final String IS_NOT_EQUAL_THAN = "isNotEqualThan";
 
-
+  private T leftCondition;
+  private String condition;
+  private T rightCondition;
 
   public RulesCondition(T leftCondition, String condition, T rightCondition) {
     this.leftCondition = leftCondition;
