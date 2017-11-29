@@ -13,15 +13,19 @@ import infrastructure.out.config.serialization.json.deserializer.OutputConfigura
 import org.slf4j.{Logger, LoggerFactory}
 
 object Main {
+  /** Constant used to define the path of the logback.xml, that is used to configure the Logger. */
+  private final val DefaultLoggerConfigurationPath = "resources/logback.xml"
 
+  /** The ActorSystem needed for the graph. We use the default one. */
   implicit private val system: ActorSystem = ActorSystem()
+  /** The ActorMaterializer needed for the graph. We use the default one. */
   implicit private val materializer: ActorMaterializer = ActorMaterializer()
 
-  private val DefaultLoggerConfigurationPath = "resources/logback.xml"
-  private val FileMethod = "file"
-  private val StreamMethod = "stream"
-  private val JsonType = "json"
-
+  /**
+    * Method used for configuring the Logger.
+    *
+    * @param loggerConfigurationFilePath String with the path where we will find the configuration file.
+    */
   private def configureLogger(loggerConfigurationFilePath: String): Unit = {
     val context: LoggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
     try {
