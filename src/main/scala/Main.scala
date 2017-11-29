@@ -14,8 +14,8 @@ import org.slf4j.{Logger, LoggerFactory}
 
 object Main {
 
-  implicit private val system = ActorSystem()
-  implicit private val materializer = ActorMaterializer()
+  implicit private val system: ActorSystem = ActorSystem()
+  implicit private val materializer: ActorMaterializer = ActorMaterializer()
 
   private val DefaultLoggerConfigurationPath = "resources/logback.xml"
   private val FileMethod = "file"
@@ -67,43 +67,6 @@ object Main {
     graph.async
     graph.run()
 
-
-
-    // TODO: Do you still need DataPreparation?
-    /*
-    val outputField = (new OutputConfigurationJsonReader).read(outputConfigurationFile)
-    val dataPreparation = new DataPreparation(inputConfiguration)
-    val outputs = new util.ArrayList[util.ArrayList[Value[_]]]
-    var i = 0
-    while ( {
-      i < outputField.getAmount
-    }) {
-      val auxOutput: util.ArrayList[Value[_]] = dataPreparation.prepareData(i)
-      rulesCheck.applyRules(auxOutput)
-      outputs.add(auxOutput)
-
-      {
-        i += 1
-        i - 1
-      }
-    }
-    */
-
-
-    /*
-    outputField.getMethod match {
-      case FileMethod =>
-        outputField.getType match {
-          case JsonType =>
-          // new JsonFileOutput().writeToFile(jsonArray);
-          case _ =>
-        }
-      case StreamMethod =>
-        // new StreamExample().example1();
-        new StreamExample().example6(inputConfiguration)
-      case _ =>
-    }
-    */
   }
 }
 
