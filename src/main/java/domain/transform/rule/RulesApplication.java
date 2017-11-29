@@ -11,16 +11,41 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Class that we can use to pass to apply the rules when RulesCheck confirms that they must be
+ * applied.
+ *
+ * @version 1.0
+ * @author Albert Trias
+ * @since 27/11/2017
+ */
 public class RulesApplication {
-  private ConditionModifier conditionModifier;
-  private String idRule;
-  private final Logger logger = LoggerFactory.getLogger("app.logger");
+  /** Constant that defines the name of the logger used for printing debug messages: {@value} */
+  private static final String LOGGER_NAME = "app.logger";
 
+  /** Object that contains the info necessary to make changes to the values. */
+  private ConditionModifier conditionModifier;
+  /** Id of the node that we need to apply the changes. */
+  private String idRule;
+  /** The Logger we use for debugging purposes. */
+  private Logger logger = LoggerFactory.getLogger(LOGGER_NAME);
+
+  /**
+   * Constructor.
+   *
+   * @param idRule String with the id of the node that we will have to apply the changes.
+   * @param conditionModifier Object with all the information needed to apply the changes.
+   */
   public RulesApplication(String idRule, ConditionModifier conditionModifier) {
     this.idRule = idRule;
     this.conditionModifier = conditionModifier;
   }
 
+  /**
+   * Method used to apply the rule to the values that apply that rule.
+   *
+   * @param outputs The list of values that form a data.
+   */
   public void applyRules(List<Value> outputs) {
     for (Value output : outputs) {
       if (idRule.equals(output.getId())) {
