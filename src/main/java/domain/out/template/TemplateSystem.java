@@ -29,4 +29,6 @@ public interface TemplateSystem {
 
   /** Method used to output the file using the selected template. */
   void generateFromTemplate();
+
+  String obtainTemplateString(List<Value> data);
 }

@@ -48,4 +48,8 @@ public class TemplateOutput {
   public void generateFromTemplate() {
     this.templateSystem.generateFromTemplate();
   }
+
+  public String obtainTemplateString(List<Value> data) {
+    return this.templateSystem.obtainTemplateString(data);
+  }
 }

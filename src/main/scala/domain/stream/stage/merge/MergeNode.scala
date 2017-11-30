@@ -2,9 +2,10 @@ package domain.stream.stage.merge
 
 import akka.NotUsed
 import akka.stream._
-import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, RunnableGraph, Source, ZipN}
+import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, RunnableGraph, Sink, Source, ZipN}
 import domain.in.distribution.InputDistribution
 import domain.stream.stage.flow.rules.RulesFlow
+import domain.stream.stage.flow.template.TemplateSerializerFlow
 import domain.stream.stage.sink.SinkNode
 import domain.value.Value
 
@@ -17,14 +18,14 @@ import domain.value.Value
   * @param listConnections    A Map with all the broadcasts that connect to the DistributionFlow,
   *                           using the DistributionFlow id as key.
   * @param rulesNode          The Rules Flow that will apply rules to the generated data.
-  * @param sinkNode           The Sink that will received the final data and will output using templates.
+  * @param templateFlow       The TemplateSerializerFlow that will grab a data and change it to String, the content of the String is defined by the template selected.
   */
 class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
                 broadcastValues: Map[String, Broadcast[Value[_]]],
                 distributionValues: Map[String, Flow[Value[_], Value[_], NotUsed]],
                 listConnections: Map[String, List[InputDistribution]],
                 rulesNode: RulesFlow,
-                sinkNode: SinkNode) {
+                templateFlow: TemplateSerializerFlow) {
 
   /**
     * Method used to connect all nodes together.
@@ -92,7 +93,7 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
      * In this last step we connect the zipper to the RulesFlow,
      * and the flow to the sink, completing the graph after closing it.
      */
-    zipper ~> rulesNode ~> sinkNode //Sink.ignore //sinkNode
+    zipper ~> rulesNode ~> templateFlow ~> Sink.ignore //sinkNode
     ClosedShape
   })
 

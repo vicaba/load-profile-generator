@@ -3,10 +3,7 @@ package domain.out.template;
 import domain.value.Value;
 import freemarker.template.*;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -32,6 +29,8 @@ public class FreemakerTemplateSystem implements TemplateSystem {
   private static final String TEMPLATE_VAL = "outputs";
   /** Constant hat defines part of the name used for the template file: {@value} */
   private static final String TEMPLATE_NAME = "template_";
+
+  private static final String TEMPLATE_STRING_NAME = "template_string_";
   /** Constant that defines the extension of the template file: {@value} */
   private static final String TEMPLATE_EXTENSION = ".ftlh";
   /** Constant that defines the pathname where the output file will be generated: {@value} */
@@ -104,5 +103,39 @@ public class FreemakerTemplateSystem implements TemplateSystem {
     } catch (IOException | TemplateException e) {
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public String obtainTemplateString(List<Value> data) {
+    String result = "";
+    try {
+      Map<String, Object> root = new HashMap<>();
+      root.put(TEMPLATE_VAL, data);
+
+      /*
+       * If value doesn't exist inside the accepted types,
+       * it will use the default value specified instead so program is not interrupted by this error.
+       */
+      // TODO Create a log informing the user that the type added doesn't exist and that it has
+      // defaulted to another.
+      if (!ACCEPTED_TYPES.contains(this.type)) {
+        this.type = DEFAULT_ACCEPTED_TYPE;
+      }
+      Template template = this.cfg.getTemplate(TEMPLATE_STRING_NAME + this.type + TEMPLATE_EXTENSION);
+      // For output in console, use this one. Testing only.
+      // Writer out = new OutputStreamWriter(System.out);
+
+      // For output in file, use this one.
+      StringWriter out = new StringWriter();
+
+      template.process(root, out);
+      result = out.getBuffer().toString();
+      out.flush();
+      out.close();
+
+    } catch (IOException | TemplateException e) {
+      e.printStackTrace();
+    }
+    return result;
   }
 }

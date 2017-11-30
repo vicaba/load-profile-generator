@@ -4,6 +4,7 @@ import domain.in.config.InputConfiguration
 import domain.out.template.TemplateOutput
 import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
 import domain.stream.stage.flow.rules.RulesFlow
+import domain.stream.stage.flow.template.TemplateSerializerFlow
 import domain.stream.stage.merge.MergeNode
 import domain.stream.stage.sink.SinkNode
 import domain.transform.rule.RulesCheck
@@ -87,10 +88,11 @@ class GraphGenerator {
 
       /* We create both the Flow node that apply rules and the Sink in this part. */
       val rulesFlow = new RulesFlow(rulesCheck)
+      val templateFlow = new TemplateSerializerFlow(createTemplate)
       val sinkNode = new SinkNode(createTemplate)
 
       /* We sent it to a class responsible to connect everything together. */
-      val mergeNodeTest = new MergeNode(mapSources, mapBroadcasts, mapDistributions, listConnections, rulesFlow, sinkNode)
+      val mergeNodeTest = new MergeNode(mapSources, mapBroadcasts, mapDistributions, listConnections, rulesFlow, templateFlow)
       mergeNodeTest.connect()
     } else {
 
