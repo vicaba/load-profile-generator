@@ -1,4 +1,4 @@
-package domain.stream.stage.merge
+package domain.stream.stage.connector
 
 import akka.NotUsed
 import akka.stream._
@@ -20,12 +20,12 @@ import domain.value.Value
   * @param rulesNode          The Rules Flow that will apply rules to the generated data.
   * @param templateFlow       The TemplateSerializerFlow that will grab a data and change it to String, the content of the String is defined by the template selected.
   */
-class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
-                broadcastValues: Map[String, Broadcast[Value[_]]],
-                distributionValues: Map[String, Flow[Value[_], Value[_], NotUsed]],
-                listConnections: Map[String, List[InputDistribution]],
-                rulesNode: RulesFlow,
-                templateFlow: TemplateSerializerFlow) {
+class GraphConnector(sourceValues: Map[String, Source[Value[_], NotUsed]],
+                     broadcastValues: Map[String, Broadcast[Value[_]]],
+                     distributionValues: Map[String, Flow[Value[_], Value[_], NotUsed]],
+                     listConnections: Map[String, List[InputDistribution]],
+                     rulesNode: RulesFlow,
+                     templateFlow: TemplateSerializerFlow) {
 
   /**
     * Method used to connect all nodes together.
@@ -74,7 +74,7 @@ class MergeNode(sourceValues: Map[String, Source[Value[_], NotUsed]],
         broadBuild(conn.head.getId).out(1) ~> flow._2 ~> zipper
       } else {
         /*
-         * If there's more than one, we need to build a zipper to merge all broadcasts together,
+         * If there's more than one, we need to build a zipper to connector all broadcasts together,
          * and connect all broadcasts to it.
          */
         val zipperMerge = builder.add(ZipN[Value[_]](conn.size))
