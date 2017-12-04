@@ -16,9 +16,10 @@ public interface TemplateSystem {
   /**
    * Method used to configure the template engine at the beginning.
    *
-   * @param type The type of file we want to output.
+   * @param nameTemplate The name of the template to be used.
+   * @param outputType The type of file we want to output.
    */
-  void configureTemplateSystem(String type);
+  void configureTemplateSystem(String nameTemplate, String outputType);
 
   /**
    * Method used to add new info that will be added to the output file.

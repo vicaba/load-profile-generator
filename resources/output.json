@@ -1,3 +1,4 @@
 {
-  "type": "json"
+  "nameTemplate": "template_string_json.ftlh",
+  "outputType": "json"
 }

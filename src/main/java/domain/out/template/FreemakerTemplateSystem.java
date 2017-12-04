@@ -4,7 +4,10 @@ import domain.value.Value;
 import freemarker.template.*;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class used to work with the Apache Freemaker Template Engine to generate output files using
@@ -19,20 +22,10 @@ public class FreemakerTemplateSystem implements TemplateSystem {
   private static final Version CONFIGURATION_VERSION = Configuration.VERSION_2_3_26;
   /** Constant that defines the default encoding Apache Freemaker uses: {@value} */
   private static final String DEFAULT_ENCODING = "UTF-8";
-  /** Constant that defines default accepted type of file to be used in case of error: {@value} */
-  private static final String DEFAULT_ACCEPTED_TYPE = "json";
   /** Constant that defines the pathname of the folder that has the templates used: {@value} */
   private static final String TEMPLATES_FOLDER = "templates";
-  /** Constant that defines a list of files that are compatible with this class: {@value} */
-  private static final List<String> ACCEPTED_TYPES = Arrays.asList("json", "html", "csv");
   /** Constant that defines the name of the variable used to pass data to the template: {@value} */
   private static final String TEMPLATE_VAL = "outputs";
-  /** Constant hat defines part of the name used for the template file: {@value} */
-  private static final String TEMPLATE_NAME = "template_";
-
-  private static final String TEMPLATE_STRING_NAME = "template_string_";
-  /** Constant that defines the extension of the template file: {@value} */
-  private static final String TEMPLATE_EXTENSION = ".ftlh";
   /** Constant that defines the pathname where the output file will be generated: {@value} */
   private static final String OUTPUT_PATHNAME = "output/data.";
 
@@ -41,15 +34,18 @@ public class FreemakerTemplateSystem implements TemplateSystem {
   /** Data that will be added to the template to generate the output file. */
   private ArrayList<List<Value>> outputs;
   /** Type of the file that will be generated. Initially we add the default one in case of error. */
-  private String type = DEFAULT_ACCEPTED_TYPE;
+  private String outputType;
+
+  private String nameTemplate;
 
   /**
    * Method that configures Apache Freemaker so we can work with it.
    *
-   * @param type The type of file we want to output.
+   * @param nameTemplate The name of the template to be used.
+   * @param outputType The type of file we want to output.
    */
   @Override
-  public void configureTemplateSystem(String type) {
+  public void configureTemplateSystem(String nameTemplate, String outputType) {
     try {
       this.cfg = new Configuration(CONFIGURATION_VERSION);
       this.cfg.setDirectoryForTemplateLoading(new File(TEMPLATES_FOLDER));
@@ -57,7 +53,8 @@ public class FreemakerTemplateSystem implements TemplateSystem {
       this.cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
       this.cfg.setLogTemplateExceptions(false);
       this.outputs = new ArrayList<>();
-      this.type = type;
+      this.nameTemplate = nameTemplate;
+      this.outputType = outputType;
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -81,21 +78,12 @@ public class FreemakerTemplateSystem implements TemplateSystem {
       Map<String, Object> root = new HashMap<>();
       root.put(TEMPLATE_VAL, this.outputs);
 
-      /*
-       * If value doesn't exist inside the accepted types,
-       * it will use the default value specified instead so program is not interrupted by this error.
-       */
-      // TODO Create a log informing the user that the type added doesn't exist and that it has
-      // defaulted to another.
-      if (!ACCEPTED_TYPES.contains(this.type)) {
-        this.type = DEFAULT_ACCEPTED_TYPE;
-      }
-      Template template = this.cfg.getTemplate(TEMPLATE_NAME + this.type + TEMPLATE_EXTENSION);
+      Template template = this.cfg.getTemplate(this.nameTemplate);
       // For output in console, use this one. Testing only.
       // Writer out = new OutputStreamWriter(System.out);
 
       // For output in file, use this one.
-      Writer out = new FileWriter(new File(OUTPUT_PATHNAME + type));
+      Writer out = new FileWriter(new File(OUTPUT_PATHNAME + this.outputType));
 
       template.process(root, out);
       out.flush();
@@ -112,16 +100,7 @@ public class FreemakerTemplateSystem implements TemplateSystem {
       Map<String, Object> root = new HashMap<>();
       root.put(TEMPLATE_VAL, data);
 
-      /*
-       * If value doesn't exist inside the accepted types,
-       * it will use the default value specified instead so program is not interrupted by this error.
-       */
-      // TODO Create a log informing the user that the type added doesn't exist and that it has
-      // defaulted to another.
-      if (!ACCEPTED_TYPES.contains(this.type)) {
-        this.type = DEFAULT_ACCEPTED_TYPE;
-      }
-      Template template = this.cfg.getTemplate(TEMPLATE_STRING_NAME + this.type + TEMPLATE_EXTENSION);
+      Template template = this.cfg.getTemplate(this.nameTemplate);
       // For output in console, use this one. Testing only.
       // Writer out = new OutputStreamWriter(System.out);
 

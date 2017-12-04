@@ -64,7 +64,7 @@ object Main {
     val graphGenerator = new GraphGenerator
     val rulesCheck = new RulesCheck(inputConfiguration.getRules)
     val createTemplate: TemplateOutput = new TemplateOutput()
-    createTemplate.configureTemplateSystem(outputConfiguration.getType)
+    createTemplate.configureTemplateSystem(outputConfiguration.getNameTemplate, outputConfiguration.getOutputType)
 
     val graph = graphGenerator.generate(inputConfiguration, rulesCheck, createTemplate)
     appLogger.debug(graph.toString)

@@ -8,16 +8,30 @@ package domain.out.field;
  * @since 27/11/2017
  */
 public class OutputField {
+  /** The name of the template to be used by the template engine. */
+  private String nameTemplate;
   /** What type of file we want to work (i.e. json). */
-  private String type;
+  private String outputType;
 
   /**
    * Constructor.
    *
-   * @param type Type of file we want to output.
+   * @param nameTemplate The name of the template to be used.
+   * @param outputType Type of file we want to output.
    */
-  public OutputField(String type) {
-    this.type = type;
+  public OutputField(String nameTemplate, String outputType) {
+    this.nameTemplate = nameTemplate;
+    this.outputType = outputType;
+  }
+
+  /**
+   * Getter of the name of the template.
+   *
+   * @return Returns a string with the name of the template that will be used by the template
+   *     engine.
+   */
+  public String getNameTemplate() {
+    return this.nameTemplate;
   }
 
   /**
@@ -25,7 +39,7 @@ public class OutputField {
    *
    * @return A string with the type of file we want to output.
    */
-  public String getType() {
-    return this.type;
+  public String getOutputType() {
+    return this.outputType;
   }
 }

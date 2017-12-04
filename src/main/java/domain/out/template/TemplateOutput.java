@@ -25,10 +25,11 @@ public class TemplateOutput {
    * Method that allows us to call the same method from the template system class to configure the
    * template engine.
    *
+   * @param nameTemplate The name of the template to be used.
    * @param type The type of file we want of output.
    */
-  public void configureTemplateSystem(String type) {
-    this.templateSystem.configureTemplateSystem(type);
+  public void configureTemplateSystem(String nameTemplate, String type) {
+    this.templateSystem.configureTemplateSystem(nameTemplate, type);
   }
 
   /**
