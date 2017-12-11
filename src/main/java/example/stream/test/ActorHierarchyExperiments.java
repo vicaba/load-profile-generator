@@ -7,13 +7,13 @@ import akka.actor.Props;
 
 import java.io.IOException;
 
-class PrintMyActorRefActor extends AbstractActor {
+class PrintMyActorRefActor /*extends AbstractActor*/ {
 
     /*
      * Para crear hijos de actores si es necesario, se usa getContext en el actor.
      * El actor responderá con esta función si se le hace un tell hacia este.
      */
-  @Override
+  /*@Override
   public Receive createReceive() {
     return receiveBuilder()
         .matchEquals(
@@ -24,6 +24,7 @@ class PrintMyActorRefActor extends AbstractActor {
             })
         .build();
   }
+  */
 }
 
 public class ActorHierarchyExperiments {

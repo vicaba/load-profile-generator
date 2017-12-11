@@ -6,7 +6,7 @@ import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, RunnableGraph, Sink, Sou
 import domain.in.distribution.InputDistribution
 import domain.stream.stage.flow.rules.RulesFlow
 import domain.stream.stage.flow.template.TemplateSerializerFlow
-import domain.stream.stage.sink.SinkNode
+//import domain.stream.stage.sink.SinkNode
 import domain.value.Value
 
 /**
@@ -66,7 +66,7 @@ class GraphConnector(sourceValues: Map[String, Source[Value[_], NotUsed]],
     distributionValues foreach { flow =>
       val conn = listConnections(flow._1)
 
-      if (conn.size == 1) {
+      if (conn.lengthCompare(1) == 0) {
         /*
          * If we only need to connect one broadcast to a distribution flow, we do it all in this step,
          * connect those two mentioned then connecting the flow to the final zipper.

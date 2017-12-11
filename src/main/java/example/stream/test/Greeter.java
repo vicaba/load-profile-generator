@@ -5,14 +5,15 @@ import akka.actor.ActorRef;
 import akka.actor.Props;
 import example.stream.test.Printer.Greeting;
 
-public class Greeter extends AbstractActor {
+public class Greeter /*extends AbstractActor*/ {
   /*
    * Define como se ha de construir el actor. Si se quiere crear un Greeter,
    * esto forzará a que solo se acepte un Greeter con un String message y un ActorRef printerActor en su constructor.
    * No aceptará un constructor sin parámetros.
    */
   public static Props props(String message, ActorRef printerActor) {
-    return Props.create(Greeter.class, () -> new Greeter(message, printerActor));
+    //return Props.create(Greeter.class, () -> new Greeter(message, printerActor));
+    return null;
   }
 
   /*
@@ -52,7 +53,7 @@ public class Greeter extends AbstractActor {
    * - Si recibe un Greet, enviará al printerActor un Greeting y una referencia a si mismo
    * para que el printerActor sepa quien lo ha enviado.
    */
-  @Override
+  /*@Override
   public Receive createReceive() {
     return receiveBuilder()
         .match(
@@ -67,4 +68,5 @@ public class Greeter extends AbstractActor {
             })
         .build();
   }
+  */
 }

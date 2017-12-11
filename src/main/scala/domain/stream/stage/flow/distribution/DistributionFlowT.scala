@@ -25,9 +25,9 @@ import scala.collection.JavaConverters._
 abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: ValueGenerator[V, T],
                                                           val inputDistribution: List[InputDistribution])
   extends GraphStage[FlowShape[Value[V], Value[V]]] {
-  /** The inlet of this flow. */
+  /** The inlet of this flow. Only compatible with one inlet for connections. */
   val inlet: Inlet[Value[V]] = Inlet[Value[V]]("FB" + inputDistribution(0).getId + ".in")
-  /** The outlet of this flow. */
+  /** The outlet of this flow. Only compatible with one outlet for connections. */
   val outlet: Outlet[Value[V]] = Outlet[Value[V]]("FD" + inputDistribution(0).getResult.getId + ".out")
   /** The logger we use to check for debug purposes. */
   private val logger = LoggerFactory.getLogger("distribution.logger")
