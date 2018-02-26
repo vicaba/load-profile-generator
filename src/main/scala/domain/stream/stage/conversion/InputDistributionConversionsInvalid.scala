@@ -3,9 +3,9 @@ package domain.stream.stage.conversion
 
 import akka.NotUsed
 import akka.stream.scaladsl.Flow
+import distribution.flow.infrastructure.{DistributionFlowDate, DistributionFlowNumber, DistributionFlowString}
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
-import domain.stream.stage.flow.distribution.{DistributionFlowDate, DistributionFlowNumber, DistributionFlowString}
 import domain.value.Value
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
 

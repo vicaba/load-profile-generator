@@ -1,7 +1,8 @@
-package domain.stream.stage.flow.distribution
+package distribution.flow.infrastructure
 
 import java.time.LocalDateTime
 
+import distribution.flow.domain.DistributionFlowT
 import domain.in.distribution.InputDistribution
 import domain.transform.calculations.Calculations
 import domain.value.generator.ValueGenerator
