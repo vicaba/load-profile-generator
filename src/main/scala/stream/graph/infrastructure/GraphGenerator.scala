@@ -1,9 +1,10 @@
+package stream.graph.infrastructure
+
 import akka.NotUsed
 import akka.stream.scaladsl.{Broadcast, RunnableGraph, Sink, Source}
 import domain.in.config.InputConfiguration
 import domain.out.template.TemplateOutput
 import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
-import domain.stream.stage.connector.GraphConnector
 import domain.transform.rule.RulesCheck
 import domain.value.Value
 import stream.rules.infrastructure.RulesFlow
@@ -19,7 +20,7 @@ import scala.languageFeature.implicitConversions
   * @author Albert Trias
   * @since 27/11/2017
   */
-class GraphGenerator {
+final class GraphGenerator {
 
   /**
     * Method that allows us to generate a graph based on all the information received from the parameters.

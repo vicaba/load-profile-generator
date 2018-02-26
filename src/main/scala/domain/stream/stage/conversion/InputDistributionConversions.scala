@@ -2,7 +2,6 @@ package domain.stream.stage.conversion
 
 import akka.NotUsed
 import akka.stream.scaladsl.Flow
-import stream.distribution.infrastructure.{DistributionFlowDate, DistributionFlowNumber}
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
@@ -10,6 +9,7 @@ import domain.transform.calculations.distribution.{DateDistributionCalculations,
 import domain.transform.calculations.equal.StringEqualCalculations
 import domain.value.Value
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
+import stream.distribution.infrastructure.value.{DistributionFlowDate, DistributionFlowNumber}
 
 object InputDistributionConversions {
 
