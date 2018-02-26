@@ -1,4 +1,4 @@
-package stream.sink.infrastructure
+package domain.sink
 
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler}
 import akka.stream.{Attributes, Inlet, SinkShape}
@@ -8,12 +8,12 @@ import domain.value.Value
 import scala.collection.JavaConverters._
 
 /**
-  * This class is the sink that we use for the graph, responsible of outputting the data using a stream.template engine.
+  * This class is the sink that we use for the graph, responsible of outputting the data using a domain.template engine.
   *
   * @version 1.0
   * @author Albert Trias
   * @since 27/11/2017
-  * @param template The stream.template engine that we will add to this Sink.
+  * @param template The domain.template engine that we will add to this Sink.
   */
 final class SinkNode(val template: TemplateOutput) extends GraphStage[SinkShape[Seq[Value[_]]]] {
   val in: Inlet[Seq[Value[_]]] = Inlet[Seq[Value[_]]]("Sink.in")

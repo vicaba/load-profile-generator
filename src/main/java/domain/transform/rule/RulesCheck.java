@@ -18,13 +18,13 @@ import java.util.List;
  * @since 27/11/2017
  */
 public class RulesCheck {
-  /** List of stream.rules that we obtain from the config file. */
+  /** List of domain.rules that we obtain from the config file. */
   private List<InputRule> rules;
 
   /**
    * Constructor.
    *
-   * @param rules List of stream.rules from the config file.
+   * @param rules List of domain.rules from the config file.
    */
   public RulesCheck(List<InputRule> rules) {
     this.rules = rules;

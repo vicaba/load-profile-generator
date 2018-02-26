@@ -1,4 +1,4 @@
-package stream.graph.infrastructure
+package domain.graph
 
 import akka.NotUsed
 import akka.stream.scaladsl.{Broadcast, RunnableGraph, Sink, Source}
@@ -6,13 +6,12 @@ import domain.distribution.DistributionFlowFactory
 import domain.distribution.generator.DistributionGeneratorFactory
 import domain.in.config.InputConfiguration
 import domain.out.template.TemplateOutput
+import domain.rules.RulesFlow
 import domain.source.SourceValueFactory
 import domain.source.generator.SourceGeneratorFactory
-import domain.test.stage.conversion.{InputDistributionConversions, InputFieldConversions}
+import domain.template.TemplateSerializerFlow
 import domain.transform.rule.RulesCheck
 import domain.value.Value
-import stream.rules.infrastructure.RulesFlow
-import stream.template.infrastructure.TemplateSerializerFlow
 
 import scala.collection.JavaConverters._
 import scala.languageFeature.implicitConversions
@@ -30,8 +29,8 @@ final class GraphGenerator {
     * Method that allows us to generate a graph based on all the information received from the parameters.
     *
     * @param inputConfiguration The configuration obtained from the config file.
-    * @param rulesCheck         The stream.rules to apply inside the graph.
-    * @param createTemplate     The stream.template system to be used in the graph to output data.
+    * @param rulesCheck         The domain.rules to apply inside the graph.
+    * @param createTemplate     The domain.template system to be used in the graph to output data.
     * @return Returns a closed RunnableGraph that we can start running when we want.
     */
   def generate(inputConfiguration: InputConfiguration,
@@ -79,7 +78,7 @@ final class GraphGenerator {
         .toMap
       println(s"Elements in map4 = $mapDistributions")
 
-      /* We create both the Flow node that apply stream.rules and the Sink in this part. */
+      /* We create both the Flow node that apply domain.rules and the Sink in this part. */
       val rulesFlow = new RulesFlow(rulesCheck)
       val templateFlow = new TemplateSerializerFlow(createTemplate)
       //val sinkNode = new SinkNode(createTemplate)

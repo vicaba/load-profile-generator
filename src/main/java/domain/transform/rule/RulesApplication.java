@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * Class that we can use to pass to apply the stream.rules when RulesCheck confirms that they must be
+ * Class that we can use to pass to apply the domain.rules when RulesCheck confirms that they must be
  * applied.
  *
  * @version 1.0

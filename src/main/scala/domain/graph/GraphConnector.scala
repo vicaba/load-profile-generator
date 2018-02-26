@@ -1,11 +1,11 @@
-package stream.graph.infrastructure
+package domain.graph
 
 import akka.NotUsed
 import akka.stream._
 import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, RunnableGraph, Sink, Source, ZipN}
 import domain.in.distribution.InputDistribution
-import stream.rules.infrastructure.RulesFlow
-import stream.template.infrastructure.TemplateSerializerFlow
+import domain.rules.RulesFlow
+import domain.template.TemplateSerializerFlow
 import domain.value.Value
 
 /**
@@ -16,8 +16,8 @@ import domain.value.Value
   * @param distributionValues A Map with all stream.distribution flows, using their own ids as key.
   * @param listConnections    A Map with all the broadcasts that connect to the DistributionFlow,
   *                           using the DistributionFlow id as key.
-  * @param rulesNode          The Rules Flow that will apply stream.rules to the generated data.
-  * @param templateFlow       The TemplateSerializerFlow that will grab a data and change it to String, the content of the String is defined by the stream.template selected.
+  * @param rulesNode          The Rules Flow that will apply domain.rules to the generated data.
+  * @param templateFlow       The TemplateSerializerFlow that will grab a data and change it to String, the content of the String is defined by the domain.template selected.
   */
 final class GraphConnector(sourceValues: Map[String, Source[Value[_], NotUsed]],
                      broadcastValues: Map[String, Broadcast[Value[_]]],

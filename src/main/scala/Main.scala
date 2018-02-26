@@ -11,7 +11,7 @@ import domain.transform.rule.RulesCheck
 import infrastructure.in.config.json.deserializer.InputConfigurationJsonReader
 import infrastructure.out.config.serialization.json.deserializer.OutputConfigurationJsonReader
 import org.slf4j.{Logger, LoggerFactory}
-import stream.graph.infrastructure.GraphGenerator
+import domain.graph.GraphGenerator
 
 object Main {
   /** Constant used to define the path of the logback.xml, that is used to configure the Logger. */

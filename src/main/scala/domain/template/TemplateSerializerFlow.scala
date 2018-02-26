@@ -1,4 +1,4 @@
-package stream.template.infrastructure
+package domain.template
 
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler, OutHandler}
 import akka.stream.{Attributes, FlowShape, Inlet, Outlet}
