@@ -1,4 +1,4 @@
-package distribution.flow.domain
+package distribution.stream.domain
 
 import akka.stream.stage._
 import akka.stream.{Attributes, FlowShape, Inlet, Outlet}

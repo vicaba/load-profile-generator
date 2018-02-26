@@ -4,8 +4,8 @@ import akka.NotUsed
 import akka.stream._
 import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, RunnableGraph, Sink, Source, ZipN}
 import domain.in.distribution.InputDistribution
-import domain.stream.stage.flow.rules.RulesFlow
 import domain.stream.stage.flow.template.TemplateSerializerFlow
+import rules.stream.infrastructure.RulesFlow
 //import domain.stream.stage.sink.SinkNode
 import domain.value.Value
 

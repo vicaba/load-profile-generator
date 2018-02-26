@@ -1,6 +1,6 @@
-package distribution.flow.infrastructure
+package distribution.stream.infrastructure
 
-import distribution.flow.domain.DistributionFlowT
+import distribution.stream.domain.DistributionFlowT
 import domain.in.distribution.InputDistribution
 import domain.transform.calculations.Calculations
 import domain.value.generator.ValueGenerator

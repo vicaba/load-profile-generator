@@ -3,11 +3,11 @@ import akka.stream.scaladsl.{Broadcast, RunnableGraph, Sink, Source}
 import domain.in.config.InputConfiguration
 import domain.out.template.TemplateOutput
 import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
-import domain.stream.stage.flow.rules.RulesFlow
 import domain.stream.stage.flow.template.TemplateSerializerFlow
 import domain.stream.stage.connector.GraphConnector
 import domain.transform.rule.RulesCheck
 import domain.value.Value
+import rules.stream.infrastructure.RulesFlow
 
 import scala.collection.JavaConverters._
 import scala.languageFeature.implicitConversions
