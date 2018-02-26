@@ -9,6 +9,7 @@ import domain.transform.rule.RulesCheck
 import domain.value.Value
 import stream.distribution.infrastructure.DistributionFlowFactory
 import stream.rules.infrastructure.RulesFlow
+import stream.source.infrastructure.SourceValueFactory
 import stream.template.infrastructure.TemplateSerializerFlow
 
 import scala.collection.JavaConverters._
@@ -51,15 +52,11 @@ final class GraphGenerator {
         .toMap
       println(s"Elements in map1 = $mapBroadcasts")
 
-      /*
-       * In this part we will check if there is any node that is not meant to apply stream.distribution.
-       * If there is, we will create a source with a configured value generator inside it,
-       * and lastly we will map it to the id of the source node for easy access to it later.
-       */
+      val sourceValueFactory = new SourceValueFactory
       val mapSources = inputFields
         .filter(field => !inputConfiguration.isDistribution(field.getId))
         .map(InputFieldConversions.inputFieldToValueGenerator)
-        .map(vg => vg.getId -> InputFieldConversions.valueGeneratorToSource(vg))
+        .map(vg => vg.getId -> sourceValueFactory.createSourceFromGenerator(vg))
         .toMap
       println(s"Elements in map2 = $mapSources")
 
