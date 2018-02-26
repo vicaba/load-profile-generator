@@ -7,7 +7,7 @@ import domain.out.template.TemplateOutput
 import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
 import domain.transform.rule.RulesCheck
 import domain.value.Value
-import generator.infrastructure.DistributionGeneratorFactory
+import generator.infrastructure.{DistributionGeneratorFactory, SourceGeneratorFactory}
 import stream.distribution.infrastructure.DistributionFlowFactory
 import stream.rules.infrastructure.RulesFlow
 import stream.source.infrastructure.SourceValueFactory
@@ -48,10 +48,11 @@ final class GraphGenerator {
         .toMap
       println(s"Elements in map1 = $mapBroadcasts")
 
+      val sourceGeneratorFactory = new SourceGeneratorFactory
       val sourceValueFactory = new SourceValueFactory
       val mapSources = inputFields
         .filter(field => !inputConfiguration.isDistribution(field.getId))
-        .map(InputFieldConversions.inputFieldToValueGenerator)
+        .map(sourceGeneratorFactory.createGeneratorFromInput)
         .map(vg => vg.getId -> sourceValueFactory.createSourceFromGenerator(vg))
         .toMap
       println(s"Elements in map2 = $mapSources")
