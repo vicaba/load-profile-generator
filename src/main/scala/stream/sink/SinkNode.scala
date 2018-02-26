@@ -1,4 +1,4 @@
-package domain.stream.stage.sink
+package stream.sink
 
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler}
 import akka.stream.{Attributes, Inlet, SinkShape}

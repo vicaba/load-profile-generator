@@ -1,4 +1,4 @@
-package domain.stream.stage.source
+package stream.source.domain
 
 import akka.stream.stage.{GraphStage, GraphStageLogic, OutHandler}
 import akka.stream.{Attributes, Outlet, SourceShape}

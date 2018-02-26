@@ -4,7 +4,7 @@ import akka.NotUsed
 import akka.stream.scaladsl.Source
 import domain.in.field.InputField
 import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
-import domain.stream.stage.source.{SourceValueDate, SourceValueNumber, SourceValueString}
+import stream.source.infrastructure.{SourceValueDate, SourceValueNumber, SourceValueString}
 import domain.transform.calculations.equal.{DateEqualCalculations, NumberEqualCalculations, StringEqualCalculations}
 import domain.value.Value
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
