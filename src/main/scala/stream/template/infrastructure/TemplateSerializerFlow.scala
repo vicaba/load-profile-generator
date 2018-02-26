@@ -7,7 +7,7 @@ import domain.value.Value
 
 import scala.collection.JavaConverters._
 
-class TemplateSerializerFlow(template: TemplateOutput) extends GraphStage[FlowShape[Seq[Value[_]],String]]{
+final class TemplateSerializerFlow(template: TemplateOutput) extends GraphStage[FlowShape[Seq[Value[_]],String]]{
   val inlet: Inlet[Seq[Value[_]]] = Inlet("InValues.in")
   val outlet: Outlet[String] = Outlet("OutStringValue.out")
 

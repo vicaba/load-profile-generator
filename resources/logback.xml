@@ -38,11 +38,11 @@
     <appender-ref ref="ASYNCFILE"/>
   </logger>
 
-  <logger name="distribution.logger" level="ALL">
+  <logger name="stream.distribution.logger" level="ALL">
     <appender-ref ref="ASYNCSTDOUT"/>
   </logger>
 
-  <logger name="distribution.trace" level="TRACE">
+  <logger name="stream.distribution.trace" level="TRACE">
     <appender-ref ref="DISTRIBUTION_TRACE_FILE_ASYNC"/>
   </logger>
 

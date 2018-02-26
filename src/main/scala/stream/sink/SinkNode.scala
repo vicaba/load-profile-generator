@@ -15,35 +15,18 @@ import scala.collection.JavaConverters._
   * @since 27/11/2017
   * @param template The stream.template engine that we will add to this Sink.
   */
-class SinkNode(val template: TemplateOutput) extends GraphStage[SinkShape[Seq[Value[_]]]] {
-  /** The inlet that we will use for this sink. */
+final class SinkNode(val template: TemplateOutput) extends GraphStage[SinkShape[Seq[Value[_]]]] {
   val in: Inlet[Seq[Value[_]]] = Inlet[Seq[Value[_]]]("Sink.in")
   var counter = 0 //TODO For testing only, must be deleted later
   var firstTime = 1
 
-  /**
-    * The logic behind the Sink. It will grab the data from the sink, and pass it to the stream.template.
-    *
-    * @param inheritedAttributes Not Used.
-    * @return Not Used.
-    */
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic =
     new GraphStageLogic(shape) {
 
-      /**
-        * This method is necessary to start running the graph. If we don't put it, it will get stuck.
-        */
       override def preStart(): Unit = pull(in)
 
-      /**
-        * The handler we put to the sink. We only use onPush for this sink.
-        */
       setHandler(in, new InHandler {
 
-        /**
-          * Handler that triggers if data arrives through the inlet.
-          * We will grab it and send it to the stream.template engine.
-          */
         override def onPush(): Unit = {
           val data = grab(in)
 
@@ -65,10 +48,5 @@ class SinkNode(val template: TemplateOutput) extends GraphStage[SinkShape[Seq[Va
 
     }
 
-  /**
-    * This method is needed to define the SinkShape for this sink using the inlet we defined.
-    *
-    * @return Returns a SinkShape that uses the inlet defined as the inlet of this Sink.
-    */
   override def shape: SinkShape[Seq[Value[_]]] = SinkShape(in)
 }
