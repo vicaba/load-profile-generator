@@ -8,7 +8,7 @@ import domain.value.generator.{DateValueGenerator, NumberValueGenerator, ValueGe
 import stream.distribution.infrastructure.value.{DistributionFlowDate, DistributionFlowNumber}
 
 final class DistributionFlowFactory {
-  def valueGeneratorToDistribution(vg: ValueGenerator[_, _],
+  def createFlowFromGenerator(vg: ValueGenerator[_, _],
                                    dist: List[InputDistribution]): Flow[Value[_], Value[_], NotUsed] = vg match {
     /*    case value : StringValueGenerator =>
            Flow.fromGraph(new DistributionFlowString(value, dist))

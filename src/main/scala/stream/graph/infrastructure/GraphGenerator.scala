@@ -7,6 +7,7 @@ import domain.out.template.TemplateOutput
 import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
 import domain.transform.rule.RulesCheck
 import domain.value.Value
+import stream.distribution.infrastructure.DistributionFlowFactory
 import stream.rules.infrastructure.RulesFlow
 import stream.template.infrastructure.TemplateSerializerFlow
 
@@ -74,15 +75,11 @@ final class GraphGenerator {
 
       println(s"Elements in map3 = $listConnections")
 
-      /*
-       * In this part we will check if there is any source that is meant to apply stream.distribution.
-       * If there is, we will create stream.distribution flows with configured value generators inside it,
-       * and lastly we will map it to the id of the stream.distribution node for easy access to it later.
-       */
+      val distributionFlowFactory = new DistributionFlowFactory
       val mapDistributions = inputFields
         .filter(field => inputConfiguration.isDistribution(field.getId))
         .map(InputDistributionConversions.inputFieldToValueGenerator)
-        .map(vg => vg.getId -> InputDistributionConversions.valueGeneratorToDistribution(vg, listConnections(vg.getId)))
+        .map(vg => vg.getId -> distributionFlowFactory.createFlowFromGenerator(vg, listConnections(vg.getId)))
         .toMap
       println(s"Elements in map4 = $mapDistributions")
 
