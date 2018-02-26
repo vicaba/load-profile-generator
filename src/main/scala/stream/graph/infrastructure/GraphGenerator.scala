@@ -7,6 +7,7 @@ import domain.out.template.TemplateOutput
 import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
 import domain.transform.rule.RulesCheck
 import domain.value.Value
+import generator.infrastructure.DistributionGeneratorFactory
 import stream.distribution.infrastructure.DistributionFlowFactory
 import stream.rules.infrastructure.RulesFlow
 import stream.source.infrastructure.SourceValueFactory
@@ -40,12 +41,7 @@ final class GraphGenerator {
     val inputFields = inputConfiguration.getFields.asScala.toList
 
     if (inputFields.nonEmpty) {
-      /*
-       * In this part we will check if there is any node that connects to a stream.distribution node.
-       * If there is, we will create a broadcast of two outlets for each node,
-       * and lastly we will map this broadcast to the id of the source node that will connect to it,
-       * for easy access to it later.
-       */
+
       val mapBroadcasts = inputFields
         .filter(field => inputConfiguration.isBroadcast(field.getId))
         .map(field => field.getId -> Broadcast[Value[_]](2))
@@ -72,10 +68,11 @@ final class GraphGenerator {
 
       println(s"Elements in map3 = $listConnections")
 
+      val distributionGeneratorFactory = new DistributionGeneratorFactory
       val distributionFlowFactory = new DistributionFlowFactory
       val mapDistributions = inputFields
         .filter(field => inputConfiguration.isDistribution(field.getId))
-        .map(InputDistributionConversions.inputFieldToValueGenerator)
+        .map(distributionGeneratorFactory.createGeneratorFromInput)
         .map(vg => vg.getId -> distributionFlowFactory.createFlowFromGenerator(vg, listConnections(vg.getId)))
         .toMap
       println(s"Elements in map4 = $mapDistributions")
