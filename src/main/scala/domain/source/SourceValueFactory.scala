@@ -1,10 +1,10 @@
-package stream.source.infrastructure
+package domain.source
 
 import akka.NotUsed
 import akka.stream.scaladsl.Source
 import domain.value.Value
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
-import stream.source.infrastructure.value.{SourceValueDate, SourceValueNumber, SourceValueString}
+import domain.source.value.{SourceValueDate, SourceValueNumber, SourceValueString}
 
 object SourceValueFactory {
 

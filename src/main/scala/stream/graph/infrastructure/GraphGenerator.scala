@@ -6,12 +6,12 @@ import domain.distribution.DistributionFlowFactory
 import domain.distribution.generator.DistributionGeneratorFactory
 import domain.in.config.InputConfiguration
 import domain.out.template.TemplateOutput
+import domain.source.SourceValueFactory
+import domain.source.generator.SourceGeneratorFactory
 import domain.test.stage.conversion.{InputDistributionConversions, InputFieldConversions}
 import domain.transform.rule.RulesCheck
 import domain.value.Value
-import generator.infrastructure.SourceGeneratorFactory
 import stream.rules.infrastructure.RulesFlow
-import stream.source.infrastructure.SourceValueFactory
 import stream.template.infrastructure.TemplateSerializerFlow
 
 import scala.collection.JavaConverters._
