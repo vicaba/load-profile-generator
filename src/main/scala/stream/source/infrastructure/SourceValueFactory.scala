@@ -6,7 +6,7 @@ import domain.value.Value
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
 import stream.source.infrastructure.value.{SourceValueDate, SourceValueNumber, SourceValueString}
 
-final class SourceValueFactory {
+object SourceValueFactory {
 
   def createSourceFromGenerator(vg: ValueGenerator[_, _]): Source[Value[_], NotUsed] = vg match {
     case value@(_: StringValueGenerator) =>

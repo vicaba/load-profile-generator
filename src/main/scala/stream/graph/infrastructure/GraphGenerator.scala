@@ -48,8 +48,8 @@ final class GraphGenerator {
         .toMap
       println(s"Elements in map1 = $mapBroadcasts")
 
-      val sourceGeneratorFactory = new SourceGeneratorFactory
-      val sourceValueFactory = new SourceValueFactory
+      val sourceGeneratorFactory = SourceGeneratorFactory
+      val sourceValueFactory = SourceValueFactory
       val mapSources = inputFields
         .filter(field => !inputConfiguration.isDistribution(field.getId))
         .map(sourceGeneratorFactory.createGeneratorFromInput)
@@ -69,8 +69,8 @@ final class GraphGenerator {
 
       println(s"Elements in map3 = $listConnections")
 
-      val distributionGeneratorFactory = new DistributionGeneratorFactory
-      val distributionFlowFactory = new DistributionFlowFactory
+      val distributionGeneratorFactory = DistributionGeneratorFactory
+      val distributionFlowFactory = DistributionFlowFactory
       val mapDistributions = inputFields
         .filter(field => inputConfiguration.isDistribution(field.getId))
         .map(distributionGeneratorFactory.createGeneratorFromInput)

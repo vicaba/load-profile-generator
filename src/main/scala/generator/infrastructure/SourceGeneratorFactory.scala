@@ -5,7 +5,7 @@ import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
 import domain.transform.calculations.equal.{DateEqualCalculations, NumberEqualCalculations, StringEqualCalculations}
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
 
-final class SourceGeneratorFactory {
+object SourceGeneratorFactory {
   def createGeneratorFromInput(in: InputField[_]): ValueGenerator[_, _] = in.getOptions match {
     case _: OptionsString =>
       new StringValueGenerator(

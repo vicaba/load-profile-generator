@@ -6,7 +6,7 @@ import domain.transform.calculations.distribution.{DateDistributionCalculations,
 import domain.transform.calculations.equal.StringEqualCalculations
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
 
-final class DistributionGeneratorFactory {
+object DistributionGeneratorFactory {
 
   def createGeneratorFromInput(in: InputField[_]): ValueGenerator[_, _] = in.getOptions match {
     case _: OptionsString =>
