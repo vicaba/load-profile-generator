@@ -1,4 +1,4 @@
-package domain.stream.stage.conversion
+package domain.test.stage.conversion
 
 
 import akka.NotUsed
@@ -7,7 +7,7 @@ import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.value.Value
 import domain.value.generator.{DateValueGenerator, NumberValueGenerator, StringValueGenerator, ValueGenerator}
-import stream.distribution.infrastructure.value.{DistributionFlowDate, DistributionFlowNumber, DistributionFlowString}
+import domain.distribution.value.{DistributionFlowDate, DistributionFlowNumber, DistributionFlowString}
 
 
 object InputDistributionConversionsInvalid {

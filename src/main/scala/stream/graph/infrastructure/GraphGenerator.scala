@@ -2,13 +2,14 @@ package stream.graph.infrastructure
 
 import akka.NotUsed
 import akka.stream.scaladsl.{Broadcast, RunnableGraph, Sink, Source}
+import domain.distribution.DistributionFlowFactory
+import domain.distribution.generator.DistributionGeneratorFactory
 import domain.in.config.InputConfiguration
 import domain.out.template.TemplateOutput
-import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
+import domain.test.stage.conversion.{InputDistributionConversions, InputFieldConversions}
 import domain.transform.rule.RulesCheck
 import domain.value.Value
-import generator.infrastructure.{DistributionGeneratorFactory, SourceGeneratorFactory}
-import stream.distribution.infrastructure.DistributionFlowFactory
+import generator.infrastructure.SourceGeneratorFactory
 import stream.rules.infrastructure.RulesFlow
 import stream.source.infrastructure.SourceValueFactory
 import stream.template.infrastructure.TemplateSerializerFlow

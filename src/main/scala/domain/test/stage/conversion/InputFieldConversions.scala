@@ -1,4 +1,4 @@
-package domain.stream.stage.conversion
+package domain.test.stage.conversion
 
 import akka.NotUsed
 import akka.stream.scaladsl.Source

@@ -1,11 +1,10 @@
-package stream.distribution.infrastructure.value
+package domain.distribution.value
 
 import java.lang
 
 import domain.in.distribution.InputDistribution
 import domain.transform.calculations.Calculations
 import domain.value.generator.ValueGenerator
-import stream.distribution.domain.DistributionFlowT
 
 final class DistributionFlowNumber(override val dataGenerator: ValueGenerator[lang.Float, Calculations[lang.Float]],
                              override val inputDistribution: List[InputDistribution])

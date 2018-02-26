@@ -1,4 +1,4 @@
-package generator.infrastructure
+package domain.distribution.generator
 
 import domain.in.field.InputField
 import domain.in.field.options.{OptionsDate, OptionsNumber, OptionsString}
