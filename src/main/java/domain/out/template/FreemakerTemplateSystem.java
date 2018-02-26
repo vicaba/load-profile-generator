@@ -24,14 +24,14 @@ public class FreemakerTemplateSystem implements TemplateSystem {
   private static final String DEFAULT_ENCODING = "UTF-8";
   /** Constant that defines the pathname of the folder that has the templates used: {@value} */
   private static final String TEMPLATES_FOLDER = "templates";
-  /** Constant that defines the name of the variable used to pass data to the template: {@value} */
+  /** Constant that defines the name of the variable used to pass data to the stream.template: {@value} */
   private static final String TEMPLATE_VAL = "outputs";
   /** Constant that defines the pathname where the output file will be generated: {@value} */
   private static final String OUTPUT_PATHNAME = "output/data.";
 
   /** Configuration object used to configure Apache Freemaker. */
   private Configuration cfg;
-  /** Data that will be added to the template to generate the output file. */
+  /** Data that will be added to the stream.template to generate the output file. */
   private ArrayList<List<Value>> outputs;
   /** Type of the file that will be generated. Initially we add the default one in case of error. */
   private String outputType;
@@ -41,7 +41,7 @@ public class FreemakerTemplateSystem implements TemplateSystem {
   /**
    * Method that configures Apache Freemaker so we can work with it.
    *
-   * @param nameTemplate The name of the template to be used.
+   * @param nameTemplate The name of the stream.template to be used.
    * @param outputType The type of file we want to output.
    */
   @Override
@@ -71,7 +71,7 @@ public class FreemakerTemplateSystem implements TemplateSystem {
     this.outputs.add(data);
   }
 
-  /** Method used to generate the output file using the template chosen and the data we've saved. */
+  /** Method used to generate the output file using the stream.template chosen and the data we've saved. */
   @Override
   public void generateFromTemplate() {
     try {

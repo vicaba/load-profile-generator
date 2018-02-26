@@ -14,7 +14,7 @@ public class InputField<Opt> {
   /** Object with specific info that depends of the type of value this field contains. */
   private Opt options;
   /**
-   * Object with the distribution info that will be used for this node if it's used to distribute
+   * Object with the stream.distribution info that will be used for this node if it's used to distribute
    * another.
    */
   private DistributionInfo distributionInfo;
@@ -24,7 +24,7 @@ public class InputField<Opt> {
    *
    * @param inputFieldInfo Object with the basic info of the InputField.
    * @param options Object with specific info that depends of the type of value this field contains.
-   * @param distributionInfo Object with the distribution info that will be used for this node if
+   * @param distributionInfo Object with the stream.distribution info that will be used for this node if
    *     it's used to distribute another.
    */
   public InputField(InputFieldInfo inputFieldInfo, Opt options, DistributionInfo distributionInfo) {

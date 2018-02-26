@@ -3,11 +3,11 @@ import akka.stream.scaladsl.{Broadcast, RunnableGraph, Sink, Source}
 import domain.in.config.InputConfiguration
 import domain.out.template.TemplateOutput
 import domain.stream.stage.conversion.{InputDistributionConversions, InputFieldConversions}
-import domain.stream.stage.flow.template.TemplateSerializerFlow
 import domain.stream.stage.connector.GraphConnector
 import domain.transform.rule.RulesCheck
 import domain.value.Value
-import rules.stream.infrastructure.RulesFlow
+import stream.rules.infrastructure.RulesFlow
+import stream.template.infrastructure.TemplateSerializerFlow
 
 import scala.collection.JavaConverters._
 import scala.languageFeature.implicitConversions
@@ -25,8 +25,8 @@ class GraphGenerator {
     * Method that allows us to generate a graph based on all the information received from the parameters.
     *
     * @param inputConfiguration The configuration obtained from the config file.
-    * @param rulesCheck         The rules to apply inside the graph.
-    * @param createTemplate     The template system to be used in the graph to output data.
+    * @param rulesCheck         The stream.rules to apply inside the graph.
+    * @param createTemplate     The stream.template system to be used in the graph to output data.
     * @return Returns a closed RunnableGraph that we can start running when we want.
     */
   def generate(inputConfiguration: InputConfiguration,
@@ -38,7 +38,7 @@ class GraphGenerator {
 
     if (inputFields.nonEmpty) {
       /*
-       * In this part we will check if there is any node that connects to a distribution node.
+       * In this part we will check if there is any node that connects to a stream.distribution node.
        * If there is, we will create a broadcast of two outlets for each node,
        * and lastly we will map this broadcast to the id of the source node that will connect to it,
        * for easy access to it later.
@@ -50,7 +50,7 @@ class GraphGenerator {
       println(s"Elements in map1 = $mapBroadcasts")
 
       /*
-       * In this part we will check if there is any node that is not meant to apply distribution.
+       * In this part we will check if there is any node that is not meant to apply stream.distribution.
        * If there is, we will create a source with a configured value generator inside it,
        * and lastly we will map it to the id of the source node for easy access to it later.
        */
@@ -62,9 +62,9 @@ class GraphGenerator {
       println(s"Elements in map2 = $mapSources")
 
       /*
-       * In this part we will check if there is any source that is meant to apply distribution.
+       * In this part we will check if there is any source that is meant to apply stream.distribution.
        * If there is, we will generate a list of all the ids of the nodes that are connected to it,
-       * and lastly we will map it to the id of the distribution node for easy access to it later.
+       * and lastly we will map it to the id of the stream.distribution node for easy access to it later.
        */
       val listConnections = inputFields
         .filter(field => inputConfiguration.isDistribution(field.getId))
@@ -74,9 +74,9 @@ class GraphGenerator {
       println(s"Elements in map3 = $listConnections")
 
       /*
-       * In this part we will check if there is any source that is meant to apply distribution.
-       * If there is, we will create distribution flows with configured value generators inside it,
-       * and lastly we will map it to the id of the distribution node for easy access to it later.
+       * In this part we will check if there is any source that is meant to apply stream.distribution.
+       * If there is, we will create stream.distribution flows with configured value generators inside it,
+       * and lastly we will map it to the id of the stream.distribution node for easy access to it later.
        */
       val mapDistributions = inputFields
         .filter(field => inputConfiguration.isDistribution(field.getId))
@@ -85,7 +85,7 @@ class GraphGenerator {
         .toMap
       println(s"Elements in map4 = $mapDistributions")
 
-      /* We create both the Flow node that apply rules and the Sink in this part. */
+      /* We create both the Flow node that apply stream.rules and the Sink in this part. */
       val rulesFlow = new RulesFlow(rulesCheck)
       val templateFlow = new TemplateSerializerFlow(createTemplate)
       //val sinkNode = new SinkNode(createTemplate)

@@ -47,7 +47,7 @@ public class Main {
         }
         read.close();
 
-        File statText = new File("log/distribution.csv");
+        File statText = new File("log/stream.distribution.csv");
         FileOutputStream is = null;
         try {
             is = new FileOutputStream(statText);

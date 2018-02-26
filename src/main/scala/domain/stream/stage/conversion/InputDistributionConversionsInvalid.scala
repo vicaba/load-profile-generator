@@ -3,7 +3,7 @@ package domain.stream.stage.conversion
 
 import akka.NotUsed
 import akka.stream.scaladsl.Flow
-import distribution.stream.infrastructure.{DistributionFlowDate, DistributionFlowNumber, DistributionFlowString}
+import stream.distribution.infrastructure.{DistributionFlowDate, DistributionFlowNumber, DistributionFlowString}
 import domain.in.distribution.InputDistribution
 import domain.in.field.InputField
 import domain.value.Value

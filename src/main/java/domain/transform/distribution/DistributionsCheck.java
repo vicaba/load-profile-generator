@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class that is used to check and work with the distribution condition of the DistributionFlow.
+ * Class that is used to check and work with the stream.distribution condition of the DistributionFlow.
  *
  * @version 1.0
  * @author Albert Trias
@@ -50,7 +50,7 @@ public class DistributionsCheck {
   }
 
   /**
-   * Method that checks if the distribution condition is fulfilled.
+   * Method that checks if the stream.distribution condition is fulfilled.
    *
    * @return Returns true if all nodes that distribute this node fulfill the condition, and false if
    *     at least one doesn't.

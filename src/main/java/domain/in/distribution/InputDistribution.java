@@ -10,14 +10,14 @@ import domain.in.condition.ConditionModifier;
  * @since 27/11/2017
  */
 public class InputDistribution {
-  /** Id of the node that will follow the distribution. */
+  /** Id of the node that will follow the stream.distribution. */
   private String id;
-  /** Condition that will be used to check if the distribution applies. */
+  /** Condition that will be used to check if the stream.distribution applies. */
   private String condition;
   /** Right comparator that will be used for the condition. */
   private int comparator;
   /**
-   * Info of the kind of operation that will be applied if the distribution condition is fulfilled.
+   * Info of the kind of operation that will be applied if the stream.distribution condition is fulfilled.
    */
   private ConditionModifier result;
 
@@ -27,7 +27,7 @@ public class InputDistribution {
    * @param id Id of the node that we will be used to affect the node that will be distributed.
    * @param condition String with the condition that will be applied to the node.
    * @param comparator Integer with the right comparator for the condition.
-   * @param result The kind of operation that will be applied if the distribution condition is
+   * @param result The kind of operation that will be applied if the stream.distribution condition is
    *     fulfilled.
    */
   public InputDistribution(String id, String condition, int comparator, ConditionModifier result) {

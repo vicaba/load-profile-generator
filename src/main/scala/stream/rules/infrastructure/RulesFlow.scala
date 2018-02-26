@@ -1,4 +1,4 @@
-package rules.stream.infrastructure
+package stream.rules.infrastructure
 
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler, OutHandler}
 import akka.stream.{Attributes, FlowShape, Inlet, Outlet}
@@ -8,17 +8,17 @@ import domain.value.Value
 import scala.collection.JavaConverters._
 
 /**
-  * The Flow responsible of applying rules to a generated data that enters through its inlet,
-  * and send it to the sink once rules have been applied.
+  * The Flow responsible of applying stream.rules to a generated data that enters through its inlet,
+  * and send it to the sink once stream.rules have been applied.
   *
-  * @param rulesCheck The rules that we need to check for all values and apply if necessary.
+  * @param rulesCheck The stream.rules that we need to check for all values and apply if necessary.
   */
 class RulesFlow(rulesCheck: RulesCheck) extends GraphStage[FlowShape[Seq[Value[_]], Seq[Value[_]]]] {
   /** The inlet of the RulesFlow. */
   val input: Inlet[Seq[Value[_]]] = Inlet[Seq[Value[_]]]("RulesFlow.in")
   /** The outlet of the RulesFlow. */
   val output: Outlet[Seq[Value[_]]] = Outlet[Seq[Value[_]]]("RulesFlow.out")
-  /** The rules that we need to check for all values and apply if necessary. */
+  /** The stream.rules that we need to check for all values and apply if necessary. */
   val rules: RulesCheck = rulesCheck
 
   /**
@@ -36,7 +36,7 @@ class RulesFlow(rulesCheck: RulesCheck) extends GraphStage[FlowShape[Seq[Value[_
       setHandler(input, new InHandler {
         /**
           * Handler that triggers if data arrives through the inlet.
-          * We will grab it, apply rules if necessary, and send it through its outlet.
+          * We will grab it, apply stream.rules if necessary, and send it through its outlet.
           */
         override def onPush(): Unit = {
           val javaList = grab(input).asJava

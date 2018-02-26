@@ -8,7 +8,7 @@ package domain.out.field;
  * @since 27/11/2017
  */
 public class OutputField {
-  /** The name of the template to be used by the template engine. */
+  /** The name of the stream.template to be used by the stream.template engine. */
   private String nameTemplate;
   /** What type of file we want to work (i.e. json). */
   private String outputType;
@@ -16,7 +16,7 @@ public class OutputField {
   /**
    * Constructor.
    *
-   * @param nameTemplate The name of the template to be used.
+   * @param nameTemplate The name of the stream.template to be used.
    * @param outputType Type of file we want to output.
    */
   public OutputField(String nameTemplate, String outputType) {
@@ -25,9 +25,9 @@ public class OutputField {
   }
 
   /**
-   * Getter of the name of the template.
+   * Getter of the name of the stream.template.
    *
-   * @return Returns a string with the name of the template that will be used by the template
+   * @return Returns a string with the name of the stream.template that will be used by the stream.template
    *     engine.
    */
   public String getNameTemplate() {

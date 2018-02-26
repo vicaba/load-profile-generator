@@ -1,4 +1,4 @@
-package distribution.stream.domain
+package stream.distribution.domain
 
 import akka.stream.stage._
 import akka.stream.{Attributes, FlowShape, Inlet, Outlet}
@@ -12,12 +12,12 @@ import org.slf4j.LoggerFactory
 import scala.collection.JavaConverters._
 
 /**
-  * Abstract class that defines the Flow responsible of applying distribution before generating its value,
-  * using what is sent from the connected broadcasts to increase the chance of the distribution to apply.
+  * Abstract class that defines the Flow responsible of applying stream.distribution before generating its value,
+  * using what is sent from the connected broadcasts to increase the chance of the stream.distribution to apply.
   * Then it will create the next value and sent it to the zipper that is connected with.
   *
   * @param dataGenerator     The data generator of this flow.
-  * @param inputDistribution The info necessary to use distribution in this node.
+  * @param inputDistribution The info necessary to use stream.distribution in this node.
   * @tparam V Type of the value that arrives to this flow.
   *           Allows different types, which are specified by the children of this node.
   * @tparam T Type of the Calculations used by this node, which also depends on the type of value it receives.
@@ -30,18 +30,18 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
   /** The outlet of this flow. Only compatible with one outlet for connections. */
   val outlet: Outlet[Value[V]] = Outlet[Value[V]]("FD" + inputDistribution(0).getResult.getId + ".out")
   /** The logger we use to check for debug purposes. */
-  private val logger = LoggerFactory.getLogger("distribution.logger")
+  private val logger = LoggerFactory.getLogger("stream.distribution.logger")
 
   /**
-    * The logic behind the Flow. It will grab the data from the inlet, affect the distribution chance with it,
-    * see if distribution will apply this time (and apply if it does) and generates the next data,
+    * The logic behind the Flow. It will grab the data from the inlet, affect the stream.distribution chance with it,
+    * see if stream.distribution will apply this time (and apply if it does) and generates the next data,
     * to at last pass it through its outlet.
     *
     * @param inheritedAttributes Not Used.
     * @return Not Used.
     */
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) {
-    /** The class we use to check if we need to influence the distribution chance. */
+    /** The class we use to check if we need to influence the stream.distribution chance. */
     private val distributionsCheck = new DistributionsCheck(inputDistribution.asJava)
 
     /**
@@ -50,14 +50,14 @@ abstract class DistributionFlowT[V, T <: Calculations[V]](val dataGenerator: Val
     setHandler(inlet, new InHandler {
       /**
         * Handler that triggers if data arrives through the inlet.
-        * We will grab it, check (and apply if necessary) distribution,
+        * We will grab it, check (and apply if necessary) stream.distribution,
         * generate the next value, and send it through its outlet.
         */
       override def onPush(): Unit = {
         //val input = grab(inlet)
         grab(inlet)
 
-        //TODO Need more methods for distribution.
+        //TODO Need more methods for stream.distribution.
         distributionsCheck.increaseAllCounters()
         if (distributionsCheck.checkDistribution()) {
           distributionsCheck.resetCounter()

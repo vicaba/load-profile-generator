@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class InputConfiguration {
   /** ArrayList with the list of fields obtained from the config file. */
   private ArrayList<InputField<Options>> fields;
-  /** ArrayList with the list of rules obtained from the config file. */
+  /** ArrayList with the list of stream.rules obtained from the config file. */
   private ArrayList<InputRule> rules;
   /** ArrayList with the list of distributions from the config file. */
   private ArrayList<InputDistribution> distributions;
@@ -58,9 +58,9 @@ public class InputConfiguration {
   }
 
   /**
-   * Getter of one specific field inside the list of rules.
+   * Getter of one specific field inside the list of stream.rules.
    *
-   * @param rule Integer that indicates which field we get, goes from 0 to length of rules.
+   * @param rule Integer that indicates which field we get, goes from 0 to length of stream.rules.
    * @return Field that was chosen with the rule parameter.
    */
   public InputRule getRule(int rule) {
@@ -103,7 +103,7 @@ public class InputConfiguration {
   }
 
   /**
-   * Function that returns the distribution rules of the nodes that distribute the node with the id
+   * Function that returns the stream.distribution stream.rules of the nodes that distribute the node with the id
    * passed as parameter.
    *
    * @param idDist String with the id of the field that we want to check who distributes it.

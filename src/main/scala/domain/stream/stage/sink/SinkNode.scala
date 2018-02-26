@@ -8,12 +8,12 @@ import domain.value.Value
 import scala.collection.JavaConverters._
 
 /**
-  * This class is the sink that we use for the graph, responsible of outputting the data using a template engine.
+  * This class is the sink that we use for the graph, responsible of outputting the data using a stream.template engine.
   *
   * @version 1.0
   * @author Albert Trias
   * @since 27/11/2017
-  * @param template The template engine that we will add to this Sink.
+  * @param template The stream.template engine that we will add to this Sink.
   */
 class SinkNode(val template: TemplateOutput) extends GraphStage[SinkShape[Seq[Value[_]]]] {
   /** The inlet that we will use for this sink. */
@@ -22,7 +22,7 @@ class SinkNode(val template: TemplateOutput) extends GraphStage[SinkShape[Seq[Va
   var firstTime = 1
 
   /**
-    * The logic behind the Sink. It will grab the data from the sink, and pass it to the template.
+    * The logic behind the Sink. It will grab the data from the sink, and pass it to the stream.template.
     *
     * @param inheritedAttributes Not Used.
     * @return Not Used.
@@ -42,7 +42,7 @@ class SinkNode(val template: TemplateOutput) extends GraphStage[SinkShape[Seq[Va
 
         /**
           * Handler that triggers if data arrives through the inlet.
-          * We will grab it and send it to the template engine.
+          * We will grab it and send it to the stream.template engine.
           */
         override def onPush(): Unit = {
           val data = grab(in)

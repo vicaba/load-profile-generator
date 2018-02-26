@@ -5,7 +5,7 @@ import domain.value.Value;
 import java.util.List;
 
 /**
- * Class that is used to use the current selected template engine to generate an output file with
+ * Class that is used to use the current selected stream.template engine to generate an output file with
  * all the data.
  *
  * @version 1.0
@@ -13,7 +13,7 @@ import java.util.List;
  * @since 27/11/2017
  */
 public class TemplateOutput {
-  /** Class that contains functions to work with the current template engine that we selected. */
+  /** Class that contains functions to work with the current stream.template engine that we selected. */
   private TemplateSystem templateSystem;
 
   /** Constructor. */
@@ -22,10 +22,10 @@ public class TemplateOutput {
   }
 
   /**
-   * Method that allows us to call the same method from the template system class to configure the
-   * template engine.
+   * Method that allows us to call the same method from the stream.template system class to configure the
+   * stream.template engine.
    *
-   * @param nameTemplate The name of the template to be used.
+   * @param nameTemplate The name of the stream.template to be used.
    * @param type The type of file we want of output.
    */
   public void configureTemplateSystem(String nameTemplate, String type) {
@@ -33,8 +33,8 @@ public class TemplateOutput {
   }
 
   /**
-   * Method that allows us to call the same method from the template system class to add new info to
-   * the template.
+   * Method that allows us to call the same method from the stream.template system class to add new info to
+   * the stream.template.
    *
    * @param data List of Values that form a completed data.
    */
@@ -43,7 +43,7 @@ public class TemplateOutput {
   }
 
   /**
-   * Method that allows us to call the same method from the template system class to generate the
+   * Method that allows us to call the same method from the stream.template system class to generate the
    * output file.
    */
   public void generateFromTemplate() {

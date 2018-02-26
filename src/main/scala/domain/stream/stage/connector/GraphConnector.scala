@@ -4,8 +4,8 @@ import akka.NotUsed
 import akka.stream._
 import akka.stream.scaladsl.{Broadcast, Flow, GraphDSL, RunnableGraph, Sink, Source, ZipN}
 import domain.in.distribution.InputDistribution
-import domain.stream.stage.flow.template.TemplateSerializerFlow
-import rules.stream.infrastructure.RulesFlow
+import stream.rules.infrastructure.RulesFlow
+import stream.template.infrastructure.TemplateSerializerFlow
 //import domain.stream.stage.sink.SinkNode
 import domain.value.Value
 
@@ -14,11 +14,11 @@ import domain.value.Value
   *
   * @param sourceValues       A Map with all sources, using their own ids as key.
   * @param broadcastValues    A Map with all broadcasts, using the ids of the connected sources as key.
-  * @param distributionValues A Map with all distribution flows, using their own ids as key.
+  * @param distributionValues A Map with all stream.distribution flows, using their own ids as key.
   * @param listConnections    A Map with all the broadcasts that connect to the DistributionFlow,
   *                           using the DistributionFlow id as key.
-  * @param rulesNode          The Rules Flow that will apply rules to the generated data.
-  * @param templateFlow       The TemplateSerializerFlow that will grab a data and change it to String, the content of the String is defined by the template selected.
+  * @param rulesNode          The Rules Flow that will apply stream.rules to the generated data.
+  * @param templateFlow       The TemplateSerializerFlow that will grab a data and change it to String, the content of the String is defined by the stream.template selected.
   */
 class GraphConnector(sourceValues: Map[String, Source[Value[_], NotUsed]],
                      broadcastValues: Map[String, Broadcast[Value[_]]],
@@ -68,7 +68,7 @@ class GraphConnector(sourceValues: Map[String, Source[Value[_], NotUsed]],
 
       if (conn.lengthCompare(1) == 0) {
         /*
-         * If we only need to connect one broadcast to a distribution flow, we do it all in this step,
+         * If we only need to connect one broadcast to a stream.distribution flow, we do it all in this step,
          * connect those two mentioned then connecting the flow to the final zipper.
          */
         broadBuild(conn.head.getId).out(1) ~> flow._2 ~> zipper
@@ -82,7 +82,7 @@ class GraphConnector(sourceValues: Map[String, Source[Value[_], NotUsed]],
           broadBuild(conn.getId).out(1) ~> zipperMerge
         }
 
-        /* Once we have the broadcasts connected, we connect the zipper to the distribution flow,
+        /* Once we have the broadcasts connected, we connect the zipper to the stream.distribution flow,
          * and lastly the flow to the final zipper.
          */
         zipperMerge ~> Flow[Seq[Value[_]]].map(src => src.toList.head) ~> flow._2 ~> zipper
