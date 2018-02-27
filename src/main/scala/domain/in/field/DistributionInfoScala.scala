@@ -1,4 +1,4 @@
-package domain.in
+package domain.in.field
 
 final class DistributionInfoScala(distributionMethod: String, offset: Double, totalData: Double) {
   def getDistributionMethod: String = this.distributionMethod

@@ -1,6 +1,6 @@
-package domain.in
+package domain.in.field
 
-import domain.in.options.OptionsScala
+import domain.in.field.options.OptionsScala
 
 final class InputFieldScala[T](field: InputFieldInfoScala, opt: OptionsScala, distributionInfo: DistributionInfoScala) {
   def getId: String = this.field.getId

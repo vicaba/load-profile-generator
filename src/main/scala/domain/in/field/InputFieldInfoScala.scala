@@ -1,4 +1,4 @@
-package domain.in
+package domain.in.field
 
 final class InputFieldInfoScala(id: String, name: String, `type`: String) {
   def getId: String = this.id
