@@ -13,5 +13,6 @@ libraryDependencies ++= Seq(
   apacheFreemaker,
   scalaLogging,
   logback,
-  apacheCommons
+  apacheCommons,
+  playJson
 )

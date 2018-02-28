@@ -7,7 +7,7 @@
         "type": "date"
       },
       "options": {
-        "startingDate": "18-09-2018 08:00",
+        "startingDate": "18-09-2017 08:00",
         "timeIncrement": 3600
       },
       "distributionInfo": {}
@@ -19,57 +19,12 @@
         "type": "date"
       },
       "options": {
-        "startingDate": "18-09-2017 08:00",
-        "timeIncrement": 3600
+        "acceptedStrings": ["MM","ML","MN"]
       },
       "distributionInfo": {
         "distributionMethod": "Student-T",
         "offset": -20,
         "totalData": 20.0
-      }
-    },
-    {
-      "info": {
-        "id": "0003",
-        "name": "Date3",
-        "type": "date"
-      },
-      "options": {
-        "startingDate": "18-09-2019 08:00",
-        "timeIncrement": 3600
-      },
-      "distributionInfo": {}
-    }
-  ],
-  "distributions": [
-    {
-      "id": "0001",
-      "condition": "count",
-      "comparator": 5,
-      "result": {
-        "id": "0002",
-        "operation": "reset"
-      }
-    },
-    {
-      "id": "0003",
-      "condition": "count",
-      "comparator": 3,
-      "result": {
-        "id": "0002",
-        "operation": "reset"
-      }
-    }
-  ],
-  "rules": [
-    {
-      "id": "0002",
-      "condition": "isGreaterThan",
-      "comparator": "18-09-2018 12:00",
-      "result": {
-        "id": "0002",
-        "operation": "+",
-        "value": 3600
       }
     }
   ]
