@@ -18,4 +18,6 @@ object Dependencies {
 
   val apacheCommons: ModuleID = "org.apache.commons" % "commons-math3" % "3.6.1"
 
+  val playJson: ModuleID = "com.typesafe.play" %% "play-json" % "2.6.7"
+
 }
