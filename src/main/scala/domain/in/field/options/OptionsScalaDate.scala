@@ -1,6 +1,6 @@
 package domain.in.field.options
 
-final case class OptionsScalaDate(startingDate: String, timeIncrement: Int) extends OptionsScala {
+final case class OptionsScalaDate(private val startingDate: String, private val timeIncrement: Int) extends OptionsScala {
   def getStartingDate: String = this.startingDate
   def getTimeIncrement: Int = this.timeIncrement
 

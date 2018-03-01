@@ -1,11 +1,10 @@
 package infrastructure.in.config.json.deserializer
 
-import domain.in.field.options.{OptionsScala, OptionsScalaDate, OptionsScalaNumber, OptionsScalaString}
+import domain.in.field.options.{NumberRangeScala, _}
 import domain.in.field.{DistributionInfoScala, InputFieldInfoScala, InputFieldScala}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads.verifying
-
 
 import scala.io.Source
 
@@ -22,9 +21,18 @@ final class InputConfigurationJsonReaderScala(path: String) {
     implicit val optionsScalaString: Reads[OptionsScalaString] = (JsPath \ "acceptedStrings")
       .read[Seq[String]].map(acceptedStrings => OptionsScalaString(acceptedStrings))
 
+    implicit val numberRangesScala: Reads[NumberRangeScala] = (
+      (JsPath \ "min").read[Float] and
+        (JsPath \ "max").read[Float]
+    )(NumberRangeScala.apply _)
+
+    implicit val optionsScalaNumber: Reads[OptionsScalaNumber] = (JsPath \ "ranges")
+      .read[Seq[NumberRangeScala]].map(ranges => OptionsScalaNumber(ranges))
+
     val dateReads: Reads[OptionsScalaDate] = verifying[OptionsScalaDate](_.getClass.getSimpleName == "OptionsScalaDate")(Json.reads[OptionsScalaDate])
     val stringReads: Reads[OptionsScalaString] = verifying[OptionsScalaString](_.getClass.getSimpleName == "OptionsScalaString")(Json.reads[OptionsScalaString])
-    implicit val optionsRead: Reads[OptionsScala] = dateReads.map(identity[OptionsScala]) or stringReads.map(identity[OptionsScala])
+    val numberReads: Reads[OptionsScalaNumber] = verifying[OptionsScalaNumber](_.getClass.getSimpleName == "OptionsScalaNumber")(Json.reads[OptionsScalaNumber])
+    implicit val optionsRead: Reads[OptionsScala] = dateReads.map(identity[OptionsScala]) or stringReads.map(identity[OptionsScala]) or numberReads.map(identity[OptionsScala])
 
     implicit val distributionInfoScala: Reads[DistributionInfoScala] = (
       ((JsPath \ "distributionMethod").read[String] or Reads.pure("") ) and
