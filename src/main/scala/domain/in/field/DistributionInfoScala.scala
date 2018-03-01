@@ -1,6 +1,6 @@
 package domain.in.field
 
-final case class DistributionInfoScala(private val distributionMethod: String, private val offset: Double, private val totalData: Double) {
+final case class DistributionInfoScala(distributionMethod: String, offset: Double, totalData: Double) {
   def getDistributionMethod: String = this.distributionMethod
 
   def getOffset: Double = this.offset

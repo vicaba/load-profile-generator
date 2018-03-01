@@ -16,15 +16,51 @@
       "info": {
         "id": "0002",
         "name": "Date2",
-        "type": "date"
+        "type": "string"
       },
       "options": {
-        "acceptedStrings": ["MM","ML","MN"]
+        "acceptedStrings": [
+          "MM",
+          "ML",
+          "MN"
+        ]
       },
       "distributionInfo": {
         "distributionMethod": "Student-T",
         "offset": -20,
         "totalData": 20.0
+      }
+    },
+    {
+      "info": {
+        "id": "0001",
+        "name": "Date1",
+        "type": "integer"
+      },
+      "options": {
+        "ranges": [
+          {
+            "min": 4,
+            "max": 100
+          },
+          {
+            "min": -50,
+            "max": -1
+          }
+        ]
+      },
+      "distributionInfo": {}
+    }
+  ],
+  "rules": [
+    {
+      "id": "0002",
+      "condition": "isGreaterThan",
+      "comparator": "18-09-2018 12:00",
+      "result": {
+        "id": "0002",
+        "operation": "+",
+        "value": 3600
       }
     }
   ]

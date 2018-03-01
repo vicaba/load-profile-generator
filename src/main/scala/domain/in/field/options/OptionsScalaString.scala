@@ -1,7 +1,7 @@
 package domain.in.field.options
 
-final case class OptionsScalaString(private val acceptedStrings: Seq[String]) extends OptionsScala {
-  def getAcceptedStrings: Seq[String] = this.acceptedStrings
+final case class OptionsScalaString(acceptedStrings: List[String]) extends OptionsScala {
+  def getAcceptedStrings: List[String] = this.acceptedStrings
   def getAcceptedString(position: Int): String = this.acceptedStrings(position)
   def getSizeAccepted: Int = this.acceptedStrings.size
 

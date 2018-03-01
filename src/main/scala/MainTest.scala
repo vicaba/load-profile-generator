@@ -3,6 +3,6 @@ import infrastructure.in.config.json.deserializer.InputConfigurationJsonReaderSc
 object MainTest {
   def main(args: Array[String]): Unit = {
     val inputConfigurationFile = "resources/input.json"
-    print(new InputConfigurationJsonReaderScala(inputConfigurationFile).read())
+    new InputConfigurationJsonReaderScala(inputConfigurationFile).readJson4()
   }
 }
