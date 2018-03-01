@@ -20,4 +20,6 @@ object Dependencies {
 
   val playJson: ModuleID = "com.typesafe.play" %% "play-json" % "2.6.7"
 
+  val json4s: ModuleID = "org.json4s" %% "json4s-jackson" % "3.6.0-M2"
+
 }
