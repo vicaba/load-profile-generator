@@ -14,5 +14,6 @@ libraryDependencies ++= Seq(
   scalaLogging,
   logback,
   apacheCommons,
-  playJson
+  playJson,
+  json4s
 )
