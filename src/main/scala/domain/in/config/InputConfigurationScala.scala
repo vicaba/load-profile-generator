@@ -21,4 +21,22 @@ final class InputConfigurationScala(fields: Seq[InputFieldScala[OptionsScala]],
 
   def getRule(ruleIndex: Int): InputRuleScala[_] = this.rules(ruleIndex)
 
+  def isBroadcast(id: String): Boolean = {
+    for (dist <- distributions) {
+      if (dist.getId == id) return true
+    }
+    false
+  }
+
+  def isDistribution(id: String): Boolean = {
+    for (dist <- distributions) {
+      if (dist.isDistribution(id)) return true
+    }
+    false
+  }
+
+  def isDistributedBy(id: String): Seq[InputDistributionScala] = {
+    distributions.filter(dist => dist.getResult.getId == id)
+  }
+
 }
