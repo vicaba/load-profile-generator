@@ -2,7 +2,7 @@ package domain.in.rule
 
 import domain.in.condition.ConditionModifierScala
 
-final case class InputRuleScala[T](private val id: String,
+final class InputRuleScala[T](private val id: String,
                                    private val condition: String,
                                    private val comparator: T,
                                    private val result: ConditionModifierScala[T]) {

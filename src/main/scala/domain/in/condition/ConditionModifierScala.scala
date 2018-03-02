@@ -1,8 +1,8 @@
 package domain.in.condition
 
-final case class ConditionModifierScala[T](private val id: String,
-                                           private val operation: String,
-                                           private val value: T) {
+final class ConditionModifierScala[T](id: String,
+                                      operation: String,
+                                      value: T) {
   def getId: String = this.id
 
   def getOperation: String = this.operation

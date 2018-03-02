@@ -52,6 +52,26 @@
       "distributionInfo": {}
     }
   ],
+  "distributions": [
+    {
+      "id": "0001",
+      "condition": "count",
+      "comparator": 5,
+      "result": {
+        "id": "0002",
+        "operation": "reset"
+      }
+    },
+    {
+      "id": "0003",
+      "condition": "count",
+      "comparator": 3,
+      "result": {
+        "id": "0002",
+        "operation": "reset"
+      }
+    }
+  ],
   "rules": [
     {
       "id": "0002",
