@@ -2,16 +2,16 @@ package domain.graph
 
 import akka.NotUsed
 import akka.stream.scaladsl.{Broadcast, RunnableGraph, Sink, Source}
-import domain.distribution.{DistributionFlowFactory, DistributionFlowFactoryScala}
-import domain.distribution.generator.{DistributionGeneratorFactory, DistributionGeneratorFactoryScala}
+import domain.distribution.DistributionFlowFactoryScala
+import domain.distribution.generator.DistributionGeneratorFactoryScala
 import domain.in.config.InputConfigurationScala
 import domain.out.template.TemplateOutputScala
-import domain.rules.RulesFlow
-import domain.source.{SourceValueFactory, SourceValueFactoryScala}
+import domain.rules.RulesFlowScala
+import domain.source.SourceValueFactoryScala
 import domain.source.generator.SourceGeneratorFactoryScala
-import domain.template.TemplateSerializerFlow
+import domain.template.TemplateSerializerFlowScala
 import domain.transform.rule.RulesCheckScala
-import domain.value.Value
+import domain.value.ValueScala
 
 import scala.languageFeature.implicitConversions
 
@@ -34,7 +34,7 @@ final class GraphGeneratorScala {
     */
   def generate(inputConfiguration: InputConfigurationScala,
                rulesCheck: RulesCheckScala,
-               createTemplate: TemplateOutputScala): Unit /*RunnableGraph[NotUsed]*/ = {
+               createTemplate: TemplateOutputScala): RunnableGraph[NotUsed] = {
 
     /* We obtain the InputFields from the Configuration class. */
     val inputFields = inputConfiguration.getFields
@@ -43,7 +43,7 @@ final class GraphGeneratorScala {
 
       val mapBroadcasts = inputFields
         .filter(field => inputConfiguration.isBroadcast(field.getId))
-        .map(field => field.getId -> Broadcast[Value[_]](2))
+        .map(field => field.getId -> Broadcast[ValueScala[_]](2))
         .toMap
       println(s"Elements in map1 = $mapBroadcasts")
 
@@ -77,12 +77,13 @@ final class GraphGeneratorScala {
 
       /* We create both the Flow node that apply domain.rules and the Sink in this part. */
       val rulesFlow = new RulesFlowScala(rulesCheck)
-      //val templateFlow = new TemplateSerializerFlow(createTemplate)
+      println(s"RulesFlow = $rulesFlow")
+      val templateFlow = new TemplateSerializerFlowScala(createTemplate)
       //val sinkNode = new SinkNode(createTemplate)
 
       /* We sent it to a class responsible to connect everything together. */
-      //val mergeNodeTest = new GraphConnector(mapSources, mapBroadcasts, mapDistributions, listConnections, rulesFlow, templateFlow)
-      //mergeNodeTest.connect()
+      val mergeNodeTest = new GraphConnectorScala(mapSources, mapBroadcasts, mapDistributions, listConnections, rulesFlow, templateFlow)
+      mergeNodeTest.connect()
     } else {
 
       //TODO Sent a log message indicating that there's been a problem and a valid graph was not generated.
