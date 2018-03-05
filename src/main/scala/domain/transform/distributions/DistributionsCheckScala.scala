@@ -20,7 +20,7 @@ final class DistributionsCheckScala(inputDistribution: Seq[InputDistributionScal
 
   def checkDistribution: Boolean = {
     this.inputDistribution
-      .filter(dist => dist.getCondition == "count" && this.listCounters(dist.getId) >= dist.getComparator).
-      lengthCompare(this.listCounters.size) == 0
+      .filter(dist => dist.getCondition == "count" && this.listCounters(dist.getId) >= dist.getComparator)
+      .lengthCompare(this.listCounters.size) == 0
   }
 }
