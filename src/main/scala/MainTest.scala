@@ -1,6 +1,7 @@
 import java.lang.System.exit
 
-import Main.{DefaultLoggerConfigurationPath, configureLogger}
+import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.joran.JoranConfigurator
 import ch.qos.logback.core.joran.spi.JoranException
@@ -13,8 +14,10 @@ import infrastructure.out.config.serialization.json.deserializer.OutputConfigura
 import org.slf4j.{Logger, LoggerFactory}
 
 object MainTest {
-
   private final val DefaultLoggerConfigurationPath = "resources/logback.xml"
+
+  implicit private val system: ActorSystem = ActorSystem()
+  implicit private val materializer: ActorMaterializer = ActorMaterializer()
 
   private def configureLogger(loggerConfigurationFilePath: String): Unit = {
     val context: LoggerContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
@@ -49,13 +52,20 @@ object MainTest {
 
     val inputConfigurationFile = "resources/input.json"
     val inputConfiguration = new InputConfigurationJsonReaderScala(inputConfigurationFile).readJson4()
+
     val outputConfigurationFile = "resources/output.json"
     val outputField = new OutputConfigurationJsonReaderScala(outputConfigurationFile).readJson4()
-    val graphGenerator = new GraphGenerator
+
     val rulesCheck = new RulesCheckScala(inputConfiguration.getRules)
 
     val templateSystemScala = new FreemakerTemplateSystemScala(outputField.getNameTemplate, outputField.getOutputType)
     val createTemplate = new TemplateOutputScala(templateSystemScala)
     createTemplate.configureTemplateSystem()
+
+    val graphGenerator = new GraphGenerator
+    val graph = graphGenerator.generate(inputConfiguration, rulesCheck, createTemplate)
+    appLogger.debug(graph.toString)
+    graph.async
+    graph.run()
   }
 }
