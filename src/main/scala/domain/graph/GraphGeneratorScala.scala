@@ -56,19 +56,15 @@ final class GraphGeneratorScala {
         .toMap
       println(s"Elements in map2 = $mapSources")
 
-      /*
-       * In this part we will check if there is any source that is meant to apply stream.distribution.
-       * If there is, we will generate a list of all the ids of the nodes that are connected to it,
-       * and lastly we will map it to the id of the stream.distribution node for easy access to it later.
-       */
-      /*
+
       val listConnections = inputFields
         .filter(field => inputConfiguration.isDistribution(field.getId))
-        .map(vg => vg.getId -> inputConfiguration.isDistributedBy(vg.getId).asScala.toList)
+        .map(vg => vg.getId -> inputConfiguration.isDistributedBy(vg.getId))
         .toMap
 
       println(s"Elements in map3 = $listConnections")
 
+      /*
       val distributionGeneratorFactory = DistributionGeneratorFactory
       val distributionFlowFactory = DistributionFlowFactory
       val mapDistributions = inputFields
