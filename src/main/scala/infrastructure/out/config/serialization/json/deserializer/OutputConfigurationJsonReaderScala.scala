@@ -9,11 +9,11 @@ import scala.io.Source
 final class OutputConfigurationJsonReaderScala(path: String) {
   implicit private val formats: Formats = DefaultFormats
 
-  def readJson4(): Unit = {
+  def readJson4(): OutputFieldScala = {
     val json = parse(Source.fromFile(path).mkString)
     print(json + "\n")
     val outputField = json.extract[OutputFieldScala]
     print(outputField.getNameTemplate + " - " + outputField.getOutputType)
-
+    outputField
   }
 }
