@@ -9,7 +9,7 @@ import scala.io.Source
 
 final class InputConfigurationJsonReaderScala(path: String) {
 
-  implicit val formats: Formats = DefaultFormats + OptionsSerializer
+  implicit private val formats: Formats = DefaultFormats + OptionsSerializer
 
   def readJson4(): Unit = {
     val json = parse(Source.fromFile(path).mkString)
