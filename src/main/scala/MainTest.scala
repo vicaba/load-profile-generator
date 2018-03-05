@@ -6,7 +6,7 @@ import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.joran.JoranConfigurator
 import ch.qos.logback.core.joran.spi.JoranException
 import ch.qos.logback.core.util.StatusPrinter
-import domain.graph.GraphGenerator
+import domain.graph.GraphGeneratorScala
 import domain.out.template.{FreemakerTemplateSystemScala, TemplateOutputScala}
 import domain.transform.rule.RulesCheckScala
 import infrastructure.in.config.json.deserializer.InputConfigurationJsonReaderScala
@@ -62,7 +62,7 @@ object MainTest {
     val createTemplate = new TemplateOutputScala(templateSystemScala)
     createTemplate.configureTemplateSystem()
 
-    val graphGenerator = new GraphGenerator
+    val graphGenerator = new GraphGeneratorScala
     val graph = graphGenerator.generate(inputConfiguration, rulesCheck, createTemplate)
     appLogger.debug(graph.toString)
     graph.async
