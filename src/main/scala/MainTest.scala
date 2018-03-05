@@ -37,7 +37,7 @@ object MainTest {
 
   def main(args: Array[String]): Unit = {
 
-    /*
+
     configureLogger(DefaultLoggerConfigurationPath)
 
     val appLogger: Logger = LoggerFactory.getLogger("app.logger")
@@ -50,12 +50,12 @@ object MainTest {
     }
 
     appLogger.info("Starting Application")
-    */
 
-    val inputConfigurationFile = "resources/input.json"
+
+    val inputConfigurationFile = args(0)
     val inputConfiguration = new InputConfigurationJsonReaderScala(inputConfigurationFile).readJson4()
 
-    val outputConfigurationFile = "resources/output.json"
+    val outputConfigurationFile = args(1)
     val outputField = new OutputConfigurationJsonReaderScala(outputConfigurationFile).readJson4()
 
     val rulesCheck = new RulesCheckScala(inputConfiguration.getRules)
@@ -66,8 +66,8 @@ object MainTest {
 
     val graphGenerator = new GraphGeneratorScala
     val graph = graphGenerator.generate(inputConfiguration, rulesCheck, createTemplate)
-    //appLogger.debug(graph.toString)
-    //graph.async
-    //graph.run()
+    appLogger.debug(graph.toString)
+    graph.async
+    graph.run()
   }
 }
