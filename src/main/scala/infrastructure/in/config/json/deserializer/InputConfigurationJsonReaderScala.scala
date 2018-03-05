@@ -11,8 +11,8 @@ final class InputConfigurationJsonReaderScala(path: String) {
 
   implicit private val formats: Formats = DefaultFormats + OptionsSerializer
 
-  def readJson4(): Unit = {
-    val json = parse(Source.fromFile(path).mkString)
+  def readJson4(): InputConfigurationScala = {
+  val json = parse(Source.fromFile(path).mkString)
     print(json + "\n")
     val inputConfig = json.extract[InputConfigurationScala]
     if (inputConfig.getField(0).getDistributionInfo == null) {
@@ -20,7 +20,7 @@ final class InputConfigurationJsonReaderScala(path: String) {
     } else {
       print("Dist is not null")
     }
-
+    inputConfig
   }
 
 }
