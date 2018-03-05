@@ -2,8 +2,8 @@ package domain.graph
 
 import akka.NotUsed
 import akka.stream.scaladsl.{Broadcast, RunnableGraph, Sink, Source}
-import domain.distribution.DistributionFlowFactory
-import domain.distribution.generator.DistributionGeneratorFactory
+import domain.distribution.{DistributionFlowFactory, DistributionFlowFactoryScala}
+import domain.distribution.generator.{DistributionGeneratorFactory, DistributionGeneratorFactoryScala}
 import domain.in.config.InputConfigurationScala
 import domain.out.template.TemplateOutputScala
 import domain.rules.RulesFlow
@@ -64,19 +64,19 @@ final class GraphGeneratorScala {
 
       println(s"Elements in map3 = $listConnections")
 
-      /*
-      val distributionGeneratorFactory = DistributionGeneratorFactory
-      val distributionFlowFactory = DistributionFlowFactory
+
+      val distributionGeneratorFactory = DistributionGeneratorFactoryScala
+      val distributionFlowFactory = DistributionFlowFactoryScala
       val mapDistributions = inputFields
         .filter(field => inputConfiguration.isDistribution(field.getId))
         .map(distributionGeneratorFactory.createGeneratorFromInput)
         .map(vg => vg.getId -> distributionFlowFactory.createFlowFromGenerator(vg, listConnections(vg.getId)))
         .toMap
       println(s"Elements in map4 = $mapDistributions")
-      */
+
 
       /* We create both the Flow node that apply domain.rules and the Sink in this part. */
-      //val rulesFlow = new RulesFlow(rulesCheck)
+      val rulesFlow = new RulesFlowScala(rulesCheck)
       //val templateFlow = new TemplateSerializerFlow(createTemplate)
       //val sinkNode = new SinkNode(createTemplate)
 
