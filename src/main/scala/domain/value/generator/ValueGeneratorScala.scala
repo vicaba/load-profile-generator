@@ -2,6 +2,7 @@ package domain.value.generator
 
 import domain.in.field.InputFieldScala
 import domain.transform.calculations.CalculationsScala
+import domain.transform.calculations.distribution.DistributionCalculationsScala
 import domain.value.ValueScala
 
 abstract class ValueGeneratorScala[T, V <: CalculationsScala[T]](inputField: InputFieldScala[T], calculations: V) {
@@ -17,13 +18,13 @@ abstract class ValueGeneratorScala[T, V <: CalculationsScala[T]](inputField: Inp
   def getName: String = inputField.getName
 
   def increaseCounter(): Unit = {
-    /*
+
     this.calculations match {
       case value: DistributionCalculationsScala[T] =>
         value.increaseDistributionCounter()
       case _ =>
     }
-    */
+
   }
 }
 
