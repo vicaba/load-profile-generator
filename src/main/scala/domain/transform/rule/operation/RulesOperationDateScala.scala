@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 import domain.value.ValueScala
 
-final class RulesOperationDateScala(operation: String, value: BigInt) extends RulesOperationTScala[LocalDateTime] {
+final class RulesOperationDateScala(operation: String, value: Long) extends RulesOperationTScala[LocalDateTime] {
   override def applyChanges(output: ValueScala[LocalDateTime]): ValueScala[LocalDateTime] = operation match {
     case "+" =>
       new ValueScala[LocalDateTime](

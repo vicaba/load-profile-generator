@@ -21,10 +21,12 @@ final class RulesCheckScala(rules: Seq[InputRuleScala[_]]) {
           var resultsChecked = false
 
           output.value match {
-            case _: Float => resultsChecked = (new CreateRuleNumberScala)
-              .getCondition(output.asInstanceOf[ValueScala[Float]], rule.asInstanceOf[InputRuleScala[Float]])
-              .checkResults
+            case _: Double =>
+              resultsChecked = (new CreateRuleNumberScala)
+                .getCondition(output.asInstanceOf[ValueScala[Double]], rule.asInstanceOf[InputRuleScala[Double]])
+                .checkResults
 
+              print("--------------"+output.value + " > " + rule.comparator+"-------------\n")
             case _: String => resultsChecked = (new CreateRuleStringScala)
               .getCondition(output.asInstanceOf[ValueScala[String]], rule.asInstanceOf[InputRuleScala[String]])
               .checkResults
@@ -35,7 +37,7 @@ final class RulesCheckScala(rules: Seq[InputRuleScala[_]]) {
                 rule.id,
                 rule.condition,
                 LocalDateTime.parse(rule.comparator.asInstanceOf[String], DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
-                rule.result.asInstanceOf[ConditionModifierScala[Float]]
+                rule.result
               )
 
               resultsChecked = (new CreateRuleLocalDateTimeScala)
@@ -46,7 +48,8 @@ final class RulesCheckScala(rules: Seq[InputRuleScala[_]]) {
           }
           /* If the value fulfills a condition specified by the rule, it wil apply the changes. */
           if (resultsChecked) {
-            val rulesApplication = new RulesApplicationScala(rule.id, rule.result)
+            print(rule + "-----------------------\n")
+            val rulesApplication = new RulesApplicationScala(rule.result)
             rulesApplication.applyRules(outMutable)
           }
         }

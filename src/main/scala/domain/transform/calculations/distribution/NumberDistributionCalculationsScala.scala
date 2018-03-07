@@ -7,7 +7,7 @@ import org.apache.commons.math3.distribution.TDistribution
 
 final class NumberDistributionCalculationsScala(numberRanges: Seq[NumberRangeScala],
                                                 offset: Double,
-                                                totalData: Double) extends DistributionCalculationsScala[Float] {
+                                                totalData: Double) extends DistributionCalculationsScala[Double] {
 
   private final val DegreesOfFreedom = 10
   private final val tDistribution = new TDistribution(this.DegreesOfFreedom)
@@ -15,7 +15,7 @@ final class NumberDistributionCalculationsScala(numberRanges: Seq[NumberRangeSca
   private var counterDistribution = 0
   private var counterNumber = 0
 
-  override def calculate: Float = {
+  override def calculate: Double = {
     val numberRange = this.numberRanges(0)
     // TODO Make it compatible with multiple ranges.
 

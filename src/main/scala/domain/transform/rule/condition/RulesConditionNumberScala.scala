@@ -1,8 +1,8 @@
 package domain.transform.rule.condition
 
-final class RulesConditionNumberScala(leftCondition: Float,
+final class RulesConditionNumberScala(leftCondition: Double,
                                        condition: String,
-                                       rightCondition: Float) extends RulesConditionTScala[Float] {
+                                       rightCondition: Double) extends RulesConditionTScala[Double] {
 
   override def checkResults: Boolean = this.condition match {
     case IsLessThan =>

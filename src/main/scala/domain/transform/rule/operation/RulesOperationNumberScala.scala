@@ -2,10 +2,10 @@ package domain.transform.rule.operation
 
 import domain.value.ValueScala
 
-final class RulesOperationNumberScala(operation: String, value: Float) extends RulesOperationTScala[Float] {
-  override def applyChanges(output: ValueScala[Float]): ValueScala[Float] = operation match {
+final class RulesOperationNumberScala(operation: String, value: Double) extends RulesOperationTScala[Double] {
+  override def applyChanges(output: ValueScala[Double]): ValueScala[Double] = operation match {
     case "+" =>
-      new ValueScala[Float](
+      new ValueScala[Double](
         output.id,
         output.`type`,
         output.name,
@@ -13,7 +13,7 @@ final class RulesOperationNumberScala(operation: String, value: Float) extends R
       )
 
     case "-" =>
-      new ValueScala[Float](
+      new ValueScala[Double](
         output.id,
         output.`type`,
         output.name,
@@ -21,7 +21,7 @@ final class RulesOperationNumberScala(operation: String, value: Float) extends R
       )
 
     case "*" =>
-      new ValueScala[Float](
+      new ValueScala[Double](
         output.id,
         output.`type`,
         output.name,
@@ -29,7 +29,7 @@ final class RulesOperationNumberScala(operation: String, value: Float) extends R
       )
 
     case "/" =>
-      new ValueScala[Float](
+      new ValueScala[Double](
         output.id,
         output.`type`,
         output.name,
@@ -37,7 +37,7 @@ final class RulesOperationNumberScala(operation: String, value: Float) extends R
       )
 
     case "%" =>
-      new ValueScala[Float](
+      new ValueScala[Double](
         output.id,
         output.`type`,
         output.name,
@@ -45,7 +45,7 @@ final class RulesOperationNumberScala(operation: String, value: Float) extends R
       )
 
     case "=" =>
-      new ValueScala[Float](
+      new ValueScala[Double](
         output.id,
         output.`type`,
         output.name,
