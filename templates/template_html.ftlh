@@ -9,13 +9,13 @@
         <table style="width:100%">
             <tr>
 <#list outputs[0] as header>
-                <th>${header.id}-${header.name}-${header.type}</th>
+                <th>${header.id()}-${header.name()}-${header.type()}</th>
 </#list>
             </tr>
             <#list outputs as datalist>
             <tr>
                 <#list datalist as data>
-                <td>${data.value}</td>
+                <td>${data.value()}</td>
                 </#list>
             </tr>
             </#list>
