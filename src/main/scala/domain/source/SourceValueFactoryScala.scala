@@ -2,7 +2,7 @@ package domain.source
 
 import akka.NotUsed
 import akka.stream.scaladsl.Source
-import domain.source.value.{SourceValueDateScala, SourceValueNumberScala, SourceValueStringScala}
+import domain.source.value.{SourceValueApplianceScala, SourceValueDateScala, SourceValueNumberScala, SourceValueStringScala}
 import domain.value.ValueScala
 import domain.value.generator._
 
@@ -15,5 +15,7 @@ object SourceValueFactoryScala {
       Source.fromGraph(new SourceValueNumberScala(value))
     case value@(_: DateValueGeneratorScala) =>
       Source.fromGraph(new SourceValueDateScala(value))
+    case value@(_: ApplianceValueGeneratorScala) =>
+      Source.fromGraph(new SourceValueApplianceScala(value))
   }
 }
