@@ -5,13 +5,13 @@ import domain.in.field.InputFieldScala
 import domain.in.field.options.OptionsScala
 import domain.in.rule.InputRuleScala
 
-final class InputConfigurationScala(fields: Seq[InputFieldScala[OptionsScala]],
+final class InputConfigurationScala(fields: Seq[InputFieldScala],
                                          distributions: Seq[InputDistributionScala],
                                          rules: Seq[InputRuleScala[_]]) {
 
-  def getFields: Seq[InputFieldScala[OptionsScala]] = this.fields
+  def getFields: Seq[InputFieldScala] = this.fields
 
-  def getField(fieldIndex: Int): InputFieldScala[_] = this.fields(fieldIndex)
+  def getField(fieldIndex: Int): InputFieldScala = this.fields(fieldIndex)
 
   def getDistributions: Seq[InputDistributionScala] = this.distributions
 
