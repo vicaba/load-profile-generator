@@ -58,9 +58,9 @@ object MainTest {
     val outputConfigurationFile = args(1)
     val outputField = new OutputConfigurationJsonReaderScala(outputConfigurationFile).readJson4()
 
-    val rulesCheck = new RulesCheckScala(inputConfiguration.getRules)
+    val rulesCheck = new RulesCheckScala(inputConfiguration.rules)
 
-    val templateSystemScala = new FreemakerTemplateSystemScala(outputField.getNameTemplate, outputField.getOutputType)
+    val templateSystemScala = new FreemakerTemplateSystemScala(outputField.nameTemplate, outputField.outputType)
     val createTemplate = new TemplateOutputScala(templateSystemScala)
     createTemplate.configureTemplateSystem()
 

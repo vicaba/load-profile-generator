@@ -8,18 +8,18 @@ final class RulesOperationDateScala(operation: String, value: BigInt) extends Ru
   override def applyChanges(output: ValueScala[LocalDateTime]): ValueScala[LocalDateTime] = operation match {
     case "+" =>
       new ValueScala[LocalDateTime](
-        output.getId,
-        output.getType,
-        output.getName,
-        output.getValue.plusSeconds(this.value.toLong)
+        output.id,
+        output.`type`,
+        output.name,
+        output.value.plusSeconds(this.value.toLong)
       )
 
     case "-" =>
       new ValueScala[LocalDateTime](
-        output.getId,
-        output.getType,
-        output.getName,
-        output.getValue.minusSeconds(this.value.toLong)
+        output.id,
+        output.`type`,
+        output.name,
+        output.value.minusSeconds(this.value.toLong)
       )
 
     case _ => null

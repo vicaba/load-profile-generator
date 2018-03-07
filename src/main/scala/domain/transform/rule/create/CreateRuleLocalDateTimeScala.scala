@@ -8,7 +8,7 @@ import domain.value.ValueScala
 
 final class CreateRuleLocalDateTimeScala extends CreateRuleTScala[LocalDateTime, RulesConditionDateScala] {
   override def getCondition(output: ValueScala[LocalDateTime], inputRule: InputRuleScala[LocalDateTime]): RulesConditionDateScala = {
-    new RulesConditionDateScala(output.getValue, inputRule.getCondition, inputRule.getComparator)
+    new RulesConditionDateScala(output.value, inputRule.condition, inputRule.comparator)
 
   }
 }

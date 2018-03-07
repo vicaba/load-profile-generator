@@ -12,22 +12,22 @@ object OptionsSerializer extends CustomSerializer[InputFieldScala](_ => ( {
 
     val distributionInfo = (x \ "distributionInfo").extractOpt[DistributionInfoScala]
     val info = (x \ "info").extract[InputFieldInfoScala]
-    info.getType match {
+    info.`type` match {
       case "string" =>
         val options = (x \ "options").extract[OptionsScalaString]
-        new InputFieldScala(info, options, distributionInfo.orNull)
+        InputFieldScala(info, options, distributionInfo.orNull)
 
       case "date" =>
         val options = (x \ "options").extract[OptionsScalaDate]
-        new InputFieldScala(info, options, distributionInfo.orNull)
+        InputFieldScala(info, options, distributionInfo.orNull)
 
       case "integer" | "decimal" =>
         val options = (x \ "options").extract[OptionsScalaNumber]
-        new InputFieldScala(info, options, distributionInfo.orNull)
+        InputFieldScala(info, options, distributionInfo.orNull)
 
       case "appliance" =>
         val options = (x \ "options").extract[OptionsScalaAppliance]
-        new InputFieldScala(info, options, distributionInfo.orNull)
+        InputFieldScala(info, options, distributionInfo.orNull)
 
       case null => throw new MappingException("Can't convert options with name " + x + " to OptionsScala")
     }

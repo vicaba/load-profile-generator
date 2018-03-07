@@ -49,12 +49,12 @@ final class GraphConnectorScala(sourceValues: Map[String, Source[ValueScala[_], 
       val conn = listConnections(flow._1)
 
       if (conn.lengthCompare(1) == 0) {
-        broadBuild(conn.head.getId).out(1) ~> flow._2 ~> zipper
+        broadBuild(conn.head.id).out(1) ~> flow._2 ~> zipper
 
       } else {
         val zipperMerge = builder.add(ZipN[ValueScala[_]](conn.size))
         conn.foreach { conn =>
-          broadBuild(conn.getId).out(1) ~> zipperMerge
+          broadBuild(conn.id).out(1) ~> zipperMerge
         }
 
         zipperMerge ~> Flow[Seq[ValueScala[_]]].map(src => src.toList.head) ~> flow._2 ~> zipper

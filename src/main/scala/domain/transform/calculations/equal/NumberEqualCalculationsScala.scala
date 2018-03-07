@@ -8,7 +8,7 @@ final class NumberEqualCalculationsScala(numberRanges: Seq[NumberRangeScala]) ex
   override def calculate: Float = {
     val numberRange = this.numberRanges(ThreadLocalRandom.current.nextInt(0, this.numberRanges.size))
 
-    val fMin = numberRange.getMin
-    ThreadLocalRandom.current.nextFloat * (numberRange.getMax - fMin) + fMin
+    val fMin = numberRange.min
+    ThreadLocalRandom.current.nextFloat * (numberRange.max - fMin) + fMin
   }
 }

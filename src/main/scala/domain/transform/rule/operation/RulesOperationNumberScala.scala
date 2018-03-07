@@ -6,49 +6,49 @@ final class RulesOperationNumberScala(operation: String, value: Float) extends R
   override def applyChanges(output: ValueScala[Float]): ValueScala[Float] = operation match {
     case "+" =>
       new ValueScala[Float](
-        output.getId,
-        output.getType,
-        output.getName,
-        output.getValue + this.value
+        output.id,
+        output.`type`,
+        output.name,
+        output.value + this.value
       )
 
     case "-" =>
       new ValueScala[Float](
-        output.getId,
-        output.getType,
-        output.getName,
-        output.getValue - this.value
+        output.id,
+        output.`type`,
+        output.name,
+        output.value - this.value
       )
 
     case "*" =>
       new ValueScala[Float](
-        output.getId,
-        output.getType,
-        output.getName,
-        output.getValue * this.value
+        output.id,
+        output.`type`,
+        output.name,
+        output.value * this.value
       )
 
     case "/" =>
       new ValueScala[Float](
-        output.getId,
-        output.getType,
-        output.getName,
-        output.getValue / this.value
+        output.id,
+        output.`type`,
+        output.name,
+        output.value / this.value
       )
 
     case "%" =>
       new ValueScala[Float](
-        output.getId,
-        output.getType,
-        output.getName,
-        output.getValue % this.value
+        output.id,
+        output.`type`,
+        output.name,
+        output.value % this.value
       )
 
     case "=" =>
       new ValueScala[Float](
-        output.getId,
-        output.getType,
-        output.getName,
+        output.id,
+        output.`type`,
+        output.name,
         this.value
       )
 

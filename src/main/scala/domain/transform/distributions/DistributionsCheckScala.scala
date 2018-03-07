@@ -6,7 +6,7 @@ final class DistributionsCheckScala(inputDistribution: Seq[InputDistributionScal
   private final val DefaultInitialCounter = 0
 
   private var listCounters: Map[String, Int] = inputDistribution
-    .map(dist => dist.getId -> this.DefaultInitialCounter)
+    .map(dist => dist.id -> this.DefaultInitialCounter)
     .toMap
 
   def increaseAllCounters(): Unit = {
@@ -20,7 +20,7 @@ final class DistributionsCheckScala(inputDistribution: Seq[InputDistributionScal
 
   def checkDistribution: Boolean = {
     this.inputDistribution
-      .filter(dist => dist.getCondition == "count" && this.listCounters(dist.getId) >= dist.getComparator)
+      .filter(dist => dist.condition == "count" && this.listCounters(dist.id) >= dist.comparator)
       .lengthCompare(this.listCounters.size) == 0
   }
 }

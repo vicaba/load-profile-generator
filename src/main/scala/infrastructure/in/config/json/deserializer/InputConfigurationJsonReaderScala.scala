@@ -15,7 +15,7 @@ final class InputConfigurationJsonReaderScala(path: String) {
   val json = parse(Source.fromFile(path).mkString)
     print(json + "\n")
     val inputConfig = json.extract[InputConfigurationScala]
-    if (inputConfig.getField(0).getDistributionInfo == null) {
+    if (inputConfig.fields(0).distributionInfo == null) {
       print("Dist is null")
     } else {
       print("Dist is not null")

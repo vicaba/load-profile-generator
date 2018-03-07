@@ -9,30 +9,31 @@ import domain.transform.calculations.equal.{DateEqualCalculationsScala, NumberEq
 import domain.value.generator._
 
 object SourceGeneratorFactoryScala {
-  def createGeneratorFromInput(in: InputFieldScala): ValueGeneratorScala[_, _] = in.getOptions match {
+  def createGeneratorFromInput(in: InputFieldScala): ValueGeneratorScala[_, _] = in.options match {
     case _: OptionsScalaString =>
       new StringValueGeneratorScala(
         in.asInstanceOf[InputFieldScala],
-        new StringEqualCalculationsScala(in.getOptions.asInstanceOf[OptionsScalaString].getAcceptedStrings))
+        new StringEqualCalculationsScala(in.options.asInstanceOf[OptionsScalaString].acceptedStrings))
 
     case _: OptionsScalaNumber =>
       new NumberValueGeneratorScala(
         in.asInstanceOf[InputFieldScala],
-        new NumberEqualCalculationsScala(in.getOptions.asInstanceOf[OptionsScalaNumber].getRanges)
+        new NumberEqualCalculationsScala(in.options.asInstanceOf[OptionsScalaNumber].ranges)
       )
 
     case _: OptionsScalaDate =>
       new DateValueGeneratorScala(
         in.asInstanceOf[InputFieldScala],
         new DateEqualCalculationsScala(
-          in.getOptions.asInstanceOf[OptionsScalaDate].getStartingDate,
-          in.getOptions.asInstanceOf[OptionsScalaDate].getTimeIncrement)
+          in.options.asInstanceOf[OptionsScalaDate].startingDate,
+          in.options.asInstanceOf[OptionsScalaDate].timeIncrement)
       )
+
     case _: OptionsScalaAppliance =>
       new ApplianceValueGeneratorScala(
         in,
         new ApplianceCalculationsScala(
-          in.getOptions.asInstanceOf[OptionsScalaAppliance].getAppliance
+          in.options.asInstanceOf[OptionsScalaAppliance].appliance
         )
       )
   }

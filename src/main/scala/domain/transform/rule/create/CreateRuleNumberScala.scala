@@ -6,6 +6,6 @@ import domain.value.ValueScala
 
 final class CreateRuleNumberScala extends CreateRuleTScala[Float, RulesConditionNumberScala] {
   override def getCondition(output: ValueScala[Float], inputRule: InputRuleScala[Float]): RulesConditionNumberScala = {
-    new RulesConditionNumberScala(output.getValue, inputRule.getCondition, inputRule.getComparator)
+    new RulesConditionNumberScala(output.value, inputRule.condition, inputRule.comparator)
   }
 }

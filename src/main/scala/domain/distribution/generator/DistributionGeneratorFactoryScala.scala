@@ -11,19 +11,19 @@ import domain.value.generator._
 
 object DistributionGeneratorFactoryScala {
 
-  def createGeneratorFromInput(in: InputFieldScala): ValueGeneratorScala[_, _] = in.getOptions match {
+  def createGeneratorFromInput(in: InputFieldScala): ValueGeneratorScala[_, _] = in.options match {
     case _: OptionsScalaString =>
       new StringValueGeneratorScala(
         in,
-        new StringEqualCalculationsScala(in.getOptions.asInstanceOf[OptionsScalaString].getAcceptedStrings))
+        new StringEqualCalculationsScala(in.options.asInstanceOf[OptionsScalaString].acceptedStrings))
 
     case _: OptionsScalaNumber =>
       new NumberValueGeneratorScala(
         in,
         new NumberDistributionCalculationsScala(
-          in.getOptions.asInstanceOf[OptionsScalaNumber].getRanges,
-          in.getDistributionInfo.getOffset,
-          in.getDistributionInfo.getTotalData
+          in.options.asInstanceOf[OptionsScalaNumber].ranges,
+          in.distributionInfo.offset,
+          in.distributionInfo.totalData
         )
       )
 
@@ -31,10 +31,10 @@ object DistributionGeneratorFactoryScala {
       new DateValueGeneratorScala(
         in,
         new DateDistributionCalculationsScala(
-          in.getOptions.asInstanceOf[OptionsScalaDate].getStartingDate,
-          in.getOptions.asInstanceOf[OptionsScalaDate].getTimeIncrement,
-          in.getDistributionInfo.getOffset,
-          in.getDistributionInfo.getTotalData
+          in.options.asInstanceOf[OptionsScalaDate].startingDate,
+          in.options.asInstanceOf[OptionsScalaDate].timeIncrement,
+          in.distributionInfo.offset,
+          in.distributionInfo.totalData
         )
       )
 

@@ -38,8 +38,8 @@ final class NumberDistributionCalculationsScala(numberRanges: Seq[NumberRangeSca
     // TODO This makes no sense. NumberDistribution shouldn't work that way.
 
     /* The number is obtained by using the minimum and increasing it by the counter number. */
-    val fTotal = numberRange.getMin + this.counterNumber
-    val fMax = numberRange.getMax
+    val fTotal = numberRange.min + this.counterNumber
+    val fMax = numberRange.max
 
     /* We can't pass the max number allowed. If we do, we get the max number*/
     if (fTotal >= fMax) return fMax

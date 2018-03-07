@@ -1,11 +1,12 @@
 package domain.in.field.options
 
-final class OptionsScalaString(acceptedStrings: List[String]) extends OptionsScala {
-  def getAcceptedStrings: List[String] = this.acceptedStrings
+final case class OptionsScalaString(acceptedStrings: Seq[String]) extends OptionsScala {
 
+  /*
   def getAcceptedString(position: Int): String = this.acceptedStrings(position)
 
   def getSizeAccepted: Int = this.acceptedStrings.size
+  */
 
   override def toString: String = this.acceptedStrings.mkString(" - ")
 }

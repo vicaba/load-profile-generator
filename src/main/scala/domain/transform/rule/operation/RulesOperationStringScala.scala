@@ -6,25 +6,25 @@ final class RulesOperationStringScala(operation: String, value: String) extends 
   override def applyChanges(output: ValueScala[String]): ValueScala[String] = this.operation match {
     case "+S" =>
       new ValueScala[String](
-        output.getId,
-        output.getType,
-        output.getName,
-        output.getValue + this.value
+        output.id,
+        output.`type`,
+        output.name,
+        output.value + this.value
       )
 
     case "S+" =>
       new ValueScala[String](
-        output.getId,
-        output.getType,
-        output.getName,
-        this.value + output.getValue
+        output.id,
+        output.`type`,
+        output.name,
+        this.value + output.value
       )
 
     case "=" =>
       new ValueScala[String](
-        output.getId,
-        output.getType,
-        output.getName,
+        output.id,
+        output.`type`,
+        output.name,
         this.value
       )
 

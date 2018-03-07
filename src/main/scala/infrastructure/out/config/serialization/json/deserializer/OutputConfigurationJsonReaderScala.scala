@@ -13,7 +13,7 @@ final class OutputConfigurationJsonReaderScala(path: String) {
     val json = parse(Source.fromFile(path).mkString)
     print(json + "\n")
     val outputField = json.extract[OutputFieldScala]
-    print(outputField.getNameTemplate + " - " + outputField.getOutputType)
+    print(outputField.nameTemplate + " - " + outputField.outputType)
     outputField
   }
 }

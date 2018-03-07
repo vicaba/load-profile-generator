@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory
 abstract class DistributionFlowTScala[V, T <: CalculationsScala[V]](val dataGenerator: ValueGeneratorScala[V, T],
                                                                     val inputDistribution: Seq[InputDistributionScala])
   extends GraphStage[FlowShape[ValueScala[V], ValueScala[V]]] {
-  val inlet: Inlet[ValueScala[V]] = Inlet[ValueScala[V]]("FB" + inputDistribution(0).getId + ".in")
-  val outlet: Outlet[ValueScala[V]] = Outlet[ValueScala[V]]("FD" + inputDistribution(0).getResult.getId + ".out")
+  val inlet: Inlet[ValueScala[V]] = Inlet[ValueScala[V]]("FB" + inputDistribution(0).id + ".in")
+  val outlet: Outlet[ValueScala[V]] = Outlet[ValueScala[V]]("FD" + inputDistribution(0).result.id + ".out")
   private val logger = LoggerFactory.getLogger("stream.distribution.logger")
 
   override def createLogic(inheritedAttributes: Attributes): GraphStageLogic = new GraphStageLogic(shape) {
@@ -33,7 +33,7 @@ abstract class DistributionFlowTScala[V, T <: CalculationsScala[V]](val dataGene
         }
 
         val data = dataGenerator.obtainNext
-        logger.debug("Data with ID " + data.getId + " has value " + data.getValue + "\n")
+        logger.debug("Data with ID " + data.id + " has value " + data.value + "\n")
         push(outlet, data)
       }
     })

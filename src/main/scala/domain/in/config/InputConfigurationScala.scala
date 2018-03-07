@@ -2,28 +2,23 @@ package domain.in.config
 
 import domain.in.distribution.InputDistributionScala
 import domain.in.field.InputFieldScala
-import domain.in.field.options.OptionsScala
 import domain.in.rule.InputRuleScala
 
-final class InputConfigurationScala(fields: Seq[InputFieldScala],
+final case class InputConfigurationScala(fields: Seq[InputFieldScala],
                                          distributions: Seq[InputDistributionScala],
                                          rules: Seq[InputRuleScala[_]]) {
 
-  def getFields: Seq[InputFieldScala] = this.fields
-
+  /*
   def getField(fieldIndex: Int): InputFieldScala = this.fields(fieldIndex)
-
-  def getDistributions: Seq[InputDistributionScala] = this.distributions
 
   def getDistribution(distributionIndex: Int): InputDistributionScala = this.distributions(distributionIndex)
 
-  def getRules: Seq[InputRuleScala[_]] = this.rules
-
   def getRule(ruleIndex: Int): InputRuleScala[_] = this.rules(ruleIndex)
+  */
 
   def isBroadcast(id: String): Boolean = {
     for (dist <- distributions) {
-      if (dist.getId == id) return true
+      if (dist.id == id) return true
     }
     false
   }
@@ -36,7 +31,7 @@ final class InputConfigurationScala(fields: Seq[InputFieldScala],
   }
 
   def isDistributedBy(id: String): Seq[InputDistributionScala] = {
-    distributions.filter(dist => dist.getResult.getId == id)
+    distributions.filter(dist => dist.result.id == id)
   }
 
 }

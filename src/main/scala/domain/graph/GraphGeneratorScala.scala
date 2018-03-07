@@ -37,20 +37,20 @@ final class GraphGeneratorScala {
                createTemplate: TemplateOutputScala): RunnableGraph[NotUsed] = {
 
     /* We obtain the InputFields from the Configuration class. */
-    val inputFields = inputConfiguration.getFields
+    val inputFields = inputConfiguration.fields
 
     if (inputFields.nonEmpty) {
 
       val mapBroadcasts = inputFields
-        .filter(field => inputConfiguration.isBroadcast(field.getId))
-        .map(field => field.getId -> Broadcast[ValueScala[_]](2))
+        .filter(field => inputConfiguration.isBroadcast(field.info.id))
+        .map(field => field.info.id -> Broadcast[ValueScala[_]](2))
         .toMap
       println(s"Elements in map1 = $mapBroadcasts")
 
       val sourceGeneratorFactory = SourceGeneratorFactoryScala
       val sourceValueFactory = SourceValueFactoryScala
       val mapSources = inputFields
-        .filter(field => !inputConfiguration.isDistribution(field.getId))
+        .filter(field => !inputConfiguration.isDistribution(field.info.id))
         .map(field => sourceGeneratorFactory.createGeneratorFromInput(field))
         .map(vg => vg.getId -> sourceValueFactory.createSourceFromGenerator(vg))
         .toMap
@@ -58,8 +58,8 @@ final class GraphGeneratorScala {
 
 
       val listConnections = inputFields
-        .filter(field => inputConfiguration.isDistribution(field.getId))
-        .map(vg => vg.getId -> inputConfiguration.isDistributedBy(vg.getId))
+        .filter(field => inputConfiguration.isDistribution(field.info.id))
+        .map(vg => vg.info.id -> inputConfiguration.isDistributedBy(vg.info.id))
         .toMap
 
       println(s"Elements in map3 = $listConnections")
@@ -68,7 +68,7 @@ final class GraphGeneratorScala {
       val distributionGeneratorFactory = DistributionGeneratorFactoryScala
       val distributionFlowFactory = DistributionFlowFactoryScala
       val mapDistributions = inputFields
-        .filter(field => inputConfiguration.isDistribution(field.getId))
+        .filter(field => inputConfiguration.isDistribution(field.info.id))
         .map(distributionGeneratorFactory.createGeneratorFromInput)
         .map(vg => vg.getId -> distributionFlowFactory.createFlowFromGenerator(vg, listConnections(vg.getId)))
         .toMap
