@@ -8,15 +8,19 @@ import domain.in.rule.InputRuleScala
 import domain.transform.rule.create.{CreateRuleLocalDateTimeScala, CreateRuleNumberScala, CreateRuleStringScala}
 import domain.value.ValueScala
 
+import scala.collection.mutable.ListBuffer
+
 final class RulesCheckScala(rules: Seq[InputRuleScala[_]]) {
 
   def applyRules(outputs: Seq[ValueScala[_]]): Seq[ValueScala[_]] = {
+    val outMutable = outputs.to[ListBuffer]
+
     for (rule <- this.rules) {
-      for (output <- outputs) {
-        if (rule.getId == output.getId) {
+      for (output <- outMutable) {
+        if (rule.id == output.id) {
           var resultsChecked = false
 
-          output.getValue match {
+          output.value match {
             case _: Float => resultsChecked = (new CreateRuleNumberScala)
               .getCondition(output.asInstanceOf[ValueScala[Float]], rule.asInstanceOf[InputRuleScala[Float]])
               .checkResults
@@ -27,11 +31,11 @@ final class RulesCheckScala(rules: Seq[InputRuleScala[_]]) {
 
             case _: LocalDateTime =>
               //TODO This code below is disgusting and should be changed in a near future
-              val dateRule = new InputRuleScala(
-                rule.getId,
-                rule.getCondition,
-                LocalDateTime.parse(rule.getComparator.asInstanceOf[String], DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
-                rule.getResult.asInstanceOf[ConditionModifierScala[Float]]
+              val dateRule = InputRuleScala(
+                rule.id,
+                rule.condition,
+                LocalDateTime.parse(rule.comparator.asInstanceOf[String], DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")),
+                rule.result.asInstanceOf[ConditionModifierScala[Float]]
               )
 
               resultsChecked = (new CreateRuleLocalDateTimeScala)
@@ -40,14 +44,16 @@ final class RulesCheckScala(rules: Seq[InputRuleScala[_]]) {
 
             case _ =>
           }
-          /* If the value fulfills a condition specified by the rule, it wil apply the changes. */ if (resultsChecked) {
-            val rulesApplication = new RulesApplicationScala(rule.getId, rule.getResult)
-            rulesApplication.applyRules(outputs)
+          /* If the value fulfills a condition specified by the rule, it wil apply the changes. */
+          if (resultsChecked) {
+            val rulesApplication = new RulesApplicationScala(rule.id, rule.result)
+            rulesApplication.applyRules(outMutable)
           }
         }
       }
     }
-    outputs
+
+    outMutable.toList
   }
 
 }
