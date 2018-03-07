@@ -3,7 +3,6 @@ package domain.transform.rule
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-import domain.in.condition.ConditionModifierScala
 import domain.in.rule.InputRuleScala
 import domain.transform.rule.create.{CreateRuleLocalDateTimeScala, CreateRuleNumberScala, CreateRuleStringScala}
 import domain.value.ValueScala
@@ -26,7 +25,6 @@ final class RulesCheckScala(rules: Seq[InputRuleScala[_]]) {
                 .getCondition(output.asInstanceOf[ValueScala[Double]], rule.asInstanceOf[InputRuleScala[Double]])
                 .checkResults
 
-              print("--------------"+output.value + " > " + rule.comparator+"-------------\n")
             case _: String => resultsChecked = (new CreateRuleStringScala)
               .getCondition(output.asInstanceOf[ValueScala[String]], rule.asInstanceOf[InputRuleScala[String]])
               .checkResults
@@ -48,7 +46,6 @@ final class RulesCheckScala(rules: Seq[InputRuleScala[_]]) {
           }
           /* If the value fulfills a condition specified by the rule, it wil apply the changes. */
           if (resultsChecked) {
-            print(rule + "-----------------------\n")
             val rulesApplication = new RulesApplicationScala(rule.result)
             rulesApplication.applyRules(outMutable)
           }

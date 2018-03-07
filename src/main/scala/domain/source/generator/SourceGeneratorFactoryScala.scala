@@ -1,7 +1,5 @@
 package domain.source.generator
 
-import java.time.LocalDateTime
-
 import domain.in.field.InputFieldScala
 import domain.in.field.options._
 import domain.transform.calculations.ApplianceCalculationsScala

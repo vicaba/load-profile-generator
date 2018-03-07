@@ -12,7 +12,7 @@ final class InputConfigurationJsonReaderScala(path: String) {
   implicit private val formats: Formats = DefaultFormats + OptionsSerializer
 
   def readJson4(): InputConfigurationScala = {
-  val json = parse(Source.fromFile(path).mkString)
+    val json = parse(Source.fromFile(path).mkString)
     print(json + "\n")
     val inputConfig = json.extract[InputConfigurationScala]
     if (inputConfig.fields(0).distributionInfo == null) {

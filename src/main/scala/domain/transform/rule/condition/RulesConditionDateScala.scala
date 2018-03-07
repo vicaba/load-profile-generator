@@ -3,8 +3,8 @@ package domain.transform.rule.condition
 import java.time.LocalDateTime
 
 final class RulesConditionDateScala(leftCondition: LocalDateTime,
-                                     condition: String,
-                                     rightCondition: LocalDateTime) extends RulesConditionTScala[LocalDateTime] {
+                                    condition: String,
+                                    rightCondition: LocalDateTime) extends RulesConditionTScala[LocalDateTime] {
 
   override def checkResults: Boolean = this.condition match {
     case IsLessThan =>

@@ -12,7 +12,6 @@ final class RulesApplicationScala(condition: ConditionModifierScala[_]) {
 
   def applyRules(outputs: ListBuffer[ValueScala[_]]): Unit = {
 
-    print("Id is " + condition.id)
     for (i <- outputs.indices) {
       outputs(i).id match {
         case this.condition.id =>
@@ -24,7 +23,6 @@ final class RulesApplicationScala(condition: ConditionModifierScala[_]) {
               outputs(i) = rulesOperation.applyChanges(outputs(i).asInstanceOf[ValueScala[String]])
 
             case _: LocalDateTime =>
-              //val date =  LocalDateTime.parse(condition.value.asInstanceOf[String], DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"))
               val rulesOperation = new RulesOperationDateScala(condition.operation, condition.value.asInstanceOf[Long])
               outputs(i) = rulesOperation.applyChanges(outputs(i).asInstanceOf[ValueScala[LocalDateTime]])
 

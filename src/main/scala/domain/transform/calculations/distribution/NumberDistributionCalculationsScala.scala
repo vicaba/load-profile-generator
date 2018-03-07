@@ -26,13 +26,13 @@ final class NumberDistributionCalculationsScala(numberRanges: Seq[NumberRangeSca
     if (comparison <= distValue) {
       //this.traceLogger.trace(this.counterDistribution + ",1|")
       //logger.debug(counterDistribution + ",1|")
-      System.out.println("Division is " + (10 / totalData) + ", operation is " + ((counterDistribution * (10 / totalData)) + offset) + ", and distValue is " + distValue)
+      //System.out.println("Division is " + (10 / totalData) + ", operation is " + ((counterDistribution * (10 / totalData)) + offset) + ", and distValue is " + distValue)
       this.resetCounter()
     }
     else {
       //this.traceLogger.trace(this.counterDistribution + ",0|")
       //logger.debug(counterDistribution + ",0|")
-      System.out.println("Division is " + (10 / totalData) + ", operation is " + ((counterDistribution * (10 / totalData)) + offset) + ", and distValue is " + distValue)
+      //System.out.println("Division is " + (10 / totalData) + ", operation is " + ((counterDistribution * (10 / totalData)) + offset) + ", and distValue is " + distValue)
     }
 
     // TODO This makes no sense. NumberDistribution shouldn't work that way.

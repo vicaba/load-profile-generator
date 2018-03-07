@@ -2,10 +2,8 @@ package domain.rules
 
 import akka.stream.stage.{GraphStage, GraphStageLogic, InHandler, OutHandler}
 import akka.stream.{Attributes, FlowShape, Inlet, Outlet}
-import domain.transform.rule.{RulesCheck, RulesCheckScala}
+import domain.transform.rule.RulesCheckScala
 import domain.value.ValueScala
-
-import scala.collection.JavaConverters._
 
 /**
   * The Flow responsible of applying domain.rules to a generated data that enters through its inlet,

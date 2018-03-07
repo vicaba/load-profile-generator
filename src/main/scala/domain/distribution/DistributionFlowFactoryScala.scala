@@ -2,7 +2,7 @@ package domain.distribution
 
 import akka.NotUsed
 import akka.stream.scaladsl.Flow
-import domain.distribution.value.{DistributionFlowDateScala, DistributionFlowNumberScala, DistributionFlowStringScala}
+import domain.distribution.value.{DistributionFlowDateScala, DistributionFlowNumberScala}
 import domain.in.distribution.InputDistributionScala
 import domain.value.ValueScala
 import domain.value.generator._

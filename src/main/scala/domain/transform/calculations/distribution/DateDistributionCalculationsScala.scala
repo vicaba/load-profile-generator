@@ -23,7 +23,7 @@ final class DateDistributionCalculationsScala(startingDate: String,
     val distValue = this.tDistribution.cumulativeProbability(this.counterDistribution * (10 / this.totalData) + this.offset)
 
     val comparison = ThreadLocalRandom.current.nextInt(1, 100) * 0.01
-    println(comparison + " <= " + distValue)
+    //println(comparison + " <= " + distValue)
     if (comparison <= distValue) {
       //this.traceLogger.trace(this.counterDistribution + ",1|")
       //this.logger.debug("Division is " + (10 / this.totalData) + ", operation is " + ((this.counterDistribution * (10 / this.totalData)) + this.offset) + ", and comparison<=distValue is " + comparison + "<=" + distValue + "\n")
@@ -35,7 +35,7 @@ final class DateDistributionCalculationsScala(startingDate: String,
     }
 
     this.currentDate = this.currentDate.plusSeconds(this.timeIncrement * this.counterDate)
-    println(this.currentDate)
+    //println(this.currentDate)
     this.counterDate += 1
     currentDate
   }

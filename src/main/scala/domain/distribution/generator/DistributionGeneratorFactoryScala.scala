@@ -1,10 +1,7 @@
 package domain.distribution.generator
 
-import java.time.LocalDateTime
-
 import domain.in.field.InputFieldScala
 import domain.in.field.options._
-import domain.transform.calculations.ApplianceCalculationsScala
 import domain.transform.calculations.distribution.{DateDistributionCalculationsScala, NumberDistributionCalculationsScala}
 import domain.transform.calculations.equal.StringEqualCalculationsScala
 import domain.value.generator._
