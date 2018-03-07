@@ -50,6 +50,31 @@
         ]
       },
       "distributionInfo": {}
+    },
+    {
+      "info": {
+        "id": "0004",
+        "name": "Appliance1",
+        "type": "appliance"
+      },
+      "options": {
+        "appliance": {
+          "name": "Lamp",
+          "duration": 30,
+          "energy": 20,
+          "timeIntervals": [
+            {
+              "min": 0,
+              "max": 12
+            },
+            {
+              "min": 12,
+              "max": 24
+            }
+          ]
+        }
+      },
+      "distributionInfo": {}
     }
   ],
   "distributions": [
